@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import video from '@/components/video'
 import Home from '@/components/home'
-import Test from '@/components/test'
+import video from '@/components/video/video'
 import login from '@/components/login'
 import AskQuestion from '@/components/askQuestion/askQuestion'
 import askQuestion from '@/components/askQuestion/askQuestion' //我要提问
@@ -41,17 +40,12 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: login,
+      component: login
     },
     {
       path: '/video',
       name: 'video',
       component: video
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: Test
     },
     {
       path: '/askQuestion',
