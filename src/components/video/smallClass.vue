@@ -38,7 +38,7 @@
         <div class="br"></div>
         <div class="sm-class-video box-sizing">
           <div class="inline-block"v-for="(item,index) in video_list">
-            <img :src="cover_src+item.image" alt="">
+            <img :src="cover_src+item.image" alt="" @click="video_click()">
             <div>{{item.title}}</div>
           </div>
         </div>
@@ -80,6 +80,12 @@
 
       },
         methods:{
+          //视频点击
+          video_click:function(){
+            this.$router.push({
+              name:'video'
+            })
+          },
           //行业,税种,专题
           get_tree:function(data){
             // console.log(data);

@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-  import {creatH} from "../../static/js/get_video"
+  import {creatH} from "../../../static/js/get_video"
     export default {
       name: "test",
       mounted () {
@@ -17,7 +17,7 @@
 </script>
 
 <style scoped>
-  @import '../../static/css/main.css';
+  @import '../../../static/css/main.css';
   #cont{
     width:100%;
     height:400px;
