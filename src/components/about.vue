@@ -177,7 +177,7 @@
   @media screen and (min-width: 960px) {
    .about-us{
       width: 55%;
-     top:-100px
+     top:-90px
     }
     .au-right p{
       line-height: 1.1;
@@ -185,18 +185,18 @@
   }
   @media (min-width: 1024px){
     .about-us{
-      width: 50%;
+      width: 55%;
 
     }
     .au-right p{
-      line-height: 1.1;
+      line-height: 1.2;
     }
   } /*>=1024的设备*/
 
   @media (min-width: 1100px) {
     .about-us{
       width: 50%;
-
+      top:-100px
     }
     .au-right p{
       line-height: 1.3;
@@ -205,6 +205,7 @@
   @media (min-width: 1280px) {
     .about-us{
       width: 45%;
+      top:-125px
     }
     .au-right p{
       line-height: 1.6;
