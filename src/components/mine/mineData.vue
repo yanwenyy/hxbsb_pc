@@ -141,7 +141,11 @@
           //市
           city:'',
           //区
-          area:''
+          area:'',
+          //性别
+          gender:'',
+          //职位
+          position:''
 
         }
       },
@@ -157,6 +161,7 @@
           var that=this;
           console.log(data);
           this.user_img=this.head_src+data.headImage;
+          console.log(this.user_img);
           this.user_name=data.userName;
           this.dj_img=this.get_score(data.integralScore,data.aision,data.vip);
           this.hangxin_date=data.vipTime;
@@ -165,6 +170,8 @@
           this.phoneNumber=data.phone;
           this.companyName=data.companyName;
           this.hy_msg=data.trade;
+          this.gender=data.gender;
+          this.position=data.position;
           if(data.province=="北京"||data.province=="上海"||data.province=="天津"||data.province=="重庆"){
             this.province=data.province+"市";
             this.city=data.province+"城区";
@@ -212,7 +219,41 @@
         },
         //提交用户信息
         sub_msg:function(){
-
+          var that=this,address='',gender='',headImage='';
+          if(that.province=="北京"||that.province=="上海"||that.province=="天津"||that.province=="重庆"){
+            var address=this.city;
+          }else{
+            var address=this.address;
+          }
+          if(that.gender=="女"){
+            gender=2;
+          }else{
+            gender=1;
+          }
+          if(this.user_img.indexOf("/showImg/head/")!=-1){
+            headImage=null;
+          }else{
+            headImage=this.user_img.split(",")[1];
+          }
+          function edit_user_msg(data){
+            if(data.code==1){
+              alert(data.des)
+            }else{
+              alert(data.des)
+            }
+          }
+          that.ajax(that.http_url.url+"/user/editUser",{
+            "headImage":headImage,
+            "realName":that.user_realNanme,
+            "userName":that.user_name,
+            "sex":gender,
+            "province":that.province,
+            "trade":that.hy_msg,
+            "address":address,
+            "companyName":that.companyName,
+            "birthdayDate":that.birthday,
+            "position":that.position
+          },edit_user_msg)
         }
       },
     }

@@ -20,7 +20,7 @@ import mineQuestion from '@/components/mine/mineQuestion'
 import mineBag from '@/components/mine/mineBag'
 import mineLearningCard from '@/components/mine/mineLearningCard'
 import about from '@/components/about' //关于我们
-import smallClass from '@/components/smallClass' //微课
+import smallClass from '@/components/video/smallClass' //微课
 Vue.use(Router)
 
 export default new Router({

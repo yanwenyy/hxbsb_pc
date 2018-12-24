@@ -90,9 +90,15 @@
         },
         //我要提问点击
         ques_btn:function(){
-          this.$router.push({
-            name: 'answerSearch',params:{msg:this.message}
-          })
+          if(this.title_code==1||this.title_code==2){
+            this.$router.push({
+              name: 'answerSearch',params:{msg:this.message}
+            })
+          }else if(this.title_code==4){
+            this.$router.push({
+              name: 'smallClass',params:{msg:this.message}
+            })
+          }
         }
       }
     }

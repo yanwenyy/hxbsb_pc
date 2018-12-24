@@ -1,7 +1,7 @@
 <template>
     <div class="home-body">
       <div class="sm-banner">
-        <img src="../../static/img/sm-class-banner.png">
+        <img src="../../../static/img/sm-class-banner.png">
       </div>
       <div class="container">
         <div class="wdk-select-group">
