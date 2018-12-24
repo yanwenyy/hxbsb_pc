@@ -1,0 +1,316 @@
+<template>
+  <div class="container" style="min-height:35.31rem;height:auto">
+    <BreadNav :breadName="title"></BreadNav>
+    <div class="pay-title">
+      <span class="pay-title-name">{{source}}</span>金额支付:
+      <span class="pay-title-money orange">¥<span>{{price}}</span>元</span>
+    </div>
+    <div class="pay-sel">
+      <div class="inline-block" @click="pay_click('wexin')">
+        <img src="../../static/img/pay-selected.png" alt="" v-if="wexin">
+        <div class="pay-method-list box-sizing">
+          <img src="../../static/img/pay_wechat.png" alt="">
+          <div>
+            <div class="pay-method-list-name">微信支付</div>
+          </div>
+        </div>
+      </div>
+      <div class="inline-block" @click="pay_click('bag')">
+        <img src="../../static/img/pay-selected.png" alt=""  v-if="bag">
+        <div class="pay-method-list box-sizing">
+          <img src="../../static/img/pay_bag.png" alt="">
+          <div>
+            <div class="pay-method-list-name">我的钱包</div>
+            <div class="orange">余额:{{bag_money}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="inline-block" @click="pay_click('card')">
+        <img src="../../static/img/pay-selected.png" alt=""  v-if="card">
+        <div class="pay-method-list box-sizing">
+          <img src="../../static/img/pay_card.png" alt="">
+          <div>
+            <div class="pay-method-list-name">学习顾问卡</div>
+            <div class="orange">余额:{{card_money}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pay-wexin-code" v-if="wexin">
+      <div class="pay-wexin-code-name">
+        <img src="../../static/img/pay_wechat.png" alt="">
+        扫码支付, 支付<span>{{price}}</span>元
+      </div>
+      <div class="pay-wexin-code-img box-sizing">
+        <div class="code-img-show" id="qrcode"></div>
+      </div>
+    </div>
+    <div class="pay-btn" v-if="btn_show" @click="normal_pay()">
+      确认支付 <span>{{price}}</span>元
+    </div>
+  </div>
+</template>
+
+<script>
+  import BreadNav from '@/components/breadNav'
+  import QRCode from 'qrcodejs2'
+    export default {
+      name: "pay-method",
+      components: {
+        BreadNav
+      },
+      data () {
+        return{
+          price:"",
+          source:"",
+          title:"",
+          //钱包余额
+          bag_money:'',
+          //学习顾问卡余额
+          card_money:'',
+          wexin:true,
+          bag:false,
+          card:false,
+          btn_show:false,
+          //支付类型
+          payType:'',
+          //二维码图片
+          codeUrl:'',
+          //订单定时器
+          timer:'',
+          //公众号appid
+          appId:'',
+          //商户号
+          partnerid:'',
+        //  商户订单号
+          orderNo:'',
+          //随机字符串
+          nonceStr:'',
+          //签名
+          sign:''
+        }
+      },
+      mounted () {
+        // console.log(this.$route.params.msg);
+        this.price=this.$route.params.price;
+        this.source=this.$route.params.source;
+        this.title="首页> "+this.$route.params.source+" > 支付";
+        if(this.source=="围观"){
+          this.ajax(this.http_url.url+"/onlook/look/buy",{
+            "uuid":this.$route.params.uuid,
+            "payType":"weixin",
+            "money":this.$route.params.price,
+            "source":2
+          },this.wexin_pay);
+        }else if(this.source=="快速问"){
+
+        }
+        //余额查询
+        this.ajax_nodata(this.http_url.url+"/user/message",this.get_money);
+        // 通过$once来监听定时器，在beforeDestroy钩子可以被清除。
+        this.$once('hook:beforeDestroy', () => {
+          clearInterval(this.timer);
+          this.timer=null;
+        });
+      },
+      methods: {
+        //余额查询
+        get_money:function(data){
+          console.log(data);
+          this.bag_money=data.balance;
+          this.card_money=data.vipBalance;
+        },
+        //扫码支付
+        wexin_pay:function(data){
+          console.log(data);
+          if(data.code==1){
+            this.codeUrl=data.codeUrl;
+            this.appId=data.appId;
+            this.partnerid=data.partnerid;
+            this.orderNo=data.orderNo;
+            this.nonceStr=data.nonceStr;
+            this.sign=data.sign;
+            this.show_code(this.codeUrl);
+            this.check_order();
+          }else{
+            alert(data.des);
+          }
+        },
+        //查询订单
+        check_order:function(){
+          function get_msg(data){
+            console.log(data);
+          };
+          var that=this;
+          this.timer=setInterval(function(){
+            that.ajax(that.http_url.url+"/api/wxPC/queryOrder",{
+               "appId": that.appId,
+               "mchId": that.partnerid,
+               "orderMchNo": that.orderNo,
+               "nonceStr": that.nonceStr,
+               "sign": that.sign
+             },get_msg)
+          },3000)
+        },
+        //钱包或学习顾问卡支付
+        normal_pay:function(){
+          var that=this;
+          function get_msg(data){
+
+            if(data.code==1){
+              alert("支付成功");
+              that.$router.push({
+                name:"Home"
+              })
+            }else{
+              alert(data.des);
+            }
+          }
+          if(this.source=="围观"){
+              this.ajax(this.http_url.url+"/onlook/look/buy",{
+                "uuid":this.$route.params.uuid,
+                "payType":this.payType,
+                "money":this.$route.params.price,
+              },get_msg)
+          }else if(this.source=="我要提问"){
+            this.ajax(this.http_url.url+"/question/releaseQuestion",this.$route.params.data,get_msg)
+          }
+        },
+        //支付方式点击
+        pay_click:function(msg){
+          var that=this;
+          if(msg=="wexin"){//微信支付
+              this.wexin=true;
+              this.bag=false;
+              this.card=false;
+              this.btn_show=false;
+            this.payType="weixin";
+              setTimeout(function(){that.show_code(that.codeUrl);},1);
+              // this.check_order();
+          }else {
+            this.btn_show=true;
+            if(msg=="bag"){//钱包支付
+              this.bag=true;
+              this.wexin=false;
+              this.card=false;
+              this.payType="balance";
+              clearInterval(this.timer);
+              this.timer=null;
+            }else{//学习顾问卡卡支付
+              this.card=true;
+              this.wexin=false;
+              this.payType="VipBalance";
+              this.bag=false;
+              clearInterval(this.timer);
+              this.timer=null;
+            }
+          }
+        },
+        //生成二维码
+        show_code:function (val) {
+          var qrcode = new QRCode('qrcode', {
+            text: 'your content',
+            width: 256,
+            height: 256,
+            colorDark : '#000000',
+            colorLight : '#ffffff',
+            correctLevel : QRCode.CorrectLevel.H
+          });
+          // 使用 API
+          qrcode.clear();
+          qrcode.makeCode(val);
+        },
+      }
+    }
+</script>
+
+<style scoped>
+  .pay-title{
+    margin: 1.19rem 0 1.25rem 0;
+    font-size:0.875rem;
+    color:#333;
+    font-weight: 400;
+  }
+  .pay-title-money{
+    font-size:0.75rem ;
+    margin-left: 0.75rem;
+  }
+  .pay-title-money>span{
+    font-size: 1rem;
+  }
+  .pay-sel>div{
+    width:7.875rem;
+    height:7.875rem;
+    position: relative;
+    margin-right: 0.625rem;
+  }
+  .pay-sel>div>div,.pay-sel>div>img{
+    width:100%;
+    height:100%;
+    position: absolute;
+    top:0;
+  }
+  .pay-method-list{
+    text-align: center;
+    font-size: 0.625rem;
+    border: 1px solid #eee;
+    border-radius: 2px;
+  }
+  .pay-method-list>img{
+    position: absolute;
+    bottom: 4.125rem;
+    left:2.625rem;
+  }
+  .pay-method-list>div{
+    position: absolute;
+    top: 5.125rem;
+    width:100%;
+  }
+  .pay-method-list-name{
+    color:#333;
+    font-size: 0.875rem;
+    font-weight: 400;
+    margin-bottom: 0.44rem;
+  }
+  .pay-wexin-code{
+    margin: 1.81rem 0 0 7.69rem;
+    font-size: 0.875rem;
+    color:#333;
+    width:10.625rem;
+    text-align: center;
+  }
+  .pay-wexin-code-name>img{
+    width:1rem;
+    height:0.875rem;
+    vertical-align: middle;
+  }
+  .pay-wexin-code-name span{
+    font-size: 1.25rem;
+  }
+  .pay-wexin-code-img{
+    width:10.625rem;
+    height:10.625rem;
+    border:1px solid #eee;
+    padding:0.625rem;
+    margin-top: 1rem;
+  }
+  .code-img-show >>> canvas,.code-img-show >>> img{
+    width:100%!important;
+    height:100%!important;
+  }
+  .code-img-show{
+    width:100%;
+    height:100%;
+  }
+  .pay-btn{
+    width:7.5rem;
+    height:2rem;
+    line-height: 2rem;
+    text-align: center;
+    background:rgba(45,134,253,1);
+    border-radius:2px;
+    color:#fff;
+    font-size: 0.875rem;
+    margin-top: 1.69rem;
+  }
+</style>

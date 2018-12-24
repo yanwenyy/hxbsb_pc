@@ -1,0 +1,86 @@
+<template>
+  <div class="mask-layer">
+    <div class="issue-quesition-suc">
+      <div class="close-mask-layer">
+        <span class="inline-block close-square" v-on:click="close_ml()">
+        </span>
+      </div>
+      <div class="success-box box-sizing">
+        <div class="inline-block suc-txt">
+          <img src="../../../static/img/icon_success.png"/>
+          <h4>问题发布成功</h4>
+          <p>可在我的提问查看回答,下载APP可及时接收回答消息和更多服务</p>
+        </div>
+        <div class="inline-block card">
+          <img src="../../../static/img/qr-app.png"/>
+          <p>扫描二维码下载APP</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<script>
+
+    export default {
+      name: "suc-dialog",
+      methods:{
+        close_ml:function () {
+          $(".mask-layer").hide();
+          this.$router.go(-1)
+        }
+      }
+    }
+</script>
+
+<style scoped>
+  .issue-quesition-suc{
+    background:rgba(255,255,255,1);
+    border-radius:6px;
+    width: 25rem;
+    height: 11.625rem;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .success-box{
+    text-align: center;
+    width: 100%;
+    margin-top: 1.8rem;
+    color: #999999;
+  }
+  .success-box .suc-txt{
+    width: 11.4rem;
+    height: 7.56rem;
+    float: left;
+    padding: 0.5rem 1.5rem;
+    border-right:1px solid rgba(242,242,242,1);
+  }
+  .success-box .suc-txt h4{
+    font-size: 1.125rem;
+    color: #2D86FD;
+    margin: 0.65rem 0;
+  }
+  .success-box .suc-txt p{
+    font-size: 0.75rem;
+    line-height: 1.2rem;
+  }
+  .success-box .suc-txt img{
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+  .success-box .card{
+    width: 10.5rem;
+    height: 8.56rem;
+    font-size: 0.625rem;
+  }
+  .success-box .card img{
+    width: 6.375rem;
+    height: 6.375rem;
+    margin-bottom: 0.8rem;
+  }
+</style>
