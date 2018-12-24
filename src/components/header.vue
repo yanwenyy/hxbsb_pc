@@ -36,7 +36,7 @@
         <div class="container">
           <div class="inline-block"><router-link :to="{ name: 'Home',params: { msg: 'sy'}}"><span  :class=" title_code==1? 'title_act':''" class="box-sizing" v-on:click="headT_click(1)">首页</span></router-link></div>
           <div class="inline-block"><router-link :to="{ name: 'quesAnswerBank'}"><span  :class=" title_code==2? 'title_act':''" class="box-sizing"  v-on:click="headT_click(2)">问答库</span></router-link></div>
-          <div class="inline-block"><span :class=" title_code==3? 'title_act':''" class="box-sizing"   v-on:click="headT_click(3)">大咖访谈</span></div>
+          <div class="inline-block"><router-link :to="{ name: 'masterInterview'}"><span :class=" title_code==3? 'title_act':''" class="box-sizing"   v-on:click="headT_click(3)">大咖访谈</span></router-link></div>
           <div class="inline-block"><router-link :to="{ name: 'smallClass'}"><span  :class=" title_code==4? 'title_act':''" class="box-sizing"  v-on:click="headT_click(4)">微课</span></router-link></div>
           <div class="inline-block"><span :class=" title_code==5? 'title_act':''" class="box-sizing"  v-on:click="headT_click(5)">私密问</span></div>
           <div class="inline-block"><router-link :to="{ name: 'about'}"><span :class=" title_code==6? 'title_act':''" class="box-sizing"  v-on:click="headT_click(6)">关于我们</span></router-link></div>
@@ -84,7 +84,7 @@
               $(".header-search-answer").html("搜索答案");
               $(".header-search-ques").show();
             }
-            if(e==3||e==5){
+            if(e==5){
               alert("请下载航信办税宝app进行操作")
             }
         },

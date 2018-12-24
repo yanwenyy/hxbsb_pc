@@ -4,7 +4,6 @@ import HelloWorld from '@/components/HelloWorld'
 import Home from '@/components/home'
 import video from '@/components/video/video'
 import login from '@/components/login'
-import AskQuestion from '@/components/askQuestion/askQuestion'
 import askQuestion from '@/components/askQuestion/askQuestion' //我要提问
 import quesAnswerBank from '@/components/askQuestion/quesAnswerBank'
 import payMethod from '@/components/payMethod'
@@ -20,6 +19,7 @@ import mineBag from '@/components/mine/mineBag'
 import mineLearningCard from '@/components/mine/mineLearningCard'
 import about from '@/components/about' //关于我们
 import smallClass from '@/components/video/smallClass' //微课
+import masterInterview from '@/components/video/masterInterview' //大咖访谈
 Vue.use(Router)
 
 export default new Router({
@@ -124,7 +124,13 @@ export default new Router({
       path: '/smallClass',
       name: 'smallClass',
       component: smallClass
+    },
+    {
+      path: '/masterInterview',
+      name: 'masterInterview',
+      component: masterInterview
     }
+
   ],
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }
