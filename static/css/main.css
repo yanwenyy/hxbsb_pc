@@ -873,6 +873,7 @@ input::-webkit-input-placeholder{
   height:2.25rem;
   vertical-align: middle;
   margin-right: 0.2rem;
+  border-radius: 50%;
 }
 .wgry-list-name{
   font-size: 0.874rem;

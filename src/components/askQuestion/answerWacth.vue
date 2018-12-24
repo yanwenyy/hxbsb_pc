@@ -44,14 +44,10 @@
           <div class="cwatch-weiguan" @click="weiguan()">一元围观</div>
           <div class="cwatch-list-people">
             <div class="cwatch-list-people-head">
-              <img src="../../../static/img/user-img.png" alt="">
-              <img src="../../../static/img/user-img.png" alt="">
-              <img src="../../../static/img/user-img.png" alt="">
-              <img src="../../../static/img/user-img.png" alt="">
-              <img src="../../../static/img/user-img.png" alt="">
+              <img v-for="item in look_list" :src="head_src+item.headImage" onerror="javascript:this.src='/static/img/user-img.png'" alt="">
             </div>
             <div class="cw-people-num">
-              191人围观,
+              {{look_list.length}}人围观,
               <span class="blue" @click="open_shadow()">查看详情</span>
             </div>
           </div>
@@ -69,150 +65,23 @@
         </div>
         <div class="shodow-body box-sizing">
           <ul>
-            <li>
-              <img src="../../../static/img/user-img.png" alt="">
+            <li v-for="item in look_list">
+              <img :src="head_src+item.headImage"  onerror="javascript:this.src='/static/img/user-img.png'" alt="">
               <div class="inline-block wgry-list">
                 <div class="inline-block wgry-list-usermsg">
                   <div class="wgry-list-name">
-                    <span>王佳佳</span>
-                    <span class="user-zxs">
+                    <span>{{item.realName}}</span>
+                    <span class="user-zxs" v-if="item.role==2">
                         <img src="../../../static/img/zxs-icon.png" alt="">
-                        <span>资深咨询师</span>
+                        <span>{{item.levelName}}</span>
                         <span class="interval-line"></span>
-                        <span>资格证书</span>
-                        <span>资格证书</span>
+                        <span>{{item.counselorDuty}}</span>
                     </span>
                   </div>
-                  <div>2018-10-01 10:00:00</div>
+                  <div>{{item.onLookTime}}</div>
                 </div>
                 <div class="inline-block orange wgry-list-money">
-                  +1.00元
-                </div>
-              </div>
-            </li>
-            <li>
-              <img src="../../../static/img/user-img.png" alt="">
-              <div class="inline-block wgry-list">
-                <div class="inline-block wgry-list-usermsg">
-                  <div class="wgry-list-name">
-                    <span>王佳佳</span>
-                  </div>
-                  <div>2018-10-01 10:00:00</div>
-                </div>
-                <div class="inline-block orange wgry-list-money">
-                  +1.00元
-                </div>
-              </div>
-            </li>
-            <li>
-              <img src="../../../static/img/user-img.png" alt="">
-              <div class="inline-block wgry-list">
-                <div class="inline-block wgry-list-usermsg">
-                  <div class="wgry-list-name">
-                    <span>王佳佳</span>
-                    <span class="user-zxs">
-                        <img src="../../../static/img/zxs-icon.png" alt="">
-                        <span>资深咨询师</span>
-                        <span class="interval-line"></span>
-                        <span>资格证书</span>
-                        <span>资格证书</span>
-                    </span>
-                  </div>
-                  <div>2018-10-01 10:00:00</div>
-                </div>
-                <div class="inline-block orange wgry-list-money">
-                  +1.00元
-                </div>
-              </div>
-            </li>
-            <li>
-              <img src="../../../static/img/user-img.png" alt="">
-              <div class="inline-block wgry-list">
-                <div class="inline-block wgry-list-usermsg">
-                  <div class="wgry-list-name">
-                    <span>王佳佳</span>
-                    <span class="user-zxs">
-                        <img src="../../../static/img/zxs-icon.png" alt="">
-                        <span>资深咨询师</span>
-                        <span class="interval-line"></span>
-                        <span>资格证书</span>
-                        <span>资格证书</span>
-                    </span>
-                  </div>
-                  <div>2018-10-01 10:00:00</div>
-                </div>
-                <div class="inline-block orange wgry-list-money">
-                  +1.00元
-                </div>
-              </div>
-            </li>
-            <li>
-              <img src="../../../static/img/user-img.png" alt="">
-              <div class="inline-block wgry-list">
-                <div class="inline-block wgry-list-usermsg">
-                  <div class="wgry-list-name">
-                    <span>王佳佳</span>
-                  </div>
-                  <div>2018-10-01 10:00:00</div>
-                </div>
-                <div class="inline-block orange wgry-list-money">
-                  +1.00元
-                </div>
-              </div>
-            </li>
-            <li>
-              <img src="../../../static/img/user-img.png" alt="">
-              <div class="inline-block wgry-list">
-                <div class="inline-block wgry-list-usermsg">
-                  <div class="wgry-list-name">
-                    <span>王佳佳</span>
-                  </div>
-                  <div>2018-10-01 10:00:00</div>
-                </div>
-                <div class="inline-block orange wgry-list-money">
-                  +1.00元
-                </div>
-              </div>
-            </li>
-            <li>
-              <img src="../../../static/img/user-img.png" alt="">
-              <div class="inline-block wgry-list">
-                <div class="inline-block wgry-list-usermsg">
-                  <div class="wgry-list-name">
-                    <span>王佳佳</span>
-                  </div>
-                  <div>2018-10-01 10:00:00</div>
-                </div>
-                <div class="inline-block orange wgry-list-money">
-                  +1.00元
-                </div>
-              </div>
-            </li>
-            <li>
-              <img src="../../../static/img/user-img.png" alt="">
-              <div class="inline-block wgry-list">
-                <div class="inline-block wgry-list-usermsg">
-                  <div class="wgry-list-name">
-                    <span>王佳佳</span>
-                  </div>
-                  <div>2018-10-01 10:00:00</div>
-                </div>
-                <div class="inline-block orange wgry-list-money">
-                  +1.00元
-                </div>
-              </div>
-            </li>
-            <li>
-              <img src="../../../static/img/user-img.png" alt="">
-              <div class="inline-block wgry-list">
-                <div class="inline-block wgry-list-usermsg">
-                  <div class="wgry-list-name">
-                    <span>王佳佳</span>
-                  </div>
-                  <div>2018-10-01 10:00:00</div>
-                </div>
-                <div class="inline-block orange wgry-list-money">
-                  +1.00元
+                  +{{parseFloat(item.onLookMoney).toFixed(2)}}元
                 </div>
               </div>
             </li>
@@ -232,7 +101,10 @@
       },
       data(){
         return{
-            shadow_status:false
+          //弹框显示
+            shadow_status:false,
+            //围观人员
+            look_list:[]
         }
       },
       mounted (){
@@ -246,6 +118,7 @@
           //围观人员
           look_num:function(data){
             console.log(data);
+            this.look_list=data.OnLookCountDetail.slice(0,5);
           },
           //打开弹窗
         open_shadow:function(){
@@ -351,5 +224,6 @@
     width:1.875rem;
     height:1.875rem;
     margin-right: 0.2rem;
+    border-radius: 50%;
   }
 </style>
