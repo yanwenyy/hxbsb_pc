@@ -96,7 +96,7 @@
             })
           }else if(this.title_code==4){
             this.$router.push({
-              name: 'smallClassSaerch',params:{msg:this.message}
+              name: 'smallClassSearch',params:{msg:this.message}
             })
           }else if(this.title_code==3){
             this.$router.push({
