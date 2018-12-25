@@ -22,14 +22,14 @@
               </div>
               <div class="wdk-list-group box-sizing">
                 <div class="wdk-list" v-for="item in zxwd">
-                  <div class="inline-block">
+                  <div class="inline-block"  @click="weiguan(item.uuid,item.status)">
                     <div class="wdk-name">
                       <img :src="head_src+item.headImage" alt=""  onerror="javascript:this.src='../../static/img/user-img.png';">
                       <div class="inline-block user_name">{{item.realName||"匿名用户"}}</div>
                       <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
                       <div class="home-list-msg-group">
                         <div class="inline-block home-list-msg">{{item.content}}</div>
-                        <div class="inline-block weiguan" :class="item.status==1? 'weiguan_also':''" @click="weiguan(item.uuid,item.status)">{{item.status==1? '已围观':'一元围观'}}</div>
+                        <div class="inline-block weiguan" :class="item.status==1? 'weiguan_also':''">{{item.status==1? '已围观':'一元围观'}}</div>
                       </div>
                       <div class="label box-sizing">
                         <div class="inline-block">{{format(item.date)}}</div>
@@ -58,14 +58,14 @@
               </div>
               <div class="wdk-list-group box-sizing">
                 <div class="wdk-list" v-for="item in zt">
-                  <div class="inline-block">
+                  <div class="inline-block"  @click="weiguan(item.uuid,item.status)">
                     <div class="wdk-name">
                       <img :src="head_src+item.headImage" alt=""  onerror="javascript:this.src='../../static/img/user-img.png';">
                       <div class="inline-block user_name">{{item.realName||"匿名用户"}}</div>
                       <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
                       <div class="home-list-msg-group">
                         <div class="inline-block home-list-msg">{{item.content}}</div>
-                        <div class="inline-block weiguan" :class="item.status==1? 'weiguan_also':''" @click="weiguan(item.uuid,item.status)">{{item.status==1? '已围观':'一元围观'}}</div>
+                        <div class="inline-block weiguan" :class="item.status==1? 'weiguan_also':''">{{item.status==1? '已围观':'一元围观'}}</div>
                       </div>
                       <div class="label box-sizing">
                         <div class="inline-block">{{format(item.date)}}</div>
@@ -94,14 +94,14 @@
               </div>
               <div class="wdk-list-group box-sizing">
                 <div class="wdk-list" v-for="item in zrwd">
-                  <div class="inline-block">
+                  <div class="inline-block"  @click="weiguan(item.uuid,item.status)">
                     <div class="wdk-name">
                       <img :src="head_src+item.headImage" alt=""  onerror="javascript:this.src='../../static/img/user-img.png';">
                       <div class="inline-block user_name">{{item.realName||"匿名用户"}}</div>
                       <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
                       <div class="home-list-msg-group">
                         <div class="inline-block home-list-msg">{{item.content}}</div>
-                        <div class="inline-block weiguan" :class="item.status==1? 'weiguan_also':''" @click="weiguan(item.uuid,item.status)">{{item.status==1? '已围观':'一元围观'}}</div>
+                        <div class="inline-block weiguan" :class="item.status==1? 'weiguan_also':''">{{item.status==1? '已围观':'一元围观'}}</div>
                       </div>
                       <div class="label box-sizing">
                         <div class="inline-block">{{format(item.date)}}</div>
@@ -207,7 +207,7 @@
           if(status==1){
             this.$router.push({ name: 'answerWacthDetail'})
           }else{
-            this.$router.push({ name: 'answerWacth',params: {uuid:val}});
+            this.$router.push({ name: 'answerWacth',params: {"uuid":val,"money":1}});
           }
           // this.$router.push({ name: 'answerWacth',params:{questionUuid:val}})
         },

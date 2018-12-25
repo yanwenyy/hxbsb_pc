@@ -25,7 +25,8 @@ export default{
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json;charset=utf-8",
-          "cookieId":"oPUdI0pZbHIYBCHUn_aQPCJAmRIU"
+          "cookieId":"oPUdI0pZbHIYBCHUn_aQPCJAmRIU",
+          "version":"1"
         },
         data:JSON.stringify(data),
         success:function(data){
@@ -50,7 +51,8 @@ export default{
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json;charset=utf-8",
-          "cookieId":"oPUdI0pZbHIYBCHUn_aQPCJAmRIU"
+          "cookieId":"oPUdI0pZbHIYBCHUn_aQPCJAmRIU",
+          "version":"1"
         },
         success:function(data){
           if(data.code=="2"){

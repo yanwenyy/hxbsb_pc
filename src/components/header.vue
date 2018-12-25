@@ -13,7 +13,7 @@
             <div class="header-user inline-block">
               <div class="inline-block h-u-name" v-on:click="user_name">
                 <!--<img src="../../static/img/user-img.png" alt="">-->
-                张三
+                {{userName}}
                 <img src="../../static/img/header-down.png"  alt="">
               </div>
               <div class="uer-sel" v-if="head_scode">
@@ -54,11 +54,19 @@
             head_scode: false,
             title_code:1,
             //搜索框内容
-            message:""
+            message:"",
+            //用户姓名
+            userName:''
           }
         },
       mounted () {
-        this.message=""
+        this.message="";
+        //获取用户名字
+        var that=this;
+        function get_name(data){
+          that.userName=data.realName;
+        }
+        this.ajax_nodata(this.http_url.url+"/user/message",get_name)
       },
       methods:{
           //用户名点击

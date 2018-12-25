@@ -97,7 +97,7 @@
         this.title="首页> "+this.$route.params.source+" > 支付";
         if(this.source=="围观"){
           this.ajax(this.http_url.url+"/onlook/look/buy",{
-            "uuid":this.$route.params.uuid,
+            "uuid":this.$route.params.data.uuid,
             "payType":"weixin",
             "money":this.$route.params.price,
             "source":2
@@ -155,23 +155,19 @@
         //钱包或学习顾问卡支付
         normal_pay:function(){
           var that=this;
+          this.$route.params.data.payType=this.payType;
           function get_msg(data){
-
             if(data.code==1){
               alert("支付成功");
               that.$router.push({
-                name:"Home"
+                name:that.$route.params.data.url
               })
             }else{
               alert(data.des);
             }
           }
           if(this.source=="围观"){
-              this.ajax(this.http_url.url+"/onlook/look/buy",{
-                "uuid":this.$route.params.uuid,
-                "payType":this.payType,
-                "money":this.$route.params.price,
-              },get_msg)
+              this.ajax(this.http_url.url+"/onlook/look/buy",this.$route.params.data,get_msg)
           }else if(this.source=="我要提问"){
             this.ajax(this.http_url.url+"/question/releaseQuestion",this.$route.params.data,get_msg)
           }

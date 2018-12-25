@@ -47,7 +47,7 @@
               <img v-for="item in look_list" :src="head_src+item.headImage" onerror="javascript:this.src='/static/img/user-img.png'" alt="">
             </div>
             <div class="cw-people-num">
-              {{look_list.length}}人围观,
+              {{look_list_num}}人围观,
               <span class="blue" @click="open_shadow()">查看详情</span>
             </div>
           </div>
@@ -65,7 +65,7 @@
         </div>
         <div class="shodow-body box-sizing">
           <ul>
-            <li v-for="item in look_list">
+            <li v-for="item in look_list_detail">
               <img :src="head_src+item.headImage"  onerror="javascript:this.src='/static/img/user-img.png'" alt="">
               <div class="inline-block wgry-list">
                 <div class="inline-block wgry-list-usermsg">
@@ -104,7 +104,11 @@
           //弹框显示
             shadow_status:false,
             //围观人员
-            look_list:[]
+            look_list:[],
+            //围观人数
+            look_list_num:'',
+            //围观详情列表
+            look_list_detail:[]
         }
       },
       mounted (){
@@ -119,6 +123,8 @@
           look_num:function(data){
             console.log(data);
             this.look_list=data.OnLookCountDetail.slice(0,5);
+            this.look_list_detail=data.OnLookCountDetail;
+            this.look_list_num=data.OnLookCount;
           },
           //打开弹窗
         open_shadow:function(){
@@ -132,7 +138,7 @@
         weiguan:function(){
           var that=this;
           this.$router.push({
-            name:"payMethod",params:{ price: 1 ,source:"围观",uuid:that.$route.params.uuid}
+            name:"payMethod",params:{ url:"answerWacthDetail",price: 1 ,source:"围观",data:this.$route.params}
           })
         }
       }

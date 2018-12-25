@@ -165,7 +165,7 @@
         },
         //提交 + 表单验证
         check_sub:function () {
-          var params={content:this.content,isAnon:this.isAnon,money:15,payType:this.payType,trade:this.trade,images:this.images}
+          var params={url:"Home",content:this.content,isAnon:this.isAnon,money:15,payType:this.payType,trade:this.trade,images:this.images}
           if(this.vip){
             if (this.content!=null&&this.content!="") {
               this.ajax(this.http_url.url+'question/releaseQuestion',params,this.show_dialog)
