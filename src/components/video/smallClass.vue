@@ -38,8 +38,11 @@
         </div>
         <div class="sm-class-video box-sizing" v-if="nomsg">
           <div class="inline-block"v-for="(item,index) in video_list">
-            <img :src="cover_src+item.image" alt="" @click="video_click()">
+            <img :src="cover_src+item.image" alt="" @click="video_click(item)">
             <div>{{item.title}}</div>
+            <p class="buy" v-if="item.ifBuy==1">已购买</p>
+            <p class="price" v-else-if="item.ifBuy!=1&&item.price!=0">¥：{{item.price}}.00</p>
+            <p class="free" v-else-if="item.price==0">限时免费</p>
           </div>
         </div>
         <div class="no-msg" v-else>暂无相关内容</div>
@@ -85,11 +88,17 @@
             var params={sinceId:this.sinceId,maxId:this.maxId,type:this.type}
             this.ajax(this.http_url.url+'video/search',params,this.get_video);
           },
-          //视频点击
-          video_click:function(){
-            this.$router.push({
-              name:'video'
-            })
+          //视频封面点击
+          video_click:function(data){
+            var that=this
+            if(data.ifBuy==1||data.price==0){
+              this.ajax(this.http_url.url+'video/vid',{id:data.id},function (e) {
+                that.$router.push({name:'video',params:{vid:e.data.vid}})
+              })
+
+            }else{
+              this.$router.push({ name: 'payMethod',params: {price: data.price ,source:"微课",data:data}})
+            }
           },
           //行业,税种,专题
           get_tree:function(data){
@@ -115,7 +124,7 @@
             }
             for(var i=0;i<data_list.length;i++){
               if(data_list[i].title.length>40){
-                data_list[i].title=data_list[i].title.substr(0,40)+"...";
+                data_list[i].title=data_list[i].title.substr(0,35)+"...";
               }
             }
             this.video_list=data_list;
@@ -238,6 +247,7 @@
   .sm-class-video{
     width: 85%;
     margin: 0 auto;
+    margin-top: 2rem;
   }
   .sm-class-video>div{
     -webkit-box-sizing: border-box;
@@ -248,11 +258,24 @@
     margin-right: 2%;
     padding: 0.5rem;
     vertical-align: top;
+    height: 14.5rem;
+    line-height: 1.2;
+    position: relative;
   }
   .sm-class-video>div>img{
     width:100%;
     max-height:10.35rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .sm-class-video>div>p{
+    position: absolute;
+    bottom: 0.5rem;
+  }
+  .sm-class-video p{
+    color: #fe6d27;
+  }
+  .sm-class-video p.buy{
+    color: #c6c6c6;
   }
   #page{
     margin: 50px 0;

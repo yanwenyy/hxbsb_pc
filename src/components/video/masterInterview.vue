@@ -35,7 +35,7 @@
       </div>
       <div class="sm-class-video box-sizing" v-if="nomsg">
         <div class="inline-block"v-for="(item,index) in video_list">
-          <img :src="cover_src+item.image" alt="" @click="video_click()">
+          <img :src="cover_src+item.image" alt="" @click="video_click(item)">
           <div>{{item.title}}</div>
         </div>
       </div>
@@ -80,9 +80,10 @@
         this.ajax(this.http_url.url+'video/search',params,this.get_video);
       },
       //视频点击
-      video_click:function(){
-        this.$router.push({
-          name:'video'
+      video_click:function(data){
+        var that=this
+        this.ajax(this.http_url.url+'video/vid',{id:data.id},function (e) {
+          that.$router.push({name:'video',params:{vid:e.data.vid}})
         })
       },
       //行业,税种,专题
