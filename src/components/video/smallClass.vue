@@ -63,11 +63,11 @@
           sz:[],//税种
           zt:[],//主题
           video_list:[], //微课封面列表
-          sinceId:1,
-          maxId:3,
-          type:0,
-          total:1,
-          page_size:3//每页3条
+          sinceId:1,//当前页开始条数
+          maxId:15,//当前页结束条数
+          type:0,//微课类型
+          total:1,//分页页数
+          page_size:15//每页3条
         }
       },
       mounted () {
@@ -133,7 +133,6 @@
                 this.sinceId=parseInt(that.page_size*(msg-1)+1)
                 this.maxId=parseInt(this.sinceId+that.page_size-1)
                 var params={sinceId:this.sinceId,maxId:this.maxId,type:that.type}
-                console.log(params)
                 that.ajax(that.http_url.url+'video/search',params,that.get_video_list);
               });
           },
