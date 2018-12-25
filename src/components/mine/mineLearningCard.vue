@@ -12,7 +12,7 @@
           <div>
             <div class="inline-block user-money-msg">
               <div>可用余额（元）</div>
-              <div>¥<span class="orange">100.00</span></div>
+              <div>¥<span class="orange">{{parseFloat(vipBalance).toFixed(2)}}</span></div>
             </div>
             <div class="inline-block money-record box-sizing">
               <div class="inline-block money-tx">
@@ -20,11 +20,11 @@
               </div>
               <div class="inline-block">
                 <div class="total-record-name">总收入（元）</div>
-                <div>¥<span>100.00</span></div>
+                <div>¥<span>{{parseFloat(incomeSum).toFixed(2)}}</span></div>
               </div>
               <div class="inline-block">
                 <div class="total-record-name">总支出（元）</div>
-                <div>¥<span>100.00</span></div>
+                <div>¥<span>{{parseFloat(outpaySum).toFixed(2)}}</span></div>
               </div>
             </div>
           </div>
@@ -40,35 +40,11 @@
               <td width="20">支付完成日期</td>
               <td width="20">金额</td>
             </tr>
-            <tr class="mine-ques-tr box-sizing">
-              <td>私密问退回</td>
-              <td>收入</td>
-              <td>2018-12-09 13:00：21</td>
-              <td>+15.00元</td>
-            </tr>
-            <tr class="mine-ques-tr box-sizing">
-              <td>私密问退回</td>
-              <td>收入</td>
-              <td>2018-12-09 13:00：21</td>
-              <td>+15.00元</td>
-            </tr>
-            <tr class="mine-ques-tr box-sizing">
-              <td>私密问退回</td>
-              <td>收入</td>
-              <td>2018-12-09 13:00：21</td>
-              <td>+15.00元</td>
-            </tr>
-            <tr class="mine-ques-tr box-sizing">
-              <td>私密问退回</td>
-              <td>收入</td>
-              <td>2018-12-09 13:00：21</td>
-              <td>+15.00元</td>
-            </tr>
-            <tr class="mine-ques-tr box-sizing">
-              <td>私密问退回</td>
-              <td>收入</td>
-              <td>2018-12-09 13:00：21</td>
-              <td>+15.00元</td>
+            <tr class="mine-ques-tr box-sizing"  v-for="item in records">
+              <td>{{item.goodsType}}</td>
+              <td>{{item.tradeType==1? '支出':'收入'}}</td>
+              <td>{{format(item.paySucTime)}}</td>
+              <td>{{item.tradeType==1? '-':'+'}}{{parseFloat(item.sum).toFixed(2)}}元</td>
             </tr>
           </table>
           <div id="page" class="paging"></div>
@@ -85,17 +61,72 @@
         components:{
           mineLeft,
         },
-      mounted(){
-        //分页插件初始化
-        $("#page").paging({
-            total: 20,
-            numberPage: 1
-          },
-          function(msg) {
-            //回调函数 msg为选中页码
-            // tab(msg);
-          });
+      data(){
+        return{
+          start:1,
+          end:10,
+          //余额显示
+          vipBalance:'',
+          //总收入
+          incomeSum:'',
+          //总支出
+          outpaySum:'',
+          //交易记录
+          records:[],
+          //总页数
+          count:'',
+        }
       },
+      mounted(){
+        //余额
+        this.ajax_nodata(this.http_url.url+"/user/message",this.get_balance);
+        //交易记录
+        this.ajax(this.http_url.url+"/flow/sumRecording",{
+          "sinceId":this.start,
+          "maxId":this.end,
+          "articleType":"all",
+          "payType":"studyCard"
+        },this.get_msg);
+      },
+      methods:{
+        //获取余额
+        get_balance:function(data){
+          this.vipBalance=data.vipBalance;
+        },
+        //交易记录
+        get_msg:function(data){
+          // console.log(data);
+          this.incomeSum=data.incomeSum;
+          this.outpaySum=data.outpaySum;
+          this.records=data.records;
+          this.count=data.count/10;
+          this.page(this.count);
+        },
+        //分页
+        page:function(data){
+          var that=this;
+          $("#page").paging({
+              total: data,
+              numberPage: 1
+            },
+            function(msg) {
+              //回调函数 msg为选中页码
+              // tab(msg);
+              that.start=((msg-1)*10)+1;
+              that.end=msg*10;
+              that.ajax(that.http_url.url+"/flow/sumRecording",{
+                "sinceId":that.start,
+                "maxId":that.end,
+                "articleType":"all",
+                "payType":"studyCard"
+              },that.page_msg)
+            });
+        },
+        //分页回调
+        page_msg:function(data){
+          this.records=data.records;
+        }
+      }
     }
 </script>
 
@@ -120,11 +151,12 @@
     padding:0 0.875rem;
   }
   .mine-data-body{
-    height:30.69rem;
+    min-height:30.69rem;
+    height: auto;
     width:100%;
     background: #fff;
     box-shadow:0px 1px 8px 0px rgba(54,177,255,0.1);
     border-radius:4px;
-    padding:0 0.875rem;
+    padding:0 0.875rem 1rem 0.875rem;
   }
 </style>

@@ -23,135 +23,27 @@
             <div class="mine-buy-main">
               <div class="mine-buy-wacth" v-if="headName=='我的围观'">
                 <div class="wdk-list-group box-sizing">
-                  <div class="wdk-list">
+                  <div class="wdk-list" v-for="item in questions">
                     <div class="inline-block">
                       <div class="wdk-name">
-                        <img src='../../../static/img/user-img.png'>
-                        <div class="inline-block user_name">匿名用户</div>
-                        <div class="inline-block user-dj"><img src="../../../static/img/jpyh.png" alt=""></div>
+                        <img :src='head_src+item.headImage'  onerror="javascript:this.src='/static/img/user-img.png';">
+                        <div class="inline-block user_name">{{item.realName||"匿名用户"}}</div>
+                        <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
                         <div class="home-list-msg-group">
-                          <div class="inline-block home-list-msg">我公司将进行资产重组，要将公司部分货物和劳力转移到一家新设立的物流公司 请问需要开发票吗？转入新公司的货物可否折旧，折旧费用能</div>
+                          <div class="inline-block home-list-msg">{{item.content}}</div>
                         </div>
                         <div class="label box-sizing">
-                          <div class="inline-block">2018-10-12 10:00:06</div>
+                          <div class="inline-block">{{format(item.date)}}</div>
                           <div class="inline-block">
                             <div class="see-num inline-block">
                               <!--<img class="home-zan" :src="zan==1? '../../static/img/zan1.png':'../../static/img/zan2.png'" alt="" :data-code="zan" v-on:click="zan_click(zan)" >-->
                               点赞
-                              12
+                              {{item.approveNum}}
                             </div>
                             <div class="see-num inline-block">
                               <!--<img class="home-cai" src="../../static/img/eye.png" alt="">-->
                               围观
-                              13
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wdk-list">
-                    <div class="inline-block">
-                      <div class="wdk-name">
-                        <img src='../../../static/img/user-img.png'>
-                        <div class="inline-block user_name">匿名用户</div>
-                        <div class="inline-block user-dj"><img src="../../../static/img/jpyh.png" alt=""></div>
-                        <div class="home-list-msg-group">
-                          <div class="inline-block home-list-msg">我公司将进行资产重组，要将公司部分货物和劳力转移到一家新设立的物流公司 请问需要开发票吗？转入新公司的货物可否折旧，折旧费用能</div>
-                        </div>
-                        <div class="label box-sizing">
-                          <div class="inline-block">2018-10-12 10:00:06</div>
-                          <div class="inline-block">
-                            <div class="see-num inline-block">
-                              <!--<img class="home-zan" :src="zan==1? '../../static/img/zan1.png':'../../static/img/zan2.png'" alt="" :data-code="zan" v-on:click="zan_click(zan)" >-->
-                              点赞
-                              12
-                            </div>
-                            <div class="see-num inline-block">
-                              <!--<img class="home-cai" src="../../static/img/eye.png" alt="">-->
-                              围观
-                              13
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wdk-list">
-                    <div class="inline-block">
-                      <div class="wdk-name">
-                        <img src='../../../static/img/user-img.png'>
-                        <div class="inline-block user_name">匿名用户</div>
-                        <div class="inline-block user-dj"><img src="../../../static/img/jpyh.png" alt=""></div>
-                        <div class="home-list-msg-group">
-                          <div class="inline-block home-list-msg">我公司将进行资产重组，要将公司部分货物和劳力转移到一家新设立的物流公司 请问需要开发票吗？转入新公司的货物可否折旧，折旧费用能</div>
-                        </div>
-                        <div class="label box-sizing">
-                          <div class="inline-block">2018-10-12 10:00:06</div>
-                          <div class="inline-block">
-                            <div class="see-num inline-block">
-                              <!--<img class="home-zan" :src="zan==1? '../../static/img/zan1.png':'../../static/img/zan2.png'" alt="" :data-code="zan" v-on:click="zan_click(zan)" >-->
-                              点赞
-                              12
-                            </div>
-                            <div class="see-num inline-block">
-                              <!--<img class="home-cai" src="../../static/img/eye.png" alt="">-->
-                              围观
-                              13
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wdk-list">
-                    <div class="inline-block">
-                      <div class="wdk-name">
-                        <img src='../../../static/img/user-img.png'>
-                        <div class="inline-block user_name">匿名用户</div>
-                        <div class="inline-block user-dj"><img src="../../../static/img/jpyh.png" alt=""></div>
-                        <div class="home-list-msg-group">
-                          <div class="inline-block home-list-msg">我公司将进行资产重组，要将公司部分货物和劳力转移到一家新设立的物流公司 请问需要开发票吗？转入新公司的货物可否折旧，折旧费用能</div>
-                        </div>
-                        <div class="label box-sizing">
-                          <div class="inline-block">2018-10-12 10:00:06</div>
-                          <div class="inline-block">
-                            <div class="see-num inline-block">
-                              <!--<img class="home-zan" :src="zan==1? '../../static/img/zan1.png':'../../static/img/zan2.png'" alt="" :data-code="zan" v-on:click="zan_click(zan)" >-->
-                              点赞
-                              12
-                            </div>
-                            <div class="see-num inline-block">
-                              <!--<img class="home-cai" src="../../static/img/eye.png" alt="">-->
-                              围观
-                              13
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="wdk-list">
-                    <div class="inline-block">
-                      <div class="wdk-name">
-                        <img src='../../../static/img/user-img.png'>
-                        <div class="inline-block user_name">匿名用户</div>
-                        <div class="inline-block user-dj"><img src="../../../static/img/jpyh.png" alt=""></div>
-                        <div class="home-list-msg-group">
-                          <div class="inline-block home-list-msg">我公司将进行资产重组，要将公司部分货物和劳力转移到一家新设立的物流公司 请问需要开发票吗？转入新公司的货物可否折旧，折旧费用能</div>
-                        </div>
-                        <div class="label box-sizing">
-                          <div class="inline-block">2018-10-12 10:00:06</div>
-                          <div class="inline-block">
-                            <div class="see-num inline-block">
-                              <!--<img class="home-zan" :src="zan==1? '../../static/img/zan1.png':'../../static/img/zan2.png'" alt="" :data-code="zan" v-on:click="zan_click(zan)" >-->
-                              点赞
-                              12
-                            </div>
-                            <div class="see-num inline-block">
-                              <!--<img class="home-cai" src="../../static/img/eye.png" alt="">-->
-                              围观
-                              13
+                              {{item.lookNum}}
                             </div>
                           </div>
                         </div>
@@ -161,25 +53,9 @@
                 </div>
               </div>
               <div class="mine-buy-video box-sizing"  v-if="headName=='已购视频'">
-                <div class="inline-block">
-                  <img src="../../../static/img/ceshi.jpg" alt="">
-                  <div>高技术尾房销售问题-土地增值清算 -晴朗</div>
-                </div>
-                <div class="inline-block">
-                  <img src="../../../static/img/ceshi.jpg" alt="">
-                  <div>高技术尾房销售问题-土地增值清算 -晴朗</div>
-                </div>
-                <div class="inline-block">
-                  <img src="../../../static/img/ceshi.jpg" alt="">
-                  <div>高技术尾房销售问题-土地增值清算 -晴朗</div>
-                </div>
-                <div class="inline-block">
-                  <img src="../../../static/img/ceshi.jpg" alt="">
-                  <div>高技术尾房销售问题-土地增值清算 -晴朗</div>
-                </div>
-                <div class="inline-block">
-                  <img src="../../../static/img/ceshi.jpg" alt="">
-                  <div>高技术尾房销售问题-土地增值清算 -晴朗</div>
+                <div class="inline-block" v-for="item in video">
+                  <img :src="cover_src+item.image" alt="" @click="video_click(item.id)">
+                  <div>{{item.title}}</div>
                 </div>
               </div>
             </div>
@@ -197,27 +73,94 @@
         name: "min-buy",
         data(){
             return{
-              headName:'我的围观'
+              headName:'我的围观',
+              start:'1',
+              end:'6',
+              //围观列表
+              questions:[],
+              video:[],
+              count:''
             }
         },
         components:{
           mineLeft
         },
         mounted(){
-          //分页插件初始化
+          if(this.headName=="我的围观"){
+            this.ajax(this.http_url.url+"/user/secretly",{"sinceId":this.start,"maxId":this.end},this.get_wg);
+          }
+        },
+        methods:{
+          //tab切换
+          mine_buy_title:function(val){
+            this.start=1;
+            this.end=6;
+            this.headName=val;
+            if(val=="我的围观"){
+              this.ajax(this.http_url.url+"/user/secretly",{"sinceId":this.start,"maxId":this.end},this.get_wg);
+            }else{
+              this.ajax(this.http_url.url+"/video/buylist",{"sinceId":this.start,"maxId":this.end},this.get_video);
+            }
+          },
+          //分页
+          page:function(data){
+            var that=this;
             $("#page").paging({
-                total: 20,
+                total: data,
                 numberPage: 1
               },
               function(msg) {
                 //回调函数 msg为选中页码
                 // tab(msg);
+                that.start=((msg-1)*6)+1;
+                that.end=msg*6;
+                if(that.headName=="我的围观"){
+                  that.ajax(that.http_url.url+"/user/secretly",{
+                    "sinceId":that.start,
+                    "maxId":that.end,
+                  },that.get_wg_page)
+                }else{
+                  that.ajax(that.http_url.url+"/video/buylist",{
+                    "sinceId":that.start,
+                    "maxId":that.end,
+                  },that.get_video_page)
+                }
               });
           },
-        methods:{
-          //tab切换
-          mine_buy_title:function(val){
-            this.headName=val;
+          //围观数据
+          get_wg:function(data){
+              // console.log(data);
+            this.questions=data.questions;
+            this.count=data.count/6;
+            this.page(this.count);
+          },
+          //分页围观回调
+          get_wg_page:function(data){
+            this.questions=data.questions;
+          },
+          //已购视频
+          get_video:function(data){
+            console.log(data);
+            this.video=data.data;
+            this.count=data.count/6;
+            this.page(this.count);
+          },
+          //分页已购视频回调
+          get_video_page:function(data){
+            this.video=data.data;
+          },
+          //视频点击
+          video_click:function(id){
+            // console.log(id);
+            var that=this;
+            function get_vid(data){
+              console.log(data);
+              that.$router.push({
+                name:'video',
+                params:{"vid":data.data.vid}
+              })
+            }
+            this.ajax(this.http_url.url+"/video/vid",{"id":id},get_vid);
           }
         }
     }
@@ -260,6 +203,7 @@
     width:31%;
     margin-right: 2%;
     padding: 0.5rem;
+    vertical-align: top;
   }
   .mine-buy-video>div>img{
     width:100%;

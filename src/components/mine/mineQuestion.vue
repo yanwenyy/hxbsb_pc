@@ -9,14 +9,16 @@
           <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>我的提问</div>
         </div>
         <div class="mine-right-body">
-          <div class="search-group">
+          <div class="search-group" v-if="false">
             <input type="text" placeholder="请输入提问内容" class="mine-ques-input">
             <div class="search-condition">
               <div class="inline-block">
                 <span>状态:</span>
                 <select name="" id="" class="box-sizing">
-                  <option value="未采纳">未采纳</option>
+                  <option value="已回答">已回答</option>
+                  <option value="未回答">未回答</option>
                   <option value="已采纳">已采纳</option>
+                  <option value="未采纳">未采纳</option>
                 </select>
               </div>
               <div class="inline-block">
@@ -29,39 +31,21 @@
                 <span class="blue">搜索</span>
               </div>
             </div>
-            <table class="mine-ques-table box-sizing">
-              <tr>
-                <td width="65">提问内容</td>
-                <td width="15">提问日期</td>
-                <td width="10">状态</td>
-                <td width="10">操作</td>
-              </tr>
-              <tr class="mine-ques-tr box-sizing">
-                <td>汇算清缴预付卡的费用取得的发票是否可以在企业所得税前扣除？汇款的 清缴卡的费用取得的发票是否可以在企业所得税前扣除？汇款的..</td>
-                <td>2018-10-21  13:00</td>
-                <td>已采纳 </td>
-                <td><img src="../../../static/img/table-look.png" alt=""><span class="blue">查看</span></td>
-              </tr>
-              <tr class="mine-ques-tr box-sizing">
-                <td>汇算清缴预付卡的费用取得的发票是否可以在企业所得税前扣除？汇款的 清缴卡的费用取得的发票是否可以在企业所得税前扣除？汇款的..</td>
-                <td>2018-10-21  13:00</td>
-                <td>已采纳 </td>
-                <td><img src="../../../static/img/table-look.png" alt=""><span class="blue">查看</span></td>
-              </tr>
-              <tr class="mine-ques-tr box-sizing">
-                <td>汇算清缴预付卡的费用取得的发票是否可以在企业所得税前扣除？汇款的 清缴卡的费用取得的发票是否可以在企业所得税前扣除？汇款的..</td>
-                <td>2018-10-21  13:00</td>
-                <td>已采纳 </td>
-                <td><img src="../../../static/img/table-look.png" alt=""><span class="blue">查看</span></td>
-              </tr>
-              <tr class="mine-ques-tr box-sizing">
-                <td>汇算清缴预付卡的费用取得的发票是否可以在企业所得税前扣除？汇款的 清缴卡的费用取得的发票是否可以在企业所得税前扣除？汇款的..</td>
-                <td>2018-10-21  13:00</td>
-                <td>已采纳 </td>
-                <td><img src="../../../static/img/table-look.png" alt=""><span class="blue">查看</span></td>
-              </tr>
-            </table>
           </div>
+          <table class="mine-ques-table box-sizing">
+            <tr>
+              <td width="65">提问内容</td>
+              <td width="15">提问日期</td>
+              <td width="10">状态</td>
+              <td width="10">操作</td>
+            </tr>
+            <tr class="mine-ques-tr box-sizing" v-for="item in questions">
+              <td>{{item.content}}</td>
+              <td>{{format(item.time)}}</td>
+              <td :class="item.status==1? 'time-msg':''" :data-time="item.status==1? item.endDate:''">采纳状态</td>
+              <td><img src="../../../static/img/table-look.png" alt=""><span class="blue">查看</span></td>
+            </tr>
+          </table>
         </div>
         <div id="page" class="paging"></div>
       </div>
@@ -74,19 +58,94 @@
     export default {
         name: "mine-question",
         components:{
-          mineLeft
+          mineLeft,
         },
+      data(){
+          return{
+            start:'1',
+            end:'10',
+            //提问列表
+            questions:[]
+          }
+      },
       mounted(){
+          var that=this;
+          //我的提问列表
+        this.ajax(this.http_url.url+"/question/admireList",{
+          "sinceId":this.start,"maxId":this.end
+        },this.get_list);
         //分页插件初始化
         $("#page").paging({
             total: 20,
-            numberPage: 1
+            numberPage: 1,
           },
           function(msg) {
             //回调函数 msg为选中页码
             // tab(msg);
           });
+        setInterval(function(){
+          $(".time-msg").each(function(){
+            var t=$(this);
+            if(t.attr("data-time")){
+              t.html(that.get_djs(t.attr("data-time")));
+            }
+          })
+        },1000);
       },
+      methods:{
+          //我的提问列表
+        get_list:function(data){
+          console.log(data);
+          this.questions=data.questions;
+        },
+        //采纳倒计时
+        get_djs:function(endTime){
+            //取设定的活动结束时间距1970年1月1日之间的毫秒数
+            var time_string="";
+            var end=endTime;
+        //取当前时间距1970年1月1日之间的毫秒数
+            var nowTime=new Date().getTime();
+        //结束时间与当前时间之间的毫秒差
+            var difference=Number(end-nowTime);
+            // console.log(nowTime);
+            if (difference>0) {
+        //将毫秒差换算成天数
+              var days=Math.floor(difference/86400000);
+              difference=difference-days*86400000;
+        //换算成小时
+              var hours=Math.floor(difference/3600000);
+              difference=difference-hours*3600000;
+        //换算成分钟
+              var minutes=Math.floor(difference/60000);
+              difference=difference-minutes*60000;
+        //换算成秒数
+              var seconds=Math.floor(difference/1000);
+        //不足10时，进行补零操作
+              if(hours<10){
+                hours="0"+hours;
+              }
+              if(minutes<10){
+                minutes="0"+minutes;
+              }
+              if(seconds<10){
+                seconds="0"+seconds;
+              }
+              // $(".tis1").html(days);
+              // $(".tis3").html(hours);
+              // $(".tis5").html(minutes);
+              // $(".tis7").html(seconds);
+              time_string="倒计时: "+hours+":"+minutes+":"+seconds;
+            } else {
+        //设定若是过了设置的活动结束时间，全部写成0天0时0分0秒
+        //                 $(".tis1").html(0);
+        //                 $(".tis3").html(0);
+        //                 $(".tis5").html(0);
+        //                 $(".tis7").html(0);
+              time_string="未采纳";
+            }
+            return time_string;
+          },
+      }
     }
 </script>
 

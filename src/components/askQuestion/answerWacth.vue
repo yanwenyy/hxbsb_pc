@@ -162,7 +162,7 @@
     font-size:0.75rem ;
   }
   .queser-msg>div:last-child{
-    margin-top: 0.2rem;
+    margin-top: 0.4rem;
   }
   .user_name{
     font-size: 0.875rem;
@@ -179,7 +179,7 @@
   .queser-grounp-footer{
     font-size: 0.875rem;
     color:#999;
-    margin-top: 0.6rem;
+    margin-top: 1rem;
   }
   .queser-grounp-footer>span{
     margin-right: 1rem;
@@ -191,6 +191,7 @@
     width:6.25rem;
     height:6.25rem;
     margin-right: 0.625rem;
+    border-radius:2px;
   }
   .answer-group{
     margin-top: 1.31rem;

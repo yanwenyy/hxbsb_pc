@@ -749,7 +749,7 @@ input::-webkit-input-placeholder{
   height:15.5rem;
   border:1px solid #eee;
   box-shadow: 1px 1px 2px 1px rgba(0,0,0,.2);
-  padding: 1.8rem;
+  padding: 4%;
 }
 .qr-title{
   font-size: 1.125rem;
@@ -905,7 +905,8 @@ input::-webkit-input-placeholder{
 }
 .mine-right{
   width: 82%;
-  height:43.31rem;
+  min-height:43.31rem;
+  height:auto;
   background: #fff;
   box-shadow:0 1px 8px 0 rgba(54,177,255,0.1);
   border-radius:4px;
@@ -925,9 +926,10 @@ input::-webkit-input-placeholder{
   font-size: 0.875rem;
 }
 .mine-left li.mine-li-act{
-  width: 110%;
+  width: 120%;
   color:#fff;
   background: url(/static/img/mine-left-bg.png) no-repeat;
+  border:none;
 }
 .mine-left li>img{
   vertical-align: middle;
@@ -985,7 +987,7 @@ input::-webkit-input-placeholder{
   font-size: 0.75rem;
   margin:1.25rem ;
   vertical-align: middle;
-  width:24%;
+  width:26%;
 }
 .user-money-msg>div{
   margin-bottom: 0.81rem;
@@ -1000,7 +1002,7 @@ input::-webkit-input-placeholder{
   font-size: 1.25rem;
 }
 .money-record{
-  width:70%;
+  width:68%;
   vertical-align: middle;
 }
 .money-record>div{

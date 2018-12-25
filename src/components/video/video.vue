@@ -8,7 +8,7 @@
     export default {
       name: "test",
       mounted () {
-        creatH("06B54E01D0950E8C9C33DC5901307461");
+        creatH(this.$route.params.vid);
         // alert(this.http_url.url);
         // alert(this.$route.params.name);
       }
