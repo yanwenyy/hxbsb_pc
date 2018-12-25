@@ -27,7 +27,7 @@
               <li>
                 <div class="wdk-select-name inline-block">税种类型:</div>
                 <div class="wdk-select-msg inline-block">
-                  <div class="inline-block wdk-select-msg-div" v-for="item in sz" data-type="topic">{{item.name}}</div>
+                  <div class="inline-block wdk-select-msg-div" v-for="item in sz" data-type="tax">{{item.name}}</div>
                 </div>
               </li>
             </ul>

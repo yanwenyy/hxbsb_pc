@@ -21,7 +21,7 @@ import about from '@/components/about' //关于我们
 import smallClass from '@/components/video/smallClass' //微课
 import smallClassSearch from '@/components/video/smallClassSearch' //微课搜索
 import masterInterview from '@/components/video/masterInterview' //大咖访谈
-import masterInterviewSearch from '@/components/video/masterInterviewSearch' //大咖访谈搜索
+/*import masterInterviewSearch from '@/components/video/masterInterviewSearch' //大咖访谈搜索*/
 Vue.use(Router)
 
 export default new Router({
@@ -137,11 +137,11 @@ export default new Router({
       name: 'masterInterview',
       component: masterInterview
     },
-    {
+    /*{
       path: '/masterInterviewSearch',
       name: 'masterInterviewSearch',
       component: masterInterviewSearch
-    }
+    }*/
 
   ],
   scrollBehavior (to, from, savedPosition) {

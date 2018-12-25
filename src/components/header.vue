@@ -85,7 +85,7 @@
         //head点击
         headT_click:function(e){
             this.title_code=e;
-            if(e==3||e==4){
+            if(e==4){
               $(".header-search-answer").html("搜索视频");
               $(".header-search-ques").hide();
             }else{
@@ -104,11 +104,7 @@
             })
           }else if(this.title_code==4){
             this.$router.push({
-              name: 'smallClassSaerch',params:{msg:this.message}
-            })
-          }else if(this.title_code==3){
-            this.$router.push({
-              name: 'masterInterviewSearch',params:{msg:this.message}
+              name: 'smallClassSearch',params:{msg:this.message}
             })
           }
         }
