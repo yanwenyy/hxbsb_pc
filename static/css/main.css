@@ -1,7 +1,12 @@
 body{
   margin: 0;
   font-size: 100%;
-  font-family: Microsoft YaHei,Helvetica;
+  /*font-family: Microsoft YaHei,Helvetica;*/
+  font-family: 'pingFangSC-Regular';
+}
+@font-face {
+  font-family: 'pingFangSC-Regular';
+  src:url('../fonts/pingFangSC-Regular.ttf')  format('truetype');
 }
 /*hover变小手*/
 .uer-sel li:hover,.h-u-name:hover,#head-title>.container>div:hover,.wdk-name:hover,.hot-list-item>div:nth-child(2):hover,

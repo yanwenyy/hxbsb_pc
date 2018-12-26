@@ -30,7 +30,7 @@ export default {
   @import "../static/css/main.css";
   @import "../static/css/reset.css";
 #app {
-  font-family: "微软雅黑";
+  font-family: "pingFangSC-Regular";
 }
   .swiper-pagination-bullet{
     width: 8px;
