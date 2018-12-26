@@ -10,6 +10,7 @@ import payMethod from '@/components/payMethod'
 import answerSearch from '@/components/askQuestion/answerSearch'
 import answerWacth from '@/components/askQuestion/answerWacth'
 import answerWacthDetail from '@/components/askQuestion/answerWacthDetail'
+import privateQuestion from '@/components/askQuestion/privateQuestion'
 import mineEditPassword from '@/components/mine/mineEditPassword'
 import mineInvoice from '@/components/mine/mineInvoice'
 import mineBuy from '@/components/mine/mineBuy'
@@ -137,6 +138,11 @@ export default new Router({
       name: 'masterInterview',
       component: masterInterview
     },
+    {
+      path: '/privateQuestion',
+      name: 'privateQuestion',
+      component: privateQuestion
+    }
     /*{
       path: '/masterInterviewSearch',
       name: 'masterInterviewSearch',

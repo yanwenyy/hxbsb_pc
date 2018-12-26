@@ -403,7 +403,7 @@ input::-webkit-input-placeholder{
   margin-top: -3px;
 }
 .home-head-title{
-  font-size: 1.125rem!important;
+  font-size: 1.125rem;
   color:rgba(26,26,26,1);
   /*border-bottom: 2px solid #0085EE;*/
   font-weight: 600;
@@ -810,7 +810,7 @@ input::-webkit-input-placeholder{
   font-size:0.875rem;
   color:#999;
   text-align: center;
-  padding:1rem;
+  padding:3rem;
 }
 .load-more>span{
   vertical-align: middle;

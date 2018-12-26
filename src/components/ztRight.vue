@@ -81,5 +81,27 @@
 </script>
 
 <style scoped>
-
+  .user_name{
+    font-size: 0.81rem;
+  }
+  .home-list-msg{
+    font-size: 0.875rem;
+    line-height:  0.875rem;
+  }
+  .wdk-name>div:nth-child(5){
+    font-size: 0.75rem;
+  }
+  .see-num{
+    margin-left: 0.5rem;
+  }
+  .home-head-title{
+    font-size: 1rem;
+  }
+  .wdk-name>div:nth-child(5){
+    margin: 0.3rem 0;
+  }
+  .home-list-msg-group{
+    margin-top: 0.3rem;
+    line-height: 1.25rem;
+  }
 </style>

@@ -31,7 +31,13 @@
             <div>
               <img src="../../../static/img/user-img.png" alt="" class="queser-head">
               <div class="inline-block queser-msg">
-                <div class="inline-block user_name">王佳佳专家</div>
+                <div class="inline-block user_name">
+                  王佳佳专家
+                  <div class="inline-block zxs-img-show">
+                    <img src="../../../static/img/zxs-icon.png" alt="">
+                    资深咨询师
+                  </div>
+                </div>
                 <div>资格证 资格证书</div>
               </div>
             </div>
@@ -49,7 +55,13 @@
             <div>
               <img src="../../../static/img/user-img.png" alt="" class="queser-head">
               <div class="inline-block queser-msg">
-                <div class="inline-block user_name">王佳佳专家</div>
+                <div class="inline-block user_name">
+                  王佳佳专家
+                  <div class="inline-block zxs-img-show">
+                    <img src="../../../static/img/zxs-icon.png" alt="">
+                    资深咨询师
+                  </div>
+                </div>
                 <div>资格证 资格证书</div>
               </div>
             </div>
@@ -181,6 +193,19 @@
 </script>
 
 <style scoped>
+  .zxs-img-show>img{
+    margin-top: -0.1rem;
+  }
+  .zxs-img-show{
+    font-size: 0.75rem;
+    color:#666;
+  }
+  .home-head-title{
+    font-size: 1rem;
+  }
+  .home-list-msg{
+    font-size: 0.875rem;
+  }
   .comment-list>.wdk-list:before{
     display: table;
     content: '';
@@ -225,6 +250,7 @@
     border:1px solid #eee;
     color:#666;
     font-size:0.75rem ;
+    margin-right: 1rem;
   }
   .zan_act{
     background: #FE6D27;

@@ -29,10 +29,16 @@
           </div>
           <div class="answer-group">
             <div>
-              <img src="../../../static/img/user-img.png" alt="" class="queser-head">
+              <img :src="head_src+answer_msg.headImage" onerror="javascript:this.src='/static/user-img.png'" alt="" class="queser-head">
               <div class="inline-block queser-msg">
-                <div class="inline-block user_name">王佳佳专家</div>
-                <div>资格证 资格证书</div>
+                <div class="inline-block user_name">
+                  {{answer_msg.realName}}
+                  <div class="inline-block zxs-img-show" v-if="answer_msg.role==2">
+                    <img src="../../../static/img/zxs-icon.png" alt="">
+                    {{answer_msg.levelName}}
+                  </div>
+                </div>
+                <div v-if="answer_msg.role==2">{{answer_msg.counselorDuty}}</div>
               </div>
             </div>
           </div>
@@ -108,7 +114,9 @@
             //围观人数
             look_list_num:'',
             //围观详情列表
-            look_list_detail:[]
+            look_list_detail:[],
+            //回答者信息
+            answer_msg:'',
         }
       },
       mounted (){
@@ -116,12 +124,14 @@
         //围观人员查询
         this.ajax(this.http_url.url+"/onlook/onlookCountDetailList",{
           "questionUuid":this.$route.params.uuid
-        },this.look_num)
+        },this.look_num);
+        //提问者和专家资料显示
+        this.ajax(this.http_url.url+"/user/someUserMsg",{"questionUuid":this.$route.params.uuid},this.msg_show);
       },
       methods:{
           //围观人员
           look_num:function(data){
-            console.log(data);
+            // console.log(data);
             this.look_list=data.OnLookCountDetail.slice(0,5);
             this.look_list_detail=data.OnLookCountDetail;
             this.look_list_num=data.OnLookCount;
@@ -140,12 +150,24 @@
           this.$router.push({
             name:"payMethod",params:{ url:"answerWacthDetail",price: 1 ,source:"围观",data:this.$route.params}
           })
+        },
+        //回答者资料显示
+        msg_show:function(data){
+            console.log(data);
+            this.answer_msg=data.userMsg;
         }
       }
     }
 </script>
 
 <style scoped>
+  .zxs-img-show>img{
+    margin-top: -0.1rem;
+  }
+  .zxs-img-show{
+    font-size: 0.75rem;
+    color:#666;
+  }
   .queser-grounp{
     padding-top:1.19rem;
   }
