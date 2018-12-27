@@ -193,6 +193,9 @@
 </script>
 
 <style scoped>
+  .home-list-msg:hover{
+    color:#333;
+  }
   .zxs-img-show>img{
     margin-top: -0.1rem;
   }
@@ -303,7 +306,7 @@
     font-size:0.75rem ;
   }
   .queser-msg>div:last-child{
-    margin-top: 0.2rem;
+    margin-top: 0.5rem;
   }
   .user_name{
     font-size: 0.875rem;

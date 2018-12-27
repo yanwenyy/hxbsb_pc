@@ -155,7 +155,7 @@
         if(status==1){
           this.$router.push({ name: 'answerWacthDetail'})
         }else{
-          this.$router.push({ name: 'payMethod',params: { price: 1 ,source:"围观",uuid:val}});
+          this.$router.push({ name: 'answerWacth',params: {"uuid":val,"money":1}});
         }
         // this.$router.push({ name: 'answerWacth',params:{questionUuid:val}})
       },
