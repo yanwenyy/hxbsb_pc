@@ -102,8 +102,17 @@
             "money":this.$route.params.price,
             "source":2
           },this.wexin_pay);
-        }else if(this.source=="快速问"){
-
+        }else if(this.source=="我要提问"){
+          this.$route.params.data.source=2
+          this.ajax(this.http_url.url+"question/releaseQuestion",this.$route.params.data,this.wexin_pay);
+        }else if(this.source=="微课"){
+          console.log(this.$route.params)
+          this.ajax(this.http_url.url+"video/buy",{
+            "videoId":this.$route.params.data.videoId,
+            "payType":"weixin",
+            "money":this.$route.params.data.money,
+            "source":2
+          },this.wexin_pay);
         }
         //余额查询
         this.ajax_nodata(this.http_url.url+"/user/message",this.get_money);
@@ -166,10 +175,24 @@
               alert(data.des);
             }
           }
+          //微课支付成功跳转播放页
+          function go_video(data){
+            if(data.code==1){
+              alert("支付成功");
+              that.ajax(that.http_url.url+'video/vid',{id:that.$route.params.data.videoId},function (e) {
+                that.$router.push({name:that.$route.params.data.url,params:{vid:e.data.vid}})
+              })
+            }else{
+              alert(data.des);
+            }
+          }
+          //this.$route.params.data
           if(this.source=="围观"){
               this.ajax(this.http_url.url+"/onlook/look/buy",this.$route.params.data,get_msg)
           }else if(this.source=="我要提问"){
-            this.ajax(this.http_url.url+"/question/releaseQuestion",this.$route.params.data,get_msg)
+            this.ajax(this.http_url.url+"question/releaseQuestion",this.$route.params.data,get_msg)
+          }else if(this.source=="微课"){
+            this.ajax(this.http_url.url+"video/buy",this.$route.params.data,go_video)
           }
         },
         //支付方式点击

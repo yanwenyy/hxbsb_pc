@@ -3,7 +3,7 @@
     <div class="container" v-if="nomsg">
       <div class="sm-class-video box-sizing">
         <div class="inline-block"v-for="(item,index) in video_list">
-          <img :src="cover_src+item.image" alt="" @click="video_click()">
+          <img :src="cover_src+item.image" alt="" @click="video_click(item)">
           <div>{{item.title}}</div>
         </div>
       </div>
@@ -23,7 +23,10 @@
           sinceId:1,//当前页开始条数
           maxId:15,//当前页结束条数
           type:0,//微课类型
-          title:null //搜索框输入的条件
+          total:1,//分页页数
+          title:null, //搜索框输入的条件
+          page_size:15,//每页15条
+          vid:null
         }
       },
       mounted () {
@@ -32,15 +35,6 @@
         //微课视频列表
         var params={sinceId:this.sinceId,maxId:this.maxId,type:this.type,title:this.title}
         this.ajax(this.http_url.url+'video/search',params,this.get_video);
-        //分页插件初始化
-        $("#page").paging({
-            total: 20,
-            numberPage: 1
-          },
-          function(msg) {
-            //回调函数 msg为选中页码
-            // tab(msg);
-          });
         //搜索视频按钮点击事件
         $("body").on("click",".header-search-answer",function(e){
           this.title=$(".search-input-header>input").val()
@@ -49,30 +43,55 @@
         });
       },
         methods:{
-          search_list:function () {
-
-          },
           //视频点击
-          video_click:function(){
-            this.$router.push({
-              name:'video'
+          video_click:function(data){
+            var that=this
+            this.ajax(this.http_url.url+'video/vid',{id:data.id},function (e) {
+              that.vid=e.data.vid
+              if(data.ifBuy==1||data.price==0){
+                that.$router.push({name:'video',params:{vid:that.vid}})
+              }else{
+                data={videoId:data.id,source:2,money:data.price,url:'video'}
+                that.$router.push({ name: 'payMethod',params: {price: data.money ,source:"微课",data:data,}})
+              }
             })
           },
-          //获取视频封面列表
           get_video:function (data) {
-            var data=data.videos
-            if(data.length!=0){
+            this.get_video_list(data)
+            this.go_page()
+          },
+          //获取视频封面列表
+          get_video_list:function (data) {
+            var data_list=data.videos;
+            this.total=Math.ceil(data.count/this.maxId)
+            if(data_list.length!=0){
               this.nomsg=true
             }else{
               this.nomsg=false
             }
-            for(var i=0;i<data.length;i++){
-              if(data[i].title.length>40){
-                data[i].title=data[i].title.substr(0,40)+"...";
+            for(var i=0;i<data_list.length;i++){
+              if(data_list[i].title.length>40){
+                data_list[i].title=data_list[i].title.substr(0,35)+"...";
               }
             }
-            this.video_list=data
-          }
+            this.video_list=data_list;
+          },
+          //分页
+          go_page:function () {
+            var that=this
+            //分页插件初始化
+            $("#page").paging({
+                total: this.total,
+                numberPage: 1
+              },
+              function(msg) {
+                //回调函数 msg为选中页码
+                this.sinceId=parseInt(that.page_size*(msg-1)+1)
+                this.maxId=parseInt(this.sinceId+that.page_size-1)
+                var params={sinceId:this.sinceId,maxId:this.maxId,type:that.type}
+                that.ajax(that.http_url.url+'video/search',params,that.get_video_list);
+              });
+          },
         }
     }
 </script>

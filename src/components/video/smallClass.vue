@@ -70,7 +70,8 @@
           maxId:15,//当前页结束条数
           type:0,//微课类型
           total:1,//分页页数
-          page_size:15//每页3条
+          page_size:15,//每页15条
+          vid:null
         }
       },
       mounted () {
@@ -79,11 +80,9 @@
         //微课视频列表
         var params={sinceId:this.sinceId,maxId:this.maxId,type:this.type}
         this.ajax(this.http_url.url+'video/search',params,this.get_video);
-
-
       },
         methods:{
-          //header输入框微课搜索
+          //全部类别微课搜索
           search_list:function () {
             var params={sinceId:this.sinceId,maxId:this.maxId,type:this.type}
             this.ajax(this.http_url.url+'video/search',params,this.get_video);
@@ -91,14 +90,15 @@
           //视频封面点击
           video_click:function(data){
             var that=this
-            if(data.ifBuy==1||data.price==0){
-              this.ajax(this.http_url.url+'video/vid',{id:data.id},function (e) {
-                that.$router.push({name:'video',params:{vid:e.data.vid}})
-              })
-
-            }else{
-              this.$router.push({ name: 'payMethod',params: {price: data.price ,source:"微课",data:data}})
-            }
+            this.ajax(this.http_url.url+'video/vid',{id:data.id},function (e) {
+              that.vid=e.data.vid
+              if(data.ifBuy==1||data.price==0){
+                that.$router.push({name:'video',params:{vid:that.vid}})
+              }else{
+                data={videoId:data.id,source:2,money:data.price,url:'video'}
+                that.$router.push({ name: 'payMethod',params: {price: data.money ,source:"微课",data:data,}})
+              }
+            })
           },
           //行业,税种,专题
           get_tree:function(data){
