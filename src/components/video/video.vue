@@ -8,9 +8,9 @@
     export default {
       name: "test",
       mounted () {
-        creatH(this.$route.params.vid);
+        creatH(this.$route.query.vid);
         // alert(this.http_url.url);
-        // alert(this.$route.params.name);
+        // alert(this.$route.query.name);
       }
     }
 

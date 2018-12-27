@@ -120,13 +120,13 @@
         }
       },
       mounted (){
-          // alert(this.$route.params.questionUuid);
+          // alert(this.$route.query.questionUuid);
         //围观人员查询
         this.ajax(this.http_url.url+"/onlook/onlookCountDetailList",{
-          "questionUuid":this.$route.params.uuid
+          "questionUuid":this.$route.query.uuid
         },this.look_num);
         //提问者和专家资料显示
-        this.ajax(this.http_url.url+"/user/someUserMsg",{"questionUuid":this.$route.params.uuid},this.msg_show);
+        this.ajax(this.http_url.url+"/user/someUserMsg",{"questionUuid":this.$route.query.uuid},this.msg_show);
       },
       methods:{
           //围观人员
@@ -148,7 +148,7 @@
         weiguan:function(){
           var that=this;
           this.$router.push({
-            name:"payMethod",params:{ url:"answerWacthDetail",price: 1 ,source:"围观",data:this.$route.params}
+            name:"payMethod",query:{ url:"answerWacthDetail",price: 1 ,source:"围观",data:this.$route.query}
           })
         },
         //回答者资料显示

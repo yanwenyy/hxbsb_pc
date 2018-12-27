@@ -165,17 +165,17 @@
         },
         //提交 + 表单验证
         check_sub:function () {
-          var params={url:"mineQuestion",content:this.content,isAnon:this.isAnon,money:15,payType:this.payType,trade:this.trade,images:this.images}
+          var query={url:"mineQuestion",content:this.content,isAnon:this.isAnon,money:15,payType:this.payType,trade:this.trade,images:this.images}
           if(this.vip){
             if (this.content!=null&&this.content!="") {
-              this.ajax(this.http_url.url+'question/releaseQuestion',params,this.show_dialog)
+              this.ajax(this.http_url.url+'question/releaseQuestion',query,this.show_dialog)
             }else{
               $("textarea").focus()
             }
 
           }else{
             if (this.content!=null&&this.content!="") {
-              this.go_pay(params)
+              this.go_pay(query)
             }else{
               $("textarea").focus()
             }
@@ -190,7 +190,7 @@
         },
         //跳转支付（带参）
         go_pay:function (data) {
-          this.$router.push({ name: 'payMethod',params: {price: 15 ,source:"我要提问",data:data}})
+          this.$router.push({ name: 'payMethod',query: {price: 15 ,source:"我要提问",data:data}})
         }
       }
     }

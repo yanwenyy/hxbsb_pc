@@ -128,8 +128,8 @@
           "typeContent":typeContent
         },that.get_list);
       });
-      if(this.$route.params.name){
-        this.type=this.$route.params.name;
+      if(this.$route.query.name){
+        this.type=this.$route.query.name;
         //列表数据加载
         // this.ajax(this.http_url.url+'/onlook/look/list',{
         //   "sinceId":this.count_start,
@@ -155,9 +155,9 @@
         if(status==1){
           this.$router.push({ name: 'answerWacthDetail'})
         }else{
-          this.$router.push({ name: 'answerWacth',params: {"uuid":val,"money":1}});
+          this.$router.push({ name: 'answerWacth',query: {"uuid":val,"money":1}});
         }
-        // this.$router.push({ name: 'answerWacth',params:{questionUuid:val}})
+        // this.$router.push({ name: 'answerWacth',query:{questionUuid:val}})
       },
       //列表数据
       load_list:function(){

@@ -56,12 +56,14 @@
           get_zt:function(data){
             // console.log(data);
             var data=data.data;
-            for(var i=0;i<data.length;i++){
-              if(data[i].content.length>40){
-                data[i].content=data[i].content.substr(0,40)+"...";
+            if(data!=''&&data!=null){
+              for(var i=0;i<data.length;i++){
+                if(data[i].content.length>40){
+                  data[i].content=data[i].content.substr(0,40)+"...";
+                }
               }
+              this.zt=data;
             }
-            this.zt=data;
           },
           //配置
           get_set:function(data){

@@ -10,21 +10,21 @@
           </div>
           <div class="mine-right-body">
             <ul class="mine-edit-password-ul">
-              <li>
-                <span class="inline-block">旧密码:</span>
-                <input type="text" placeholder="输入旧密码" class="box-sizing">
-              </li>
+              <!--<li>-->
+                <!--<span class="inline-block">旧密码:</span>-->
+                <!--<input type="text" placeholder="输入旧密码" class="box-sizing">-->
+              <!--</li>-->
               <li>
                 <span class="inline-block">新密码:</span>
-                <input type="text" placeholder="输入6-15位数字或字母" class="box-sizing">
+                <input type="password" placeholder="输入6-15位数字或字母" v-model="password" class="box-sizing">
               </li>
               <li>
                 <span class="inline-block">确认新密码:</span>
-                <input type="text" placeholder="确认新密码" class="box-sizing">
+                <input type="password" placeholder="确认新密码" v-model="passwordConfirm" class="box-sizing">
               </li>
               <li>
                 <span class="inline-block"></span>
-                <div class="sub-password inline-block">完  成</div>
+                <div class="sub-password inline-block" @click="sub()">完  成</div>
               </li>
             </ul>
           </div>
@@ -40,8 +40,32 @@
         components:{
           mineLeft
         },
+        data(){
+            return{
+              password:'',
+              passwordConfirm:''
+            }
+        },
         mounted(){
 
+        },
+        methods:{
+          //密码提交
+          sub:function(){
+            // console.log(this.password+"..."+this.passwordConfirm);
+            if(this.password==""||this.passwordConfirm==""){
+              alert("密码不能为空")
+            }else if(this.password!=this.passwordConfirm){
+              alert("两次密码输入不一致")
+            }else{
+              this.ajax_nodata(this.http_url.url+"/upatePwd",{
+                "newPwd":this.password,
+                "updateType":"0"
+              },function(data){
+
+              })
+            }
+          }
         }
     }
 </script>

@@ -70,20 +70,20 @@
       //行业,税种,专题
       this.ajax_nodata(this.http_url.url+'category/tree',this.get_tree);
       //获取大咖访谈视频封面列表
-      var params={sinceId:this.sinceId,maxId:this.maxId,type:this.type}
-      this.ajax(this.http_url.url+'video/search',params,this.get_video);
+      var query={sinceId:this.sinceId,maxId:this.maxId,type:this.type}
+      this.ajax(this.http_url.url+'video/search',query,this.get_video);
     },
     methods:{
       //header输入框大咖访谈搜索
       search_list:function () {
-        var params={sinceId:this.sinceId,maxId:this.maxId,type:this.type}
-        this.ajax(this.http_url.url+'video/search',params,this.get_video);
+        var query={sinceId:this.sinceId,maxId:this.maxId,type:this.type}
+        this.ajax(this.http_url.url+'video/search',query,this.get_video);
       },
       //视频点击
       video_click:function(data){
         var that=this
         this.ajax(this.http_url.url+'video/vid',{id:data.id},function (e) {
-          that.$router.push({name:'video',params:{vid:e.data.vid}})
+          that.$router.push({name:'video',query:{vid:e.data.vid}})
         })
       },
       //行业,税种,专题
@@ -127,23 +127,23 @@
             //回调函数 msg为选中页码
             this.sinceId=parseInt(that.page_size*(msg-1)+1)
             this.maxId=parseInt(this.sinceId+that.page_size-1)
-            var params={sinceId:this.sinceId,maxId:this.maxId,type:that.type}
-            that.ajax(that.http_url.url+'video/search',params,that.get_video_list);
+            var query={sinceId:this.sinceId,maxId:this.maxId,type:that.type}
+            that.ajax(that.http_url.url+'video/search',query,that.get_video_list);
           });
       },
       //类别搜索
       search_list_wdk:function (event,uuid,wdk) {
-        var params;
+        var query;
         $(".wdk-select-msg>div").removeClass("blue");
         $(event.target).addClass("blue");
         if(wdk=="trade"){
-          params={sinceId:this.sinceId,maxId:this.maxId,type:this.type,trade:uuid}
+          query={sinceId:this.sinceId,maxId:this.maxId,type:this.type,trade:uuid}
         }else if(wdk=="topic"){
-          params={sinceId:this.sinceId,maxId:this.maxId,type:this.type,topic:uuid}
+          query={sinceId:this.sinceId,maxId:this.maxId,type:this.type,topic:uuid}
         }else if(wdk=="tax"){
-          params={sinceId:this.sinceId,maxId:this.maxId,type:this.type,tax:uuid}
+          query={sinceId:this.sinceId,maxId:this.maxId,type:this.type,tax:uuid}
         }
-        this.ajax(this.http_url.url+'video/search',params,this.get_video);
+        this.ajax(this.http_url.url+'video/search',query,this.get_video);
       }
     }
   }

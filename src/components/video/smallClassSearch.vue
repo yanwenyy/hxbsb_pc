@@ -31,15 +31,15 @@
       },
       mounted () {
         var that=this
-        this.title=this.$route.params.msg
+        this.title=this.$route.query.msg
         //微课视频列表
-        var params={sinceId:this.sinceId,maxId:this.maxId,type:this.type,title:this.title}
-        this.ajax(this.http_url.url+'video/search',params,this.get_video);
+        var query={sinceId:this.sinceId,maxId:this.maxId,type:this.type,title:this.title}
+        this.ajax(this.http_url.url+'video/search',query,this.get_video);
         //搜索视频按钮点击事件
         $("body").on("click",".header-search-answer",function(e){
           this.title=$(".search-input-header>input").val()
-          params.title=this.title
-          that.ajax(that.http_url.url+'video/search',params,that.get_video);
+          query.title=this.title
+          that.ajax(that.http_url.url+'video/search',query,that.get_video);
         });
       },
         methods:{
@@ -49,10 +49,10 @@
             this.ajax(this.http_url.url+'video/vid',{id:data.id},function (e) {
               that.vid=e.data.vid
               if(data.ifBuy==1||data.price==0){
-                that.$router.push({name:'video',params:{vid:that.vid}})
+                that.$router.push({name:'video',query:{vid:that.vid}})
               }else{
                 data={videoId:data.id,source:2,money:data.price,url:'video'}
-                that.$router.push({ name: 'payMethod',params: {price: data.money ,source:"微课",data:data,}})
+                that.$router.push({ name: 'payMethod',query: {price: data.money ,source:"微课",data:data,}})
               }
             })
           },
@@ -88,8 +88,8 @@
                 //回调函数 msg为选中页码
                 this.sinceId=parseInt(that.page_size*(msg-1)+1)
                 this.maxId=parseInt(this.sinceId+that.page_size-1)
-                var params={sinceId:this.sinceId,maxId:this.maxId,type:that.type}
-                that.ajax(that.http_url.url+'video/search',params,that.get_video_list);
+                var query={sinceId:this.sinceId,maxId:this.maxId,type:that.type}
+                that.ajax(that.http_url.url+'video/search',query,that.get_video_list);
               });
           },
         }

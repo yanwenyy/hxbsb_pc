@@ -157,7 +157,7 @@
               console.log(data);
               that.$router.push({
                 name:'video',
-                params:{"vid":data.data.vid}
+                query:{"vid":data.data.vid}
               })
             }
             this.ajax(this.http_url.url+"/video/vid",{"id":id},get_vid);
