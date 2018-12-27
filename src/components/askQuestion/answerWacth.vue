@@ -184,7 +184,7 @@
     font-size:0.75rem ;
   }
   .queser-msg>div:last-child{
-    margin-top: 0.4rem;
+    margin-top: 0.5rem;
   }
   .user_name{
     font-size: 0.875rem;

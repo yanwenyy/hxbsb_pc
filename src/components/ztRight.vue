@@ -81,12 +81,15 @@
 </script>
 
 <style scoped>
+  .wdk-name>img{
+    margin-right: 4px;
+  }
   .user_name{
     font-size: 0.81rem;
   }
   .home-list-msg{
     font-size: 0.875rem;
-    line-height:  0.875rem;
+    line-height:  1.2rem;
   }
   .wdk-name>div:nth-child(5){
     font-size: 0.75rem;
@@ -98,7 +101,7 @@
     font-size: 1rem;
   }
   .wdk-name>div:nth-child(5){
-    margin: 0.3rem 0;
+    margin: 0.2rem 0;
   }
   .home-list-msg-group{
     margin-top: 0.3rem;
