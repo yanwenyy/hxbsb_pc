@@ -91,26 +91,26 @@
         }
       },
       mounted () {
-        // console.log(this.$route.params.msg);
-        this.price=this.$route.params.price;
-        this.source=this.$route.params.source;
-        this.title="首页> "+this.$route.params.source+" > 支付";
+        // console.log(this.$route.query.msg);
+        this.price=this.$route.query.price;
+        this.source=this.$route.query.source;
+        this.title="首页> "+this.$route.query.source+" > 支付";
         if(this.source=="围观"){
           this.ajax(this.http_url.url+"/onlook/look/buy",{
-            "uuid":this.$route.params.data.uuid,
+            "uuid":this.$route.query.data.uuid,
             "payType":"weixin",
-            "money":this.$route.params.price,
+            "money":this.$route.query.price,
             "source":2
           },this.wexin_pay);
         }else if(this.source=="我要提问"){
-          this.$route.params.data.source=2
-          this.ajax(this.http_url.url+"question/releaseQuestion",this.$route.params.data,this.wexin_pay);
+          this.$route.query.data.source=2
+          this.ajax(this.http_url.url+"question/releaseQuestion",this.$route.query.data,this.wexin_pay);
         }else if(this.source=="微课"){
-          console.log(this.$route.params)
+          console.log(this.$route.query)
           this.ajax(this.http_url.url+"video/buy",{
-            "videoId":this.$route.params.data.videoId,
+            "videoId":this.$route.query.data.videoId,
             "payType":"weixin",
-            "money":this.$route.params.data.money,
+            "money":this.$route.query.data.money,
             "source":2
           },this.wexin_pay);
         }
@@ -164,12 +164,12 @@
         //钱包或学习顾问卡支付
         normal_pay:function(){
           var that=this;
-          this.$route.params.data.payType=this.payType;
+          this.$route.query.data.payType=this.payType;
           function get_msg(data){
             if(data.code==1){
               alert("支付成功");
               that.$router.push({
-                name:that.$route.params.data.url
+                name:that.$route.query.data.url
               })
             }else{
               alert(data.des);
@@ -179,20 +179,20 @@
           function go_video(data){
             if(data.code==1){
               alert("支付成功");
-              that.ajax(that.http_url.url+'video/vid',{id:that.$route.params.data.videoId},function (e) {
-                that.$router.push({name:that.$route.params.data.url,params:{vid:e.data.vid}})
+              that.ajax(that.http_url.url+'video/vid',{id:that.$route.query.data.videoId},function (e) {
+                that.$router.push({name:that.$route.query.data.url,query:{vid:e.data.vid}})
               })
             }else{
               alert(data.des);
             }
           }
-          //this.$route.params.data
+          //this.$route.query.data
           if(this.source=="围观"){
-              this.ajax(this.http_url.url+"/onlook/look/buy",this.$route.params.data,get_msg)
+              this.ajax(this.http_url.url+"/onlook/look/buy",this.$route.query.data,get_msg)
           }else if(this.source=="我要提问"){
-            this.ajax(this.http_url.url+"question/releaseQuestion",this.$route.params.data,get_msg)
+            this.ajax(this.http_url.url+"question/releaseQuestion",this.$route.query.data,get_msg)
           }else if(this.source=="微课"){
-            this.ajax(this.http_url.url+"video/buy",this.$route.params.data,go_video)
+            this.ajax(this.http_url.url+"video/buy",this.$route.query.data,go_video)
           }
         },
         //支付方式点击

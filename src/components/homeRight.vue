@@ -75,7 +75,7 @@
           jxzt_click:function(type,typeContent){
             this.$router.push({
               name:"answerSearch",
-              params:{type:type,typeContent:typeContent}
+              query:{type:type,typeContent:typeContent}
             })
           }
         }

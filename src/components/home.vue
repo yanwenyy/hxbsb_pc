@@ -18,7 +18,7 @@
             <div>
               <div class="home-model-header">
                 <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>最新问答</div>
-                <div class="inline-block"><router-link :to="{ name: 'quesAnswerBank', params: { name: 'new' }}">查看更多</router-link> <img src="../../static/img/more.png" alt=""></div>
+                <div class="inline-block"><router-link :to="{ name: 'quesAnswerBank', query: { name: 'new' }}">查看更多</router-link> <img src="../../static/img/more.png" alt=""></div>
               </div>
               <div class="wdk-list-group box-sizing">
                 <div class="wdk-list" v-for="item in zxwd">
@@ -54,7 +54,7 @@
             <div>
               <div class="home-model-header">
                 <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>本期热门专题：{{zt_name}}</div>
-                <div class="inline-block"><router-link :to="{ name: 'answerSearch', params: { type: zt_topic,typeContent:zt_name }}">查看更多</router-link> <img src="../../static/img/more.png" alt=""></div>
+                <div class="inline-block"><router-link :to="{ name: 'answerSearch', query: { type: zt_topic,typeContent:zt_name }}">查看更多</router-link> <img src="../../static/img/more.png" alt=""></div>
               </div>
               <div class="wdk-list-group box-sizing">
                 <div class="wdk-list" v-for="item in zt">
@@ -90,7 +90,7 @@
             <div>
               <div class="home-model-header">
                 <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>最热围观</div>
-                <div class="inline-block"><router-link :to="{ name: 'quesAnswerBank', params: { name: 'hot' }}">查看更多</router-link> <img src="../../static/img/more.png" alt=""></div>
+                <div class="inline-block"><router-link :to="{ name: 'quesAnswerBank', query: { name: 'hot' }}">查看更多</router-link> <img src="../../static/img/more.png" alt=""></div>
               </div>
               <div class="wdk-list-group box-sizing">
                 <div class="wdk-list" v-for="item in zrwd">
@@ -207,9 +207,9 @@
           if(status==1){
             this.$router.push({ name: 'answerWacthDetail'})
           }else{
-            this.$router.push({ name: 'answerWacth',params: {"uuid":val,"money":1}});
+            this.$router.push({ name: 'answerWacth',query: {"uuid":val,"money":1}});
           }
-          // this.$router.push({ name: 'answerWacth',params:{questionUuid:val}})
+          // this.$router.push({ name: 'answerWacth',query:{questionUuid:val}})
         },
         //首页通告栏
         get_notice:function(data){

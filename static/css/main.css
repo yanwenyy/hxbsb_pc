@@ -217,6 +217,7 @@ input::-webkit-input-placeholder{
   font-size: 1rem;
   background: #fff;
   border-bottom: 1px solid rgba(242,242,242,1);
+  box-shadow:0px 1px 3px 0px rgba(238,238,238,0.74);
 }
 #head-title>.container>div{
   width:8.6%;
@@ -233,6 +234,7 @@ input::-webkit-input-placeholder{
 #head-title>.container>div span{
   height:100%;
   display: inline-block;
+  color:#333;
 }
 .no-msg{
   font-size: 1rem;

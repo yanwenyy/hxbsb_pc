@@ -2,6 +2,9 @@
     <div class="container">
       <div class="home-main box-sizing">
         <div class="h-main-left inline-block">
+          <div class="home-model-header">
+            <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>搜索结果</div>
+          </div>
           <div class="no-msg out">暂无相关内容</div>
           <div class="wdk-list-group box-sizing">
             <div class="wdk-list" v-for="item in list">
@@ -40,15 +43,19 @@
           </div>
         </div>
         <div class="h-main-right inline-block box-sizing">
-
+          <ztRight></ztRight>
         </div>
       </div>
     </div>
 </template>
 
 <script>
+  import ztRight from '@/components/ztRight'
     export default {
         name: "answer-search",
+        components:{
+          ztRight
+        },
         data () {
           return{
             //列表数据
@@ -62,9 +69,9 @@
         },
         mounted () {
           var that=this;
-          this.msg=this.$route.params.msg;
-          this.type=this.$route.params.type;
-          this.typeContent=this.$route.params.typeContent;
+          this.msg=this.$route.query.msg;
+          this.type=this.$route.query.type;
+          this.typeContent=this.$route.query.typeContent;
           //搜索答案按钮点击
           $("body").on("click",".header-search-answer",function(){
             that.list=[];
@@ -135,5 +142,7 @@
 </script>
 
 <style scoped>
-
+  .h-main-right{
+    margin-top: 0rem;
+  }
 </style>

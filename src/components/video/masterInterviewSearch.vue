@@ -66,8 +66,8 @@
       //行业,税种,专题
       this.ajax_nodata(this.http_url.url+'category/tree',this.get_tree);
       //获取大咖访谈视频封面列表
-      var params={sinceId:this.sinceId,maxId:this.maxId,type:this.type}
-      this.ajax(this.http_url.url+'video/search',params,this.get_video);
+      var query={sinceId:this.sinceId,maxId:this.maxId,type:this.type}
+      this.ajax(this.http_url.url+'video/search',query,this.get_video);
       //分页插件初始化
       $("#page").paging({
           total: 20,
