@@ -205,7 +205,7 @@
           //一元围观
         weiguan:function(val,status){
           if(status==1){
-            this.$router.push({ name: 'answerWacthDetail'})
+            this.$router.push({ name: 'answerWacthDetail',query:{"uuid":val}})
           }else{
             this.$router.push({ name: 'answerWacth',query: {"uuid":val,"money":1}});
           }

@@ -20,14 +20,14 @@
         <div class="qr-title">航信办税宝</div>
         <div class="qr-code-img-group">
           <div class="inline-block">
-            <img src="../../static/img/qr-weixin.png" alt="">
+            <img src="../../static/img/qr-app.png" alt="">
             <div class="qr-code-footer">
               <div>扫描二维码</div>
               <div>关注微信公众号</div>
             </div>
           </div>
           <div class="inline-block">
-            <img src="../../static/img/qr-app.png" alt="">
+            <img src="../../static/img/qr-weixin.png" alt="">
             <div class="qr-code-footer">
               <div>扫描二维码</div>
               <div>下载航信办税宝APP</div>

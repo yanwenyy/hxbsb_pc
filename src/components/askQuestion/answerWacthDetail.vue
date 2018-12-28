@@ -4,154 +4,88 @@
       <div class="home-main box-sizing">
         <div class="h-main-left inline-block">
           <div class="queser-grounp">
-            <img src="../../../static/img/user-img.png" alt="" class="queser-head">
+            <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'/static/img/user-img.png'"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
             <div class="inline-block queser-msg">
-              <div class="inline-block user_name">匿名用户</div>
-              <div class="inline-block user-dj"><img src="../../../static/img/jpyh.png" alt=""></div>
-              <div>2018-10-12 10:00:00</div>
+              <div class="inline-block user_name">{{questionUser.isAnon==1? questionUser.realName:'匿名用户'}}</div>
+              <div class="inline-block user-dj"><img :src="get_score(questionUser.integralScore,questionUser.aision,questionUser.vip)" alt=""></div>
+              <div>{{format(questionUser.date)}}</div>
             </div>
             <div class="queser-grounp-content">
-              科技风潮公司租个人的房屋，向小区物业支付物业费，可以要求物业公司向 科技风潮公司开具物业费发票吗？还是出租房代开发票？
+              {{questionUser.content}}
             </div>
             <div class="queser-grounp-img">
-              <img src="../../../static/img/ceshi.jpg" alt="">
-              <img src="../../../static/img/ceshi.jpg" alt="">
-              <img src="../../../static/img/ceshi.jpg" alt="">
+              <img :src="question_src+item" alt="" v-for="item in questionUser.images">
             </div>
             <div class="queser-grounp-footer">
-              <span>北京 房地产</span>
-              <span>点赞22</span>
-              <span>围观169</span>
+              <span>{{questionUser.area}} {{questionUser.quTrade}}</span>
+              <span>点赞{{questionUser.approveNum}}</span>
+              <span>围观{{questionUser.lookNum}}</span>
             </div>
           </div>
           <div class="home-model-header">
             <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>回答</div>
           </div>
-          <div class="answer-group">
+          <div class="answer-group" v-for="item in answewrUsers">
             <div>
-              <img src="../../../static/img/user-img.png" alt="" class="queser-head">
+              <img :src="head_src+item.headImage"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
               <div class="inline-block queser-msg">
                 <div class="inline-block user_name">
-                  王佳佳专家
+                  {{item.realName}}
                   <div class="inline-block zxs-img-show">
                     <img src="../../../static/img/zxs-icon.png" alt="">
-                    资深咨询师
+                    {{item.levelName}}
                   </div>
                 </div>
-                <div>资格证 资格证书</div>
+                <div>{{item.counselorDuty}}</div>
               </div>
             </div>
             <div class="answer-group-content">
-              您好：金融企业根据《贷款风险分类指引》,对其涉农贷款进行风险分类后，按照规定比例计提的贷款损失准备金，准予在计算应纳税所得额时
+              {{item.content}}
             </div>
             <div class="answer-group-class">
-              <div class="inline-block box-sizing">#税收筹划#</div>
-              <div class="inline-block box-sizing">#税收筹划#</div>
-              <div class="inline-block box-sizing">#税收筹划#</div>
+              <div class="inline-block box-sizing">#{{item.tax.replace(",",' ')}}#</div>
+              <div class="inline-block box-sizing">#{{item.topic.replace(",",' ')}}#</div>
             </div>
-            <div class="answer-group-footer">2018-10-12 10:00:06</div>
-          </div>
-          <div class="answer-group">
-            <div>
-              <img src="../../../static/img/user-img.png" alt="" class="queser-head">
-              <div class="inline-block queser-msg">
-                <div class="inline-block user_name">
-                  王佳佳专家
-                  <div class="inline-block zxs-img-show">
-                    <img src="../../../static/img/zxs-icon.png" alt="">
-                    资深咨询师
-                  </div>
+            <div class="answer-group-footer">{{format(item.date)}}</div>
+            <div class="evaluate-model box-sizing " v-if="item.status==2||item.status==6||item.status==7">
+              <div class="evaluate-score">
+                评价得分:
+                <div class="inline-block" v-for="s in 5">
+                  <img :src="s<=item.score? '../../../static/img/score-sel.png':'../../../static/img/score-unsel.png'" alt="">
+                  <!--<img src="../../../static/img/score-unsel.png" alt="">-->
                 </div>
-                <div>资格证 资格证书</div>
+              </div>
+              <div class="evaluate-content">
+                {{item.appraisal||"暂无评价内容"}}
               </div>
             </div>
-            <div class="answer-group-content">
-              您好：金融企业根据《贷款风险分类指引》,对其涉农贷款进行风险分类后，按照规定比例计提的贷款损失准备金，准予在计算应纳税所得额时
-            </div>
-            <div class="answer-group-class">
-              <div class="inline-block box-sizing">#税收筹划#</div>
-              <div class="inline-block box-sizing">#税收筹划#</div>
-              <div class="inline-block box-sizing">#税收筹划#</div>
-            </div>
-            <div class="answer-group-footer">2018-10-12 10:00:06</div>
           </div>
-          <div class="evaluate-model box-sizing ">
-            <div class="evaluate-score">
-              评价得分:
-              <div class="inline-block">
-                <img src="../../../static/img/score-sel.png" alt="">
-                <img src="../../../static/img/score-unsel.png" alt="">
-                <img src="../../../static/img/score-unsel.png" alt="">
-                <img src="../../../static/img/score-unsel.png" alt="">
-                <img src="../../../static/img/score-unsel.png" alt="">
-              </div>
-            </div>
-            <div class="evaluate-content">
-              暂无评论内容
-            </div>
-          </div>
-          <div class="user-operation">
-            <div class="inline-block zan">
-              <img src="../../../static/img/zan.png" alt="">
-              <span>13</span>
-            </div>
-            <div class="inline-block cai">
-              <img src="../../../static/img/cai.png" alt="">
-              <span>13</span>
-            </div>
-          </div>
+          <!--<div class="user-operation">-->
+            <!--<div class="inline-block zan">-->
+              <!--<img src="../../../static/img/zan.png" alt="">-->
+              <!--<span>13</span>-->
+            <!--</div>-->
+            <!--<div class="inline-block cai">-->
+              <!--<img src="../../../static/img/cai.png" alt="">-->
+              <!--<span>13</span>-->
+            <!--</div>-->
+          <!--</div>-->
           <div class="comment-group">
-            <input type="text" placeholder="请输入您的评论" class="box-sizing">
-            <div class="inline-block comment-sub">提交</div>
+            <input type="text" v-model="commit_msg" placeholder="请输入您的评论" class="box-sizing">
+            <div class="inline-block comment-sub" @click="sub_commit()">提交</div>
           </div>
           <div class="home-model-header">
             <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>精彩评论</div>
           </div>
           <div class="comment-list">
-            <div class="wdk-list">
+            <div class="wdk-list" v-for="item in discussUsers">
               <div class="inline-block">
                 <div class="wdk-name">
-                  <img src='../../../static/img/user-img.png'>
-                  <div class="inline-block user_name">匿名用户</div>
-                  <div class="inline-block user-dj"><img src="../../../static/img/jpyh.png" alt=""></div>
+                  <img :src='head_src+item.headImage' onerror="javascript:this.src='../../static/img/user-img.png';">
+                  <div class="inline-block user_name">{{item.realName}}</div>
+                  <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
                   <div class="home-list-msg-group">
-                    <div class="inline-block home-list-msg">港剧只剩下一班老戏骨，毫无新血，消亡只是时间问题。TVB新人人工低，拍戏又辛苦，又难上位。点 解要拍剧？现在只能无限炒冷饭，难</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="wdk-list">
-              <div class="inline-block">
-                <div class="wdk-name">
-                  <img src='../../../static/img/user-img.png'>
-                  <div class="inline-block user_name">匿名用户</div>
-                  <div class="inline-block user-dj"><img src="../../../static/img/jpyh.png" alt=""></div>
-                  <div class="home-list-msg-group">
-                    <div class="inline-block home-list-msg">港剧只剩下一班老戏骨，毫无新血，消亡只是时间问题。TVB新人人工低，拍戏又辛苦，又难上位。点 解要拍剧？现在只能无限炒冷饭，难</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="wdk-list">
-              <div class="inline-block">
-                <div class="wdk-name">
-                  <img src='../../../static/img/user-img.png'>
-                  <div class="inline-block user_name">匿名用户</div>
-                  <div class="inline-block user-dj"><img src="../../../static/img/jpyh.png" alt=""></div>
-                  <div class="home-list-msg-group">
-                    <div class="inline-block home-list-msg">港剧只剩下一班老戏骨，毫无新血，消亡只是时间问题。TVB新人人工低，拍戏又辛苦，又难上位。点 解要拍剧？现在只能无限炒冷饭，难</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="wdk-list">
-              <div class="inline-block">
-                <div class="wdk-name">
-                  <img src='../../../static/img/user-img.png'>
-                  <div class="inline-block user_name">匿名用户</div>
-                  <div class="inline-block user-dj"><img src="../../../static/img/jpyh.png" alt=""></div>
-                  <div class="home-list-msg-group">
-                    <div class="inline-block home-list-msg">港剧只剩下一班老戏骨，毫无新血，消亡只是时间问题。TVB新人人工低，拍戏又辛苦，又难上位。点 解要拍剧？现在只能无限炒冷饭，难</div>
+                    <div class="inline-block home-list-msg">{{item.content}}</div>
                   </div>
                 </div>
               </div>
@@ -159,7 +93,7 @@
           </div>
           <div class="load-more">
             <span class="inline-block gray-line"></span>
-            <span class="inline-block load-more-btn" @click="load_more()">点击加载更多</span>
+            <span class="inline-block load-more-btn" @click="load_more()">{{more_msg}}</span>
             <span class="inline-block gray-line"></span>
           </div>
         </div>
@@ -180,19 +114,97 @@
     },
     data(){
       return{
-
+        //提问者信息
+        questionUser:'',
+        //回答者信息
+        answewrUsers:'',
+        //评论者id
+        comment_id:'',
+        start:1,
+        end:10,
+        num:1,
+        //评论者信息
+        discussUsers:'',
+        //评论内容
+        commit_msg:'',
+        no_more:true,
+        more_msg:"点击加载更多"
       }
     },
     mounted(){
-
+      //回答者和提问者信息
+      this.ajax_nodata(this.http_url.url+"/onlook/wx/onlookAuthorized?uuid="+this.$route.query.uuid,this.que_msg);
     },
     methods:{
-
+      //回答者和提问者信息
+      que_msg:function(data){
+        // console.log(data);
+        var that=this;
+        this.questionUser=data.questionUser;
+        this.answewrUsers=data.answewrUsers;
+        for(var i=0;i<data.answewrUsers.length;i++){
+          if(data.answewrUsers[i].type==0){
+            if(data.answewrUsers[i].status==2||data.answewrUsers[i].status==6||data.answewrUsers[i].status==7){
+              that.comment_id=data.answewrUsers[i].uuid;
+            }
+          }
+        };
+        this.ajax(this.http_url.url+"/discuss/all",{
+          "sinceId":this.start, "maxId":this.end, "answerUuid":that.comment_id
+        },function(data){
+            // console.log(data);
+          that.discussUsers=data.discussUsers;
+        })
+      },
+      //评论加载更多
+      load_more:function(){
+        var that=this;
+        this.num+=1;
+        this.start=((this.num-1)*10)+1;
+        this.end=this.num*10;
+        this.ajax(this.http_url.url+"/discuss/all",{
+          "sinceId":this.start, "maxId":this.end, "answerUuid":that.comment_id
+        },function(data){
+          // console.log(data);
+          if(data.discussUsers!=""&&data.discussUsers!=null&&that.no_more){
+            that.discussUsers=that.discussUsers.concat(data.discussUsers);
+            // console.log(that.discussUsers);
+          }else{
+            that.no_more=false;
+            that.more_msg="没有更多数据了"
+          }
+        })
+      },
+      //提交评论
+      sub_commit:function(){
+        var that=this;
+        if(this.commit_msg==""){
+          alert("请输入评论内容");
+        }else{
+          this.ajax(this.http_url.url+"/discuss/edit",{
+            "answerUuid":that.comment_id,
+            "discussContent":that.commit_msg
+          },function(data){
+              alert(data.des);
+              if(data.code==1){
+                that.ajax(that.http_url.url+"/discuss/all",{
+                  "sinceId":that.start, "maxId":that.end, "answerUuid":that.comment_id
+                },function(data){
+                  that.discussUsers=data.discussUsers;
+                });
+                that.commit_msg="";
+              }
+          })
+        }
+      }
     }
   }
 </script>
 
 <style scoped>
+  .comment-group{
+    margin-top:2.25rem ;
+  }
   .home-list-msg:hover{
     color:#333;
   }
@@ -268,10 +280,11 @@
     font-size: 0.875rem;
     margin-top: 0.6rem;
   }
-  .evaluate-score img{
+  .evaluate-score >>>img{
     width:1.19rem;
     height:1.31rem;
     vertical-align: middle;
+    margin-right: 0.44rem;
   }
   .evaluate-score{
     font-size: 0.875rem;

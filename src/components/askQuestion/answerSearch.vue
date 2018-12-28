@@ -7,7 +7,7 @@
           </div>
           <div class="no-msg out">暂无相关内容</div>
           <div class="wdk-list-group box-sizing">
-            <div class="wdk-list" v-for="item in list">
+            <div class="wdk-list" v-for="item in list"  @click="weiguan(item.uuid,item.status)">
               <div class="inline-block">
                 <div class="wdk-name">
                   <img :src="head_src+item.headImage" alt=""  onerror="javascript:this.src='../../static/img/user-img.png';">
@@ -15,7 +15,7 @@
                   <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
                   <div class="home-list-msg-group">
                     <div class="inline-block home-list-msg">{{item.content}}</div>
-                    <div class="inline-block weiguan" @click="weiguan(1)">1元围观</div>
+                    <div class="inline-block weiguan" :class="item.status==1? 'weiguan_also':''">{{item.status==1? '已围观':'一元围观'}}</div>
                   </div>
                   <div class="label box-sizing">
                     <div class="inline-block">{{format(item.date)}}</div>
@@ -93,6 +93,15 @@
           },this.get_list);
         },
         methods:{
+          //一元围观
+          weiguan:function(val,status){
+            if(status==1){
+              this.$router.push({ name: 'answerWacthDetail',query:{"uuid":val}})
+            }else{
+              this.$router.push({ name: 'answerWacth',query: {"uuid":val,"money":1}});
+            }
+            // this.$router.push({ name: 'answerWacth',query:{questionUuid:val}})
+          },
           //列表
           get_list:function(data){
             //console.log(data);
