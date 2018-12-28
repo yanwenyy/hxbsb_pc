@@ -4,24 +4,22 @@
       <div class="home-main box-sizing">
         <div class="h-main-left inline-block">
           <div class="queser-grounp">
-            <img src="../../../static/img/user-img.png" alt="" class="queser-head">
+            <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'/static/img/user-img.png'"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
             <div class="inline-block queser-msg">
-              <div class="inline-block user_name">匿名用户</div>
-              <div class="inline-block user-dj"><img src="../../../static/img/jpyh.png" alt=""></div>
-              <div>2018-10-12 10:00:00</div>
+              <div class="inline-block user_name">{{questionUser.isAnon==1? questionUser.realName:'匿名用户'}}</div>
+              <div class="inline-block user-dj"><img :src="get_score(questionUser.integralScore,questionUser.aision,questionUser.vip)" alt=""></div>
+              <div>{{format(questionUser.date)}}</div>
             </div>
             <div class="queser-grounp-content">
-              科技风潮公司租个人的房屋，向小区物业支付物业费，可以要求物业公司向 科技风潮公司开具物业费发票吗？还是出租房代开发票？
+              {{questionUser.content}}
             </div>
             <div class="queser-grounp-img">
-              <img src="../../../static/img/ceshi.jpg" alt="">
-              <img src="../../../static/img/ceshi.jpg" alt="">
-              <img src="../../../static/img/ceshi.jpg" alt="">
+              <img :src="question_src+item" alt="" v-for="item in questionUser.images">
             </div>
             <div class="queser-grounp-footer">
-              <span>北京 房地产</span>
-              <span>点赞22</span>
-              <span>围观169</span>
+              <span>{{questionUser.area}} {{questionUser.quTrade}}</span>
+              <span>点赞{{questionUser.approveNum}}</span>
+              <span>围观{{questionUser.lookNum}}</span>
             </div>
           </div>
           <div class="home-model-header">
@@ -107,6 +105,8 @@
       },
       data(){
         return{
+          //问题者信息
+            questionUser:'',
           //弹框显示
             shadow_status:false,
             //围观人员
@@ -120,6 +120,8 @@
         }
       },
       mounted (){
+          //问题者信息
+        this.ajax_nodata(this.http_url.url+"/onlook/wx/onlookAuthorized?uuid="+this.$route.query.uuid,this.que_msg);
           // alert(this.$route.query.questionUuid);
         //围观人员查询
         this.ajax(this.http_url.url+"/onlook/onlookCountDetailList",{
@@ -127,10 +129,15 @@
         },this.look_num);
         //提问者和专家资料显示
         this.ajax(this.http_url.url+"/user/someUserMsg",{"questionUuid":this.$route.query.uuid},this.msg_show);
-      },
+        },
       methods:{
+          //问题者信息
+        que_msg:function(data){
+          console.log(data);
+          this.questionUser=data.questionUser;
+        },
           //围观人员
-          look_num:function(data){
+        look_num:function(data){
             // console.log(data);
             this.look_list=data.OnLookCountDetail.slice(0,5);
             this.look_list_detail=data.OnLookCountDetail;
@@ -153,7 +160,7 @@
         },
         //回答者资料显示
         msg_show:function(data){
-            console.log(data);
+            // console.log(data);
             this.answer_msg=data.userMsg;
         }
       }
