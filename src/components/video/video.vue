@@ -11,6 +11,13 @@
         creatH(this.$route.query.vid);
         // alert(this.http_url.url);
         // alert(this.$route.query.name);
+        if(this.$route.query.pagetype=="pay"){
+          var that=this
+          window.addEventListener("popstate", function(e) {
+            that.$router.push({name:"smallClass"})
+          }, false);
+        }
+
       }
     }
 

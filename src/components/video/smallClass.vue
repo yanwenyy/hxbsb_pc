@@ -264,7 +264,7 @@
   }
   .sm-class-video>div>img{
     width:100%;
-    max-height:10.35rem;
+    height:9.4rem;
     margin-bottom: 0.5rem;
   }
   .sm-class-video>div>p{

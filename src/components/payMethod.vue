@@ -180,7 +180,7 @@
             if(data.code==1){
               alert("支付成功");
               that.ajax(that.http_url.url+'video/vid',{id:that.$route.query.data.videoId},function (e) {
-                that.$router.push({name:that.$route.query.data.url,query:{vid:e.data.vid}})
+                that.$router.push({name:that.$route.query.data.url,query:{vid:e.data.vid,pagetype:'pay'}})
               })
             }else{
               alert(data.des);
