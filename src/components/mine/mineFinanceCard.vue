@@ -57,7 +57,7 @@
 <script>
   import mineLeft from '@/components/mineLeft'
     export default {
-        name: "mine-bag",
+        name: "mine-finance-card",
         components:{
           mineLeft,
         },

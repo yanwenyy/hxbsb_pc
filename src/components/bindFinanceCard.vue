@@ -15,100 +15,16 @@
             <ul>
               <li class="login-li">
                 <div class="inline-block login-li-img">
-                  <div class="inline-block"><img src="../../static/img/login-sj.png" alt=""></div>
-                  <input type="text" placeholder="请输入手机号">
+                  <input type="text" placeholder="请输入卡号">
                 </div>
               </li>
               <li class="login-li">
                 <div class="inline-block login-li-img">
-                  <div class="inline-block"><img src="../../static/img/login-txyzm.png" alt=""></div>
-                  <input type="text" placeholder="图形验证">
-                </div>
-                <div class="inline-block">
-                  <img src="" alt="" class="sjyzm">
-                </div>
-              </li>
-              <li class="login-li">
-                <div class="inline-block login-li-img">
-                  <div class="inline-block"><img src="../../static/img/login-dxyzm.png" alt=""></div>
-                  <input type="text" placeholder="请输入短信验证码">
-                </div>
-                <div class="inline-block">
-                  <span class="blue">获取验证码</span>
+                  <input type="text" placeholder="请输入兑换码">
                 </div>
               </li>
             </ul>
-            <div class="login-method-checked">
-              <div class="inline-block"></div>
-              <div class="inline-block blue password_login">账号密码登录</div>
-            </div>
-            <div class="login-btn">注册/登录</div>
-            <div class="login-must-know">登录即代表同意我们的《用户使用协议和隐私政策》</div>
-          </div>
-        </div>
-        <div class="password-way" v-if="pass">
-          <div class="info-head">
-            <img src="../../static/img/login-model-logo.png" alt="">
-          </div>
-          <div class="info-main">
-            <ul>
-              <li class="login-li">
-                <div class="inline-block login-li-img">
-                  <div class="inline-block"><img src="../../static/img/login-sj.png" alt=""></div>
-                  <input type="text" placeholder="请输入手机号">
-                </div>
-              </li>
-              <li class="login-li">
-                <div class="inline-block login-li-img">
-                  <div class="inline-block"><img src="../../static/img/login-password.png" alt=""></div>
-                  <input type="text" placeholder="请输入密码">
-                </div>
-              </li>
-            </ul>
-            <div class="login-method-checked">
-              <div class="inline-block blue sjdx_login">手机短信登录</div>
-              <div class="inline-block blue password_login">账号密码登录</div>
-            </div>
-            <div class="login-btn">登录</div>
-            <div class="login-must-know">登录即代表同意我们的《用户使用协议和隐私政策》</div>
-          </div>
-        </div>
-        <div class="forget-password-way"  v-if="forget_pass">
-          <div class="info-head">
-            忘记密码
-          </div>
-          <div class="info-main">
-            <ul>
-              <li class="login-li">
-                <div class="inline-block login-li-img">
-                  <div class="inline-block"><img src="../../static/img/login-sj.png" alt=""></div>
-                  <input type="text" placeholder="请输入手机号">
-                </div>
-              </li>
-              <li class="login-li">
-                <div class="inline-block login-li-img">
-                  <div class="inline-block"><img src="../../static/img/login-txyzm.png" alt=""></div>
-                  <input type="text" placeholder="图形验证">
-                </div>
-                <div class="inline-block">
-                  <img src="" alt="" class="sjyzm">
-                </div>
-              </li>
-              <li class="login-li">
-                <div class="inline-block login-li-img">
-                  <div class="inline-block"><img src="../../static/img/login-password.png" alt=""></div>
-                  <input type="text" placeholder="请输入密码">
-                </div>
-              </li>
-              <li class="login-li">
-                <div class="inline-block login-li-img">
-                  <div class="inline-block"><img src="../../static/img/login-confirm-pass.png" alt=""></div>
-                  <input type="text" placeholder="请确认密码">
-                </div>
-              </li>
-            </ul>
-            <div class="login-btn">重置</div>
-            <div class="go-login blue">去登录</div>
+            <div class="login-btn">绑定</div>
           </div>
         </div>
       </div>
@@ -121,12 +37,9 @@
 </template>
 <script>
     export default {
-        name: "login",
+        name: "bind-finance-card",
         data(){
           return{
-            info:true,
-            pass:false,
-            forget_pass:false,
           }
         },
         mounted(){

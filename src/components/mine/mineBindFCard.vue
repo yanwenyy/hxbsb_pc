@@ -32,7 +32,7 @@
 <script>
   import mineLeft from '@/components/mineLeft'
     export default {
-        name: "mine-edit-password",
+        name: "mine-bind-f-card",
         components:{
           mineLeft
         },
