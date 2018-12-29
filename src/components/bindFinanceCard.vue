@@ -7,9 +7,9 @@
     </div>
     <div class="login">
       <div class="login-model box-sizing">
-        <div class="information-way" v-if="info">
+        <div class="information-way">
           <div class="info-head">
-            <img src="../../static/img/login-model-logo.png" alt="">
+            绑定财税问答卡
           </div>
           <div class="info-main">
             <ul>
@@ -24,7 +24,13 @@
                 </div>
               </li>
             </ul>
+            <div class="inline-block">
+              <p class="label-txt">*有财税问答卡请务必填写，后期无法补填。
+                填写后点完成，没有点跳过。
+              </p>
+            </div>
             <div class="login-btn">绑定</div>
+            <div class="skip blue">跳过</div>
           </div>
         </div>
       </div>
@@ -112,7 +118,7 @@
   }
   .login-model{
     width:31.88rem;
-    height:32rem;
+    height:27rem;
     background: #fff;
     margin: 4rem auto;
     box-shadow:0px 3px 8px 0px rgba(39, 39, 39, 0.35);
@@ -143,5 +149,14 @@
     height:90%;
     background: url("/static/img/login-bg.png");
 
+  }
+  .label-txt{
+    width: 60%;
+    color: #FB4343;
+    margin-top: 1rem;
+  }
+  .skip{
+    text-align: center;
+    margin-top: 2rem;
   }
 </style>
