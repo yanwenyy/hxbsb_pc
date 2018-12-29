@@ -2,29 +2,28 @@
   <div class="mine-body box-sizing">
     <div class="container">
       <div class="mine-left inline-block box-sizing">
-        <mineLeft msg="我的钱包"></mineLeft>
+        <mineLeft msg="财税问答卡"></mineLeft>
       </div>
       <div class="mine-right inline-block box-sizing">
         <div class="mine-data-head box-sizing">
           <div class="home-model-header">
-            <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>我的钱包</div>
+            <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>财税问答卡</div>
           </div>
           <div>
             <div class="inline-block user-money-msg">
-              <div>可用余额（元）</div>
+              <div>财税问答余额（元）</div>
               <div>¥<span class="orange">{{parseFloat(balance).toFixed(2)}}</span></div>
-              <div>*提示：请下载解税宝APP进行提现。</div>
             </div>
             <div class="inline-block money-record box-sizing">
               <div class="inline-block money-tx">
-                <img src="../../../static/img/download-app.png" alt="">
+                <div @click="bind_card">绑定问答卡</div>
               </div>
               <div class="inline-block">
-                <div class="total-record-name">总收入（元）</div>
+                <div class="total-record-name">收入（元）</div>
                 <div>¥<span>{{parseFloat(incomeSum).toFixed(2)}}</span></div>
               </div>
               <div class="inline-block">
-                <div class="total-record-name">总支出（元）</div>
+                <div class="total-record-name">支出（元）</div>
                 <div>¥<span>{{parseFloat(outpaySum).toFixed(2)}}</span></div>
               </div>
             </div>
@@ -126,6 +125,12 @@
         //分页回调
         page_msg:function(data){
           this.records=data.records;
+        },
+        //绑定问答卡
+        bind_card:function(){
+          this.$router.push({
+            name:'mineBindFCard'
+          })
         }
       }
     }
@@ -157,7 +162,8 @@
     border-radius:4px;
     padding:0 0.875rem 1rem 0.875rem;
   }
-  .money-tx>img {
-    margin-top: -0.95rem;
+  .money-tx>div{
+    margin-top: 2rem;
+    width: 5rem;
   }
 </style>

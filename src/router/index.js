@@ -11,13 +11,15 @@ import answerSearch from '@/components/askQuestion/answerSearch'
 import answerWacth from '@/components/askQuestion/answerWacth'
 import answerWacthDetail from '@/components/askQuestion/answerWacthDetail'
 import privateQuestion from '@/components/askQuestion/privateQuestion'
-import mineEditPassword from '@/components/mine/mineEditPassword'
-import mineInvoice from '@/components/mine/mineInvoice'
-import mineBuy from '@/components/mine/mineBuy'
-import mineData from '@/components/mine/mineData'
-import mineQuestion from '@/components/mine/mineQuestion'
-import mineBag from '@/components/mine/mineBag'
-import mineLearningCard from '@/components/mine/mineLearningCard'
+import mineEditPassword from '@/components/mine/mineEditPassword' //设置密码
+import mineInvoice from '@/components/mine/mineInvoice' //开具发票
+import mineBuy from '@/components/mine/mineBuy' //我的购买
+import mineData from '@/components/mine/mineData' //我的资料
+import mineQuestion from '@/components/mine/mineQuestion' //我的提问
+import mineBag from '@/components/mine/mineBag' //我的钱包
+import mineLearningCard from '@/components/mine/mineLearningCard' //学习顾问卡
+import mineFinanceCard from '@/components/mine/mineFinanceCard' //财税问答卡
+import mineBindFCard from '@/components/mine/mineBindFCard' //财税问答卡-绑定财税问答卡
 import about from '@/components/about' //关于我们
 import smallClass from '@/components/video/smallClass' //微课
 import smallClassSearch from '@/components/video/smallClassSearch' //微课搜索
@@ -122,6 +124,16 @@ export default new Router({
       path: '/mineLearningCard',
       name: 'mineLearningCard',
       component: mineLearningCard
+    },
+    {
+      path: '/mineFinanceCard',
+      name: 'mineFinanceCard',
+      component: mineFinanceCard
+    },
+    {
+      path: '/mineBindFCard',
+      name: 'mineBindFCard',
+      component: mineBindFCard
     },
     {
       path: '/smallClass',

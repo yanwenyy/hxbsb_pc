@@ -20,6 +20,10 @@
       <img :src="msg=='学习顾问卡'? '../../static/img/mine-xxgwk-click.png':'../../static/img/mine-xxgwk.png'" alt="">
       学习顾问卡
     </li>
+    <li :class="msg=='财税问答卡'?  'mine-li-act':''" @click="mine_left_li('mineFinanceCard')">
+      <img :src="msg=='财税问答卡'? '../../static/img/mine-cswdk-click.png':'../../static/img/mine-cswdk.png'" alt="">
+      财税问答卡
+    </li>
     <li :class="msg=='开具发票'?  'mine-li-act':''" @click="mine_left_li('mineInvoice')">
       <img :src="msg=='开具发票'? '../../static/img/mine-fp-click.png':'../../static/img/mine-fp.png'" alt="">
       开具发票

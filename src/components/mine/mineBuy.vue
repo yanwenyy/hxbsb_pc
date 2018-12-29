@@ -46,6 +46,7 @@
                               {{item.lookNum}}
                             </div>
                           </div>
+                          <div class="inline-block statu">已纠错</div>
                         </div>
                       </div>
                     </div>
@@ -209,5 +210,8 @@
     width:100%;
     height:9rem;
     margin-bottom: 1rem;
+  }
+  .label>div.statu{
+    margin-left: 1.5rem;
   }
 </style>

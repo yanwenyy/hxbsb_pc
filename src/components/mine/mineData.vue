@@ -13,7 +13,7 @@
             <div class="inline-block mine-data-user-img">
               <img :src="user_img" alt=""  onerror="javascript:this.src='../../static/img/user-img.png';">
               <input type="file" class="img-file" @change="head_img_sel()">
-              <div><span class="orange">*</span>上传头像</div>
+              <div>上传头像</div>
             </div>
             <div class="inline-block mine-data-user-duty">
               <div class="mine-data-user-name">{{user_name}}</div>
@@ -60,15 +60,15 @@
               </li>
               <li>
                 <span class="inline-block">
-                  公司名称：
+                  企业名称：
                 </span>
                 <div class="inline-block">
-                  <input type="text" placeholder="请输入公司名称" v-model="companyName">
+                  <input type="text" placeholder="请输入企业名称" v-model="companyName">
                 </div>
               </li>
               <li>
                 <span class="inline-block">
-                  <span class="orange">*</span>公司所在行业：
+                  公司所在行业：
                 </span>
                 <div class="inline-block company-industry">
                   <input type="text" placeholder="请输入公司所在行业" @click="hy_show=!hy_show" v-model="hy_msg">
