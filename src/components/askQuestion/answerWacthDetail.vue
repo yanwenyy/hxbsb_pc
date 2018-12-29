@@ -24,13 +24,17 @@
           </div>
           <div class="home-model-header">
             <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>回答</div>
+            <div class="error-eidt-btn inline-block" v-if="jc_btn_status"  @click="jc_status=!jc_status"><img src="../../../static/img/error-eidt-btn.png" alt="">我要纠错</div>
           </div>
           <div class="answer-group" v-for="item in answewrUsers">
+            <div class="home-model-header" style="margin-bottom: 1.31rem" v-if="item.type==1">
+              <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>答案纠错</div>
+            </div>
             <div>
               <img :src="head_src+item.headImage"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
               <div class="inline-block queser-msg">
                 <div class="inline-block user_name">
-                  {{item.realName}}
+                  {{item.userName}}
                   <div class="inline-block zxs-img-show">
                     <img src="../../../static/img/zxs-icon.png" alt="">
                     {{item.levelName}}
@@ -38,15 +42,33 @@
                 </div>
                 <div>{{item.counselorDuty}}</div>
               </div>
+              <div class="inline-block best-answer" v-if="item.status==2||item.status==6||item.status==7||item.checkStatus==2">
+                <img src="../../../static/img/best-answer.png" alt="">
+              </div>
+              <div class="inline-block best-answer" v-if="item.type==1">
+                <img src="../../../static/img/error-answer.png" alt="">
+              </div>
             </div>
             <div class="answer-group-content">
               {{item.content}}
             </div>
             <div class="answer-group-class">
-              <div class="inline-block box-sizing">#{{item.tax.replace(",",' ')}}#</div>
-              <div class="inline-block box-sizing">#{{item.topic.replace(",",' ')}}#</div>
+              <div class="inline-block box-sizing" v-for="w in item.tax.split(',')">#{{w}}#</div>
+              <div class="inline-block box-sizing"  v-for="s in item.topic.split(',')">#{{s}}#</div>
             </div>
-            <div class="answer-group-footer">{{format(item.date)}}</div>
+            <div class="answer-group-footer">
+              <div class="inline-block">{{format(item.date)}}</div>
+              <div class="inline-block cz_group">
+                <div class="inline-block">
+                  <img :src="item.praiseNum>0? '/static/img/zan_click.png':zan_src" @click="zan(item.uuid,$event)" alt="">
+                  <span>{{item.approveNum}}</span>
+                </div>
+                <div class="inline-block">
+                  <img  :src="item.treadNum>0? '/static/img/cai_click.png':cai_src" @click="cai(item.uuid,$event)" alt="">
+                  <span>{{item.opposeNum}}</span>
+                </div>
+              </div>
+            </div>
             <div class="evaluate-model box-sizing " v-if="item.status==2||item.status==6||item.status==7">
               <div class="evaluate-score">
                 评价得分:
@@ -60,16 +82,46 @@
               </div>
             </div>
           </div>
-          <!--<div class="user-operation">-->
-            <!--<div class="inline-block zan">-->
-              <!--<img src="../../../static/img/zan.png" alt="">-->
-              <!--<span>13</span>-->
-            <!--</div>-->
-            <!--<div class="inline-block cai">-->
-              <!--<img src="../../../static/img/cai.png" alt="">-->
-              <!--<span>13</span>-->
-            <!--</div>-->
-          <!--</div>-->
+          <div v-if="changerAnswer">
+            <div class="home-model-header">
+              <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>我的纠错</div>
+            </div>
+            <div class="answer-group" v-for="item in changerAnswer">
+              <div>
+                <img :src="head_src+item.headImage"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
+                <div class="inline-block queser-msg">
+                  <div class="inline-block user_name">
+                    {{item.userName}}
+                    <div class="inline-block zxs-img-show">
+                      <img src="../../../static/img/zxs-icon.png" alt="">
+                      {{item.levelName}}
+                    </div>
+                  </div>
+                  <div>{{item.counselorDuty}}</div>
+                </div>
+              </div>
+              <div class="answer-group-content">
+                {{item.content}}
+              </div>
+              <div class="answer-group-class">
+                <div class="inline-block box-sizing" v-for="w in item.tax.split(',')">#{{w}}#</div>
+                <div class="inline-block box-sizing"  v-for="s in item.topic.split(',')">#{{s}}#</div>
+              </div>
+              <div class="answer-group-footer">
+                <div class="inline-block">{{format(item.date)}}</div>
+                <div class="inline-block cz_group">
+                  <div class="inline-block">
+                    <img :src="item.praiseNum>0? '/static/img/zan_click.png':zan_src" @click="zan(item.uuid,$event)" alt="">
+                    <span>{{item.approveNum}}</span>
+                  </div>
+                  <div class="inline-block">
+                    <img  :src="item.treadNum>0? '/static/img/cai_click.png':cai_src" @click="cai(item.uuid,$event)" alt="">
+                    <span>{{item.opposeNum}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="comment-group">
             <input type="text" v-model="commit_msg" placeholder="请输入您的评论" class="box-sizing">
             <div class="inline-block comment-sub" @click="sub_commit()">提交</div>
@@ -102,6 +154,30 @@
         </div>
       </div>
     </div>
+    <div class="shadow-box" v-if="jc_status">
+      <div class="jc_body">
+        <div class="jc_title">
+          我要纠错
+          <div class="inline-block"  @click="jc_status=!jc_status"><img src="../../../static/img/close-shadow.png" alt=""></div>
+        </div>
+        <div class="jc_main box-sizing">
+          <textarea name="" id="" cols="30" rows="10"></textarea>
+          <div class="jc_main_title">所属专题：</div>
+          <select name="" id="">
+            <option value="" v-for="item in hy">{{item.name}}</option>
+          </select>
+          <div class="jc_main_title">所属税种：</div>
+          <div class="sz-model">
+            <div class="inline-block"  v-for="item in sz">{{item.name}}</div>
+          </div>
+          <ul class="notice">
+            <li><span class="inline-block">提示：</span>1、纠错答案采纳后将公开显示供其他用户参考。</li>
+            <li><span class="inline-block"></span>2、如果填写的答案与他人的重复则按提交先后判定。</li>
+          </ul>
+        </div>
+        <div class="jc_sub" @click="sub_jc()">提交</div>
+      </div>
+    </div v>
   </div>
 </template>
 
@@ -114,10 +190,15 @@
     },
     data(){
       return{
+        //纠错框状态
+        jc_status:false,
+        jc_btn_status:false,
         //提问者信息
         questionUser:'',
         //回答者信息
         answewrUsers:'',
+        //我的纠错
+        changerAnswer:"",
         //评论者id
         comment_id:'',
         start:1,
@@ -128,12 +209,45 @@
         //评论内容
         commit_msg:'',
         no_more:true,
-        more_msg:"点击加载更多"
+        more_msg:"点击加载更多",
+        //赞的src
+        zan_src:"/static/img/zan.png",
+        //踩的src
+        cai_src:"/static/img/cai.png",
+        hy:[],
+        sz:[],
+        //选择的税种
+        sz_selece:[],
       }
     },
     mounted(){
+      var that=this;
       //回答者和提问者信息
       this.ajax_nodata(this.http_url.url+"/onlook/wx/onlookAuthorized?uuid="+this.$route.query.uuid,this.que_msg);
+      //行业,税种,专题
+      this.ajax_nodata(this.http_url.url+'/category/tree',this.get_tree);
+      //删除数组内某项的构造函数
+      Array.prototype.indexOf = function(val) {
+        for (var i = 0; i < this.length; i++) {
+          if (this[i] == val) return i;
+        }
+        return -1;
+      };
+      Array.prototype.remove = function(val) {
+        var index = this.indexOf(val);
+        if (index > -1) {
+          this.splice(index, 1);
+        }
+      };
+      $("body").on("click",".sz-model>div",function(){
+        if($(this).hasClass("sz-model-act")){
+          $(this).removeClass("sz-model-act");
+          that.sz_selece.remove($(this).html());
+        }else{
+          $(this).addClass("sz-model-act");
+          that.sz_selece.push($(this).html());
+        }
+      })
     },
     methods:{
       //回答者和提问者信息
@@ -142,10 +256,12 @@
         var that=this;
         this.questionUser=data.questionUser;
         this.answewrUsers=data.answewrUsers;
+        this.changerAnswer=data.changerAnswer;
         for(var i=0;i<data.answewrUsers.length;i++){
           if(data.answewrUsers[i].type==0){
             if(data.answewrUsers[i].status==2||data.answewrUsers[i].status==6||data.answewrUsers[i].status==7){
               that.comment_id=data.answewrUsers[i].uuid;
+              that.jc_btn_status=true;
             }
           }
         };
@@ -196,12 +312,144 @@
               }
           })
         }
+      },
+      //赞
+      zan:function(val,e){
+        var that=this,span=e.currentTarget.nextElementSibling,event=e.currentTarget;
+        this.ajax(this.http_url.url+"/answer/proveAndpose",{
+          "answerUuid": val, "status": 1
+        },function(data){
+
+          if(data.code==1){
+            event="/static/img/zan_click.png";
+            span.innerHTML=Number(span.innerHTML)+1;
+          }else{
+            alert(data.des);
+          }
+        })
+      },
+      //踩
+      cai:function(val,e){
+        var that=this,span=e.currentTarget.nextElementSibling,event=e.currentTarget;
+        this.ajax(this.http_url.url+"/answer/proveAndpose",{
+          "answerUuid": val, "status":2
+        },function(data){
+          if(data.code==1){
+            event.src="/static/img/cai_click.png";
+            span.innerHTML=Number(span.innerHTML)+1;
+          }else{
+            alert(data.des);
+          }
+        })
+      },
+      //行业,税种,专题
+      get_tree:function(data){
+        // console.log(data);
+        var categorys=data.categorys;
+        this.hy=this.get_category(categorys,"行业");
+        this.sz=this.get_category(categorys,"税种");
+      },
+      //提交纠错
+      sub_jc:function(val){
+        console.log(this.sz_selece.join(","));
       }
     }
   }
 </script>
 
 <style scoped>
+  .sz-model-act{
+    border-color:#2D86FD!important;
+    color:#2D86FD!important;
+  }
+  .notice>li{
+    margin-bottom: 0.5rem;
+  }
+  .notice>li>span{
+      width:10%;
+  }
+  .notice{
+    color:#999;
+    font-size: 0.75rem;
+  }
+  .jc_sub{
+    margin: 0 auto;
+    width: 7.5rem;
+    height:2.25rem;
+    color:#fff;
+    font-size: 0.94rem;
+    line-height: 2.25rem;
+    text-align: center;
+    background: #2D86FD;
+    border-radius: 4px;
+    margin-top: 0.69rem;
+  }
+  .sz-model>div{
+    width:6rem;
+    height:1.875rem;
+    line-height: 1.875rem;
+    text-align: center;
+    border-radius: 4px;
+    border:1px solid #ddd;
+    font-size: 0.815rem;
+    color:#333;
+    margin-right:0.625rem;
+    margin-bottom: 0.75rem;
+  }
+  .jc_main>select{
+    width:9.38rem;
+    height:2rem;
+  }
+  .jc_main_title{
+    font-size: 0.875rem;
+    color:#333;
+    margin: 1.56rem 0 1rem 0;
+  }
+  .jc_main>textarea{
+    width: 100%;
+    height: 7.81rem;
+  }
+  .jc_main{
+    padding:1.19rem 2.25rem;
+    height:26.94rem;
+    overflow: auto;
+  }
+  .jc_title>div{
+    position: absolute;
+    right:1rem;
+    top:1.125rem;
+  }
+  .jc_title{
+    text-align: center;
+    position: relative;
+    width:100%;
+    height:2.94rem;
+    line-height: 2.94rem;
+    color:#333;
+    font-size: 1rem;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
+  }
+  .jc_body{
+    width:34.8rem;
+    height:34.5rem;
+    background: #fff;
+    border-radius: 0.625rem;
+    margin: 5% auto;
+  }
+  .error-eidt-btn>img{
+    margin-right: 0.375rem;
+  }
+  .error-eidt-btn{
+    float: right;
+  }
+  .best-answer{
+    vertical-align: middle;
+    float: right;
+  }
+  .cz_group>div{
+    margin-left: 1.81rem;
+  }
   .comment-group{
     margin-top:2.25rem ;
   }
