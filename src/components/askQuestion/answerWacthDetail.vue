@@ -88,16 +88,20 @@
             </div>
             <div class="answer-group" v-for="item in changerAnswer">
               <div>
-                <img :src="head_src+item.headImage"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
-                <div class="inline-block queser-msg">
+                <img :src="head_src+all_usermsg.headImage"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
+                <div class="inline-block queser-msg" v-if="all_usermsg.role==2">
                   <div class="inline-block user_name">
-                    {{item.userName}}
+                    {{all_usermsg.userName}}
                     <div class="inline-block zxs-img-show">
                       <img src="../../../static/img/zxs-icon.png" alt="">
-                      {{item.levelName}}
+                      {{all_usermsg.levelName}}
                     </div>
                   </div>
-                  <div>{{item.counselorDuty}}</div>
+                  <div>{{all_usermsg.counselorDuty}}</div>
+                </div>
+                <div class="inline-block queser-msg" v-if="all_usermsg.role==1">
+                  <div class="inline-block user_name">{{all_usermsg.isAnon==1? all_usermsg.realName:'匿名用户'}}</div>
+                  <div class="inline-block user-dj"><img :src="get_score(all_usermsg.integralScore,all_usermsg.aision,all_usermsg.vip)" alt=""></div>
                 </div>
               </div>
               <div class="answer-group-content">
@@ -161,10 +165,11 @@
           <div class="inline-block"  @click="jc_status=!jc_status"><img src="../../../static/img/close-shadow.png" alt=""></div>
         </div>
         <div class="jc_main box-sizing">
-          <textarea name="" id="" cols="30" rows="10"></textarea>
+          <textarea name="" class="box-sizing" id="content" cols="30" rows="10"></textarea>
           <div class="jc_main_title">所属专题：</div>
-          <select name="" id="">
-            <option value="" v-for="item in hy">{{item.name}}</option>
+          <select name="" id="topicId" v-model="topicId" >
+            <option disabled value="">请选择</option>
+            <option value="" v-for="item in hy" v-bind:value="item.name">{{item.name}}</option>
           </select>
           <div class="jc_main_title">所属税种：</div>
           <div class="sz-model">
@@ -177,7 +182,7 @@
         </div>
         <div class="jc_sub" @click="sub_jc()">提交</div>
       </div>
-    </div v>
+    </div>
   </div>
 </template>
 
@@ -190,6 +195,8 @@
     },
     data(){
       return{
+        //用户所有信息
+        all_usermsg:'',
         //纠错框状态
         jc_status:false,
         jc_btn_status:false,
@@ -218,10 +225,17 @@
         sz:[],
         //选择的税种
         sz_selece:[],
+        //专题id
+        topicId:''
       }
     },
     mounted(){
       var that=this;
+      //用户所有信息
+      this.ajax_nodata(this.http_url.url+"/user/message",function(data){
+        console.log(data);
+        that.all_usermsg=data;
+      });
       //回答者和提问者信息
       this.ajax_nodata(this.http_url.url+"/onlook/wx/onlookAuthorized?uuid="+this.$route.query.uuid,this.que_msg);
       //行业,税种,专题
@@ -261,6 +275,8 @@
           if(data.answewrUsers[i].type==0){
             if(data.answewrUsers[i].status==2||data.answewrUsers[i].status==6||data.answewrUsers[i].status==7){
               that.comment_id=data.answewrUsers[i].uuid;
+            }
+            if(data.answewrUsers[i].status==2){
               that.jc_btn_status=true;
             }
           }
@@ -351,13 +367,32 @@
       },
       //提交纠错
       sub_jc:function(val){
-        console.log(this.sz_selece.join(","));
+        var that=this;
+        this.ajax(this.http_url.url+"/changerError/answer/add",{
+          "content":$("#content").val(),
+          "taxId":this.sz_selece.join(","),
+          "topicId":this.topicId,
+          "uuid":that.comment_id
+          },function(data){
+            console.log(data);
+            if(data.code==1){
+              alert("提交成功");
+              window.location.reload();
+            }else{
+              alert(data.des);
+            }
+        })
       }
     }
   }
 </script>
 
 <style scoped>
+  #content{
+    padding:1.125rem;
+    font-size: 0.875rem;
+    color:#999;
+  }
   .sz-model-act{
     border-color:#2D86FD!important;
     color:#2D86FD!important;

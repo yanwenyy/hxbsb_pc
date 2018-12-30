@@ -42,8 +42,8 @@
             <tr class="mine-ques-tr box-sizing" v-for="item in questions">
               <td>{{item.content}}</td>
               <td>{{format(item.time)}}</td>
-              <td :class="item.status==1? 'time-msg':''" :data-time="item.status==1? item.endDate:''">采纳状态</td>
-              <td><img src="../../../static/img/table-look.png" alt=""><span class="blue">查看</span></td>
+              <td :class="item.status==1? 'time-msg':''" :data-time="item.status==1? item.endDate:''">{{cn_status(item.status)}}</td>
+              <td><img src="../../../static/img/table-look.png" alt="" ><span class="blue" @click="$router.push({'name':'mineQuesDetail',query:{'uuid':item.uuid,'status':item.status}})">查看</span></td>
             </tr>
           </table>
         </div>
@@ -82,6 +82,11 @@
           function(msg) {
             //回调函数 msg为选中页码
             // tab(msg);
+            that.start=((msg-1)*10)+1;
+            that.end=msg*10;
+            that.ajax(that.http_url.url+"/question/admireList",{
+              "sinceId":that.start,"maxId":that.end
+            },that.page_msg)
           });
         setInterval(function(){
           $(".time-msg").each(function(){
@@ -145,6 +150,34 @@
             }
             return time_string;
           },
+        //采纳状态
+        cn_status:function(val){
+          var sstatus='';
+          if(val==1){
+            status="未采纳";
+          }if(val==2){
+            status="未采纳";
+          }else if(val==3){
+            status="已采纳";
+          }else if(val==4){
+            status="已采纳";
+          }else if(val==5){
+            status="已过期";
+          }else if(val==6){
+            status="已退款";
+          }else if(val==7){
+            status="退款异常";
+          }else if(val==8){
+            status="退款异常";
+          }else if(val==9){
+            status="已纠错";
+          }
+          return status;
+        },
+        //分页回调
+        page_msg:function(data){
+          this.questions=data.questions;
+        }
       }
     }
 </script>

@@ -12,11 +12,11 @@
             <ul class="mine-edit-password-ul">
               <li>
                 <span class="inline-block">卡号:</span>
-                <input type="password" placeholder="请输入卡号" class="box-sizing">
+                <input v-model="cardNumber" type="number" placeholder="请输入卡号" class="box-sizing">
               </li>
               <li>
                 <span class="inline-block">兑换码:</span>
-                <input type="password" placeholder="请输入兑换码" class="box-sizing">
+                <input v-model="cardPass" type="password" placeholder="请输入兑换码" class="box-sizing">
               </li>
               <li>
                 <span class="inline-block"></span>
@@ -38,12 +38,34 @@
         },
         data(){
             return{
+              cardNumber:'',
+              cardPass:''
             }
         },
         mounted(){
 
         },
         methods:{
+          //提交
+          sub:function(){
+            var that=this;
+            if(this.cardNumber==""||this.cardPass==""){
+              alert("请完善信息")
+            }else{
+              this.ajax(this.http_url.url+"/bindingQACard",{
+                "id":this.cardNumber,
+                "securityCode":this.cardPass
+              },function(data){
+                if(data.code==1){
+                  that.$router.push({
+                    name:'mineFinanceCard'
+                  })
+                }else{
+                  alert(data.des);
+                }
+              })
+            }
+          }
         }
     }
 </script>
