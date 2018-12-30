@@ -46,7 +46,7 @@
                               {{item.lookNum}}
                             </div>
                           </div>
-                          <div class="inline-block statu">已纠错</div>
+                          <div class="inline-block statu" v-if="item.status==9">已纠错</div>
                         </div>
                       </div>
                     </div>

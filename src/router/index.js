@@ -17,6 +17,7 @@ import mineBuy from '@/components/mine/mineBuy' //我的购买
 import mineData from '@/components/mine/mineData' //我的资料
 import mineQuestion from '@/components/mine/mineQuestion' //我的提问
 import questionProgress from '@/components/mine/questionProgress' //我的提问-问题进度
+import mineQuesDetail from '@/components/mine/mineQuesDetail' //我的提问详情
 import mineBag from '@/components/mine/mineBag' //我的钱包
 import mineLearningCard from '@/components/mine/mineLearningCard' //学习顾问卡
 import mineFinanceCard from '@/components/mine/mineFinanceCard' //财税问答卡
@@ -121,6 +122,11 @@ export default new Router({
       path: '/questionProgress',
       name: 'questionProgress',
       component: questionProgress
+    },
+    {
+      path: '/mineQuesDetail',
+      name: 'mineQuesDetail',
+      component: mineQuesDetail
     },
     {
       path: '/mineBag',

@@ -16,7 +16,7 @@
             </div>
             <div class="inline-block money-record box-sizing">
               <div class="inline-block money-tx">
-                <div @click="bind_card">绑定问答卡</div>
+                <div v-if="financeCard_status" @click="bind_card">绑定问答卡</div>
               </div>
               <div class="inline-block">
                 <div class="total-record-name">收入（元）</div>
@@ -74,10 +74,19 @@
             //交易记录
             records:[],
             //总页数
-            count:''
+            count:'',
+            //是否可以绑定问答卡
+            financeCard_status:false
           }
       },
       mounted(){
+          var that=this;
+          //是否可以绑定问答卡
+        this.ajax_nodata(this.http_url.url+"/registIsOvertime",function(data){
+          if(data.code==1){
+            that.financeCard_status=true;
+          }
+        });
         //余额
         this.ajax_nodata(this.http_url.url+"/user/message",this.get_balance);
         //交易记录
@@ -85,13 +94,13 @@
           "sinceId":this.start,
           "maxId":this.end,
           "articleType":"all",
-          "payType":"wallet"
+          "payType":"qaCard"
         },this.get_msg);
       },
       methods:{
           //获取余额
         get_balance:function(data){
-          this.balance=data.balance;
+          this.balance=data.qacardBlance;
         },
           //交易记录
         get_msg:function(data){
@@ -118,7 +127,7 @@
                 "sinceId":that.start,
                 "maxId":that.end,
                 "articleType":"all",
-                "payType":"wallet"
+                "payType":"qaCard"
               },that.page_msg)
             });
         },
