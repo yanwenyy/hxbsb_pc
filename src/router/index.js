@@ -16,6 +16,7 @@ import mineInvoice from '@/components/mine/mineInvoice' //开具发票
 import mineBuy from '@/components/mine/mineBuy' //我的购买
 import mineData from '@/components/mine/mineData' //我的资料
 import mineQuestion from '@/components/mine/mineQuestion' //我的提问
+import questionProgress from '@/components/mine/questionProgress' //我的提问-问题进度
 import mineBag from '@/components/mine/mineBag' //我的钱包
 import mineLearningCard from '@/components/mine/mineLearningCard' //学习顾问卡
 import mineFinanceCard from '@/components/mine/mineFinanceCard' //财税问答卡
@@ -24,6 +25,7 @@ import about from '@/components/about' //关于我们
 import smallClass from '@/components/video/smallClass' //微课
 import smallClassSearch from '@/components/video/smallClassSearch' //微课搜索
 import masterInterview from '@/components/video/masterInterview' //大咖访谈
+import bindFinanceCard from '@/components/bindFinanceCard' //登录注册-绑定财税问答卡
 /*import masterInterviewSearch from '@/components/video/masterInterviewSearch' //大咖访谈搜索*/
 Vue.use(Router)
 
@@ -116,6 +118,11 @@ export default new Router({
       component: mineQuestion
     },
     {
+      path: '/questionProgress',
+      name: 'questionProgress',
+      component: questionProgress
+    },
+    {
       path: '/mineBag',
       name: 'mineBag',
       component: mineBag
@@ -154,6 +161,11 @@ export default new Router({
       path: '/privateQuestion',
       name: 'privateQuestion',
       component: privateQuestion
+    },
+    {
+      path: '/bindFinanceCard',
+      name: 'bindFinanceCard',
+      component: bindFinanceCard
     }
     /*{
       path: '/masterInterviewSearch',
