@@ -98,10 +98,6 @@
         },1000);
       },
       methods:{
-        //点击问题进度
-        go_progress:function (uuid) {
-          this.$router.push({name:'questionProgress',query:{uuid:uuid}})
-        },
           //我的提问列表
         get_list:function(data){
           console.log(data);

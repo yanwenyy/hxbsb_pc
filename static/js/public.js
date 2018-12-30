@@ -1,5 +1,5 @@
 export default{
-  install(Vue,options)
+  install:function(Vue,options)
   {
     //接口变量
     Vue.prototype.http_url = {
@@ -17,7 +17,7 @@ export default{
     Vue.prototype.cover_src = Vue.prototype.http_url.url+"showImg/cover/";
     //证件图片
     Vue.prototype.cert_src = Vue.prototype.http_url.url+"showImg/cert/";
-    Vue.prototype.ajax=function (url,data,succ){
+    Vue.prototype.ajax=function(url,data,succ){
       $.ajax({
         type:"POST",
         url:url,
@@ -43,7 +43,7 @@ export default{
         }
       })
     }
-    Vue.prototype.ajax_nodata=function (url,succ){
+    Vue.prototype.ajax_nodata=function(url,succ){
       $.ajax({
         type:"POST",
         url:url,
@@ -69,7 +69,7 @@ export default{
       })
     }
     //日期转换
-    Vue.prototype.format=function (shijianchuo){
+    Vue.prototype.format=function(shijianchuo){
       function add0(m){return m<10?'0'+m:m };
       var time = new Date(shijianchuo);
       var y = time.getFullYear();
@@ -81,7 +81,7 @@ export default{
       return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
     }
     //用户等级
-    Vue.prototype.get_score=function (data,aision,vip){
+    Vue.prototype.get_score=function(data,aision,vip){
       var score_img;
       if(aision==0){
         if(vip==0){
@@ -107,7 +107,7 @@ export default{
       return score_img;
     }
     //行业,税种,专题
-    Vue.prototype.get_category=function (data,key){
+    Vue.prototype.get_category=function(data,key){
       var categorys='';
       for(var i=0;i<data.length;i++){
         if(data[i].name==key){
