@@ -9,6 +9,7 @@
         <div class="home-model-header">
           <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>我的提问</div>
         </div>
+        <div class="question-progress" v-if="questionUser.quType!=1" @click="go_progress()">问题进度</div>
         <div class="box-sizing mine-ques-detail">
             <div class="queser-grounp">
               <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'/static/img/user-img.png'"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
@@ -29,11 +30,12 @@
                 <span>围观{{questionUser.lookNum}}</span>
               </div>
             </div>
-            <div class="home-model-header home-model-header2">
+            <div class="release_again" @click="release_question()" v-if="questionUser.quType==1">免费重新发布</div>
+            <div class="home-model-header home-model-header2"  v-if="questionUser.quType!=1">
               <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>回答</div>
               <div class="error-eidt-btn inline-block" v-if="jc_btn_status"  @click="jc_status=!jc_status"><img src="../../../static/img/error-eidt-btn.png" alt="">我要纠错</div>
             </div>
-            <div class="answer-group" v-for="item in answewrUsers">
+            <div class="answer-group"  v-if="questionUser.quType!=1" v-for="item in answewrUsers">
               <div class="home-model-header" style="margin-bottom: 1.31rem" v-if="item.type==1">
                 <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>答案纠错</div>
               </div>
@@ -138,7 +140,6 @@
               </div>
             </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -211,6 +212,9 @@
       },
       data(){
         return{
+          // //是否重新发布
+          // release_again:false,
+          // release_no:true,
           //评价内容
           pj_content:'',
           //评价框信息
@@ -294,6 +298,23 @@
         })
       },
       methods:{
+        //重新发布问题
+        release_question:function(){
+          this.ajax(this.http_url.url+"/question/againReleaseQuestion",{
+            "questionUuid":this.$route.query.uuid
+          },function(data){
+              if(data.code==1){
+                alert("发布成功");
+                this.$router.push({name:"mineQuestion"})
+              }else{
+                alert(data.des);
+              }
+          })
+        },
+        //点击问题进度
+        go_progress:function (uuid) {
+          this.$router.push({name:'questionProgress',query:{uuid:this.$route.query.uuid}})
+        },
         //评价按钮点击
         pj_sub:function(val){
           this.ajax(this.http_url.url+"/answer/score",{
@@ -416,6 +437,28 @@
 </script>
 
 <style scoped>
+  .release_again{
+    background: #FE6D27;
+    color:#fff;
+    font-size: 1rem;
+    width:8.75rem;
+    height:2.25rem;
+    line-height: 2.25rem;
+    text-align: center;
+    border-radius: 2px;
+    margin: 2.25rem auto;
+  }
+  .question-progress{
+    width:7.5rem;
+    height:2rem;
+    line-height: 2rem;
+    text-align: center;
+    background: #2D86FD;
+    color:#fff;
+    font-size: 0.875rem;
+    border-radius: 2px;
+    margin-left: 1rem;
+  }
   .cn-pj-sub{
     margin: 0 auto;
     background: #2D86FD;
