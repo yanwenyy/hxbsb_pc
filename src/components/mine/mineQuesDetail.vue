@@ -12,7 +12,7 @@
         <div class="question-progress" v-if="questionUser.quType!=1" @click="go_progress()">问题进度</div>
         <div class="box-sizing mine-ques-detail">
             <div class="queser-grounp">
-              <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'/static/img/user-img.png'"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
+              <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'/static/img/user-img.png'"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
               <div class="inline-block queser-msg">
                 <div class="inline-block user_name">{{questionUser.isAnon==1? questionUser.realName:'匿名用户'}}</div>
                 <div class="inline-block user-dj"><img :src="get_score(questionUser.integralScore,questionUser.aision,questionUser.vip)" alt=""></div>
@@ -40,7 +40,7 @@
                 <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>答案纠错</div>
               </div>
               <div>
-                <img :src="head_src+item.headImage"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
+                <img :src="head_src+item.headImage"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
                 <div class="inline-block queser-msg">
                   <div class="inline-block user_name">
                     {{item.userName}}
@@ -101,7 +101,7 @@
               </div>
               <div class="answer-group" v-for="item in changerAnswer">
                 <div>
-                  <img :src="head_src+all_usermsg.headImage"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
+                  <img :src="head_src+all_usermsg.headImage"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
                   <div class="inline-block queser-msg" v-if="all_usermsg.role==2">
                     <div class="inline-block user_name">
                       {{all_usermsg.userName}}
@@ -176,7 +176,7 @@
         </div>
         <div class="cn_main box-sizing">
           <div>
-            <img :src="head_src+pj_msg.headImage"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
+            <img :src="head_src+pj_msg.headImage"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
             <div class="inline-block queser-msg">
               <div class="inline-block user_name">
                 {{pj_msg.userName}}
@@ -261,12 +261,12 @@
         var that=this;
         // alert(this.$route.query.status);
         //用户所有信息
-        // this.ajax_nodata(this.http_url.url+"/user/message",function(data){
-        //   console.log(data);
-        //   that.all_usermsg=data;
-        // });
-        var data=JSON.parse(sessionStorage.getItem("userMessage"));
-        this.all_usermsg=data;
+        this.ajax_nodata(this.http_url.url+"/user/message",function(data){
+          console.log(data);
+          that.all_usermsg=data;
+        });
+        // var data=JSON.parse(sessionStorage.getItem("userMessage"));
+        // this.all_usermsg=data;
         //回答者和提问者信息
         this.ajax(this.http_url.url+"/question/acceptAnswer",{
           "status":this.$route.query.status,

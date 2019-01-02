@@ -26,7 +26,7 @@
                   <div class="wdk-list" v-for="item in questions">
                     <div class="inline-block">
                       <div class="wdk-name">
-                        <img :src='head_src+item.headImage'  onerror="javascript:this.src='/static/img/user-img.png';">
+                        <img :src='head_src+item.headImage'  onerror="javascript:this.src='./static/img/user-img.png';">
                         <div class="inline-block user_name">{{item.realName||"匿名用户"}}</div>
                         <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
                         <div class="home-list-msg-group">

@@ -85,23 +85,23 @@ export default{
       var score_img;
       if(aision==0){
         if(vip==0){
-          score_img="/static/img/hangxin_vip.png"
+          score_img="./static/img/hangxin_vip.png"
         }else{
-          score_img="/static/img/hangxin_vip_dateout.png"
+          score_img="./static/img/hangxin_vip_dateout.png"
         }
       }else{
         if(0<=data&&data<6){
-          score_img="/static/img/icon-pthy.png"
+          score_img="./static/img/icon-pthy.png"
         }else if(6<=data&&data<20){
-          score_img="/static/img/icon-pthy.png"
+          score_img="./static/img/icon-pthy.png"
         }else if(20<=data&&data<50){
-          score_img="/static/img/icon-yphy.png"
+          score_img="./static/img/icon-yphy.png"
         }else if(50<=data&&data<100){
-          score_img="/static/img/icon-jphy.png"
+          score_img="./static/img/icon-jphy.png"
         }else if(100<=data&&data<500){
-          score_img="/static/img/icon-bjhy.png"
+          score_img="./static/img/icon-bjhy.png"
         }else if(500<=data){
-          score_img="/static/img/icon-zshy.png"
+          score_img="./static/img/icon-zshy.png"
         }
       }
       return score_img;

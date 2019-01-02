@@ -4,7 +4,7 @@
       <div class="home-main box-sizing">
         <div class="h-main-left inline-block">
           <div class="queser-grounp">
-            <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'/static/img/user-img.png'"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
+            <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'/static/img/user-img.png'"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
             <div class="inline-block queser-msg">
               <div class="inline-block user_name">{{questionUser.isAnon==1? questionUser.realName:'匿名用户'}}</div>
               <div class="inline-block user-dj"><img :src="get_score(questionUser.integralScore,questionUser.aision,questionUser.vip)" alt=""></div>
@@ -31,7 +31,7 @@
               <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>答案纠错</div>
             </div>
             <div>
-              <img :src="head_src+item.headImage"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
+              <img :src="head_src+item.headImage"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
               <div class="inline-block queser-msg">
                 <div class="inline-block user_name">
                   {{item.userName}}
@@ -42,7 +42,7 @@
                 </div>
                 <div>{{item.counselorDuty}}</div>
               </div>
-              <div class="inline-block best-answer" v-if="item.status==2||item.status==6||item.status==7||item.checkStatus==2">
+              <div class="inline-block best-answer" v-if="item.status==2||item.status==6||item.status==7">
                 <img src="../../../static/img/best-answer.png" alt="">
               </div>
               <div class="inline-block best-answer" v-if="item.type==1">
@@ -88,7 +88,7 @@
             </div>
             <div class="answer-group" v-for="item in changerAnswer">
               <div>
-                <img :src="head_src+all_usermsg.headImage"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
+                <img :src="head_src+all_usermsg.headImage"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
                 <div class="inline-block queser-msg" v-if="all_usermsg.role==2">
                   <div class="inline-block user_name">
                     {{all_usermsg.userName}}

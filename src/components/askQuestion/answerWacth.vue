@@ -4,7 +4,7 @@
       <div class="home-main box-sizing">
         <div class="h-main-left inline-block">
           <div class="queser-grounp">
-            <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'/static/img/user-img.png'"   onerror="javascript:this.src='/static/img/user-img.png';" alt="" class="queser-head">
+            <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'/static/img/user-img.png'"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
             <div class="inline-block queser-msg">
               <div class="inline-block user_name">{{questionUser.isAnon==1? questionUser.realName:'匿名用户'}}</div>
               <div class="inline-block user-dj"><img :src="get_score(questionUser.integralScore,questionUser.aision,questionUser.vip)" alt=""></div>
