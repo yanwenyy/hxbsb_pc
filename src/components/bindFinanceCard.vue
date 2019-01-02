@@ -15,12 +15,12 @@
             <ul>
               <li class="login-li">
                 <div class="inline-block login-li-img">
-                  <input type="text" placeholder="请输入卡号">
+                  <input v-model="cardNumber" type="text" placeholder="请输入卡号">
                 </div>
               </li>
               <li class="login-li">
                 <div class="inline-block login-li-img">
-                  <input type="text" placeholder="请输入兑换码">
+                  <input v-model="cardPass" type="text" placeholder="请输入兑换码">
                 </div>
               </li>
             </ul>
@@ -29,8 +29,8 @@
                 填写后点完成，没有点跳过。
               </p>
             </div>
-            <div class="login-btn">绑定</div>
-            <div class="skip blue">跳过</div>
+            <div class="login-btn" @click="sub()">绑定</div>
+            <div class="skip blue" @click="cross()">跳过</div>
           </div>
         </div>
       </div>
@@ -46,11 +46,41 @@
         name: "bind-finance-card",
         data(){
           return{
+            cardNumber:'',
+            cardPass:''
           }
         },
         mounted(){
 
+        },
+      methods:{
+        //提交
+        sub:function(){
+          var that=this;
+          if(this.cardNumber==""||this.cardPass==""){
+            alert("请完善信息")
+          }else{
+            this.ajax(this.http_url.url+"/bindingQACard",{
+              "id":this.cardNumber,
+              "securityCode":this.cardPass
+            },function(data){
+              if(data.code==1){
+                that.$router.push({
+                  name:'Home'
+                })
+              }else{
+                alert(data.des);
+              }
+            })
+          }
+        },
+        //跳过
+        cross:function(){
+          this.$router.push({
+            name:'Home'
+          })
         }
+      }
     }
 </script>
 

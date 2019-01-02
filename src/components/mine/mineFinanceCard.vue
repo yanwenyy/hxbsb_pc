@@ -88,7 +88,9 @@
           }
         });
         //余额
-        this.ajax_nodata(this.http_url.url+"/user/message",this.get_balance);
+        // this.ajax_nodata(this.http_url.url+"/user/message",this.get_balance);
+        var data=JSON.parse(sessionStorage.getItem("userMessage"));
+        this.balance=data.qacardBlance;
         //交易记录
         this.ajax(this.http_url.url+"/flow/sumRecording",{
           "sinceId":this.start,

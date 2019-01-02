@@ -261,10 +261,12 @@
         var that=this;
         // alert(this.$route.query.status);
         //用户所有信息
-        this.ajax_nodata(this.http_url.url+"/user/message",function(data){
-          console.log(data);
-          that.all_usermsg=data;
-        });
+        // this.ajax_nodata(this.http_url.url+"/user/message",function(data){
+        //   console.log(data);
+        //   that.all_usermsg=data;
+        // });
+        var data=JSON.parse(sessionStorage.getItem("userMessage"));
+        this.all_usermsg=data;
         //回答者和提问者信息
         this.ajax(this.http_url.url+"/question/acceptAnswer",{
           "status":this.$route.query.status,

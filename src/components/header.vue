@@ -62,11 +62,13 @@
       mounted () {
         this.message="";
         //获取用户名字
-        var that=this;
-        function get_name(data){
-          that.userName=data.realName;
-        }
-        this.ajax_nodata(this.http_url.url+"/user/message",get_name)
+        // var that=this;
+        // function get_name(data){
+        //   that.userName=data.realName;
+        // }
+        // this.ajax_nodata(this.http_url.url+"/user/message",get_name);
+        var data=JSON.parse(sessionStorage.getItem("userMessage"));
+        this.userName=data.realName;
       },
       methods:{
           //用户名点击
