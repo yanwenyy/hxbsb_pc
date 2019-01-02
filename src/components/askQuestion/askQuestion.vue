@@ -291,7 +291,6 @@
     width:5.5rem;
     height: 5.5rem;
     opacity: 0;
-    filter: opacity(0);
     z-index: 1;
   }
   .ask-trade-box input{
@@ -365,7 +364,6 @@
   .checkbox-box input{
     z-index: 1;
     opacity: 0;
-    filter: opacity(0);
   }
   .checkbox-box.checkbox-icon label{
     background:url("../../../static/img/label-checkbox-icon.png") no-repeat center;
