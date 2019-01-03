@@ -27,7 +27,7 @@
           </div>
           <div class="answer-group">
             <div>
-              <img :src="head_src+answer_msg.headImage" onerror="javascript:this.src='/static/user-img.png'" alt="" class="queser-head">
+              <img :src="head_src+answer_msg.headImage" onerror="javascript:this.src='./static/user-img.png'" alt="" class="queser-head">
               <div class="inline-block queser-msg">
                 <div class="inline-block user_name">
                   {{answer_msg.realName}}
@@ -70,7 +70,7 @@
         <div class="shodow-body box-sizing">
           <ul>
             <li v-for="item in look_list_detail">
-              <img :src="head_src+item.headImage"  onerror="javascript:this.src='/static/img/user-img.png'" alt="">
+              <img :src="head_src+item.headImage"  onerror="javascript:this.src='./static/img/user-img.png'" alt="">
               <div class="inline-block wgry-list">
                 <div class="inline-block wgry-list-usermsg">
                   <div class="wgry-list-name">
