@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import main from '@/components/main'//主入口页面
 import Home from '@/components/home'
 import video from '@/components/video/video'
 import login from '@/components/login'
@@ -34,156 +34,179 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      meta:{
-        title:'首页'
-      },
-      component: Home
-    },
-    {
-      path: '/HelloWorld:id',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'main',
+      component: main,
+      redirect: { name: 'Home' },
+      meta: { title: '主入口整体布局' },
+      children: [
+        {
+          path: '/home',
+          name: 'Home',
+          meta:{
+            title:'首页'
+          },
+          component: Home
+        },
+        {
+          path: '/video',
+          name: 'video',
+          component: video
+        },
+        {
+          path: '/askQuestion',
+          name: 'askQuestion',
+          meta:{
+            title:'我要提问',
+          },
+          component: askQuestion
+        },
+        {
+          path: '/quesAnswerBank',
+          name: 'quesAnswerBank',
+          component: quesAnswerBank
+        },
+        {
+          path: '/payMethod',
+          name: 'payMethod',
+          component: payMethod
+        },
+        {
+          path: '/answerSearch',
+          name: 'answerSearch',
+          component: answerSearch
+        },
+        {
+          path: '/answerWacth',
+          name: 'answerWacth',
+          component: answerWacth
+        },
+        {
+          path: '/answerWacthDetail',
+          name: 'answerWacthDetail',
+          component: answerWacthDetail
+        },
+        {
+          path: '/mineEditPassword',
+          name: 'mineEditPassword',
+          component: mineEditPassword
+        },
+        {
+          path: '/mineInvoice',
+          name: 'mineInvoice',
+          component: mineInvoice
+        },
+        {
+          path: '/about',
+          name: 'about',
+          component: about
+        },
+        {
+          path: '/mineBuy',
+          name: 'mineBuy',
+          component: mineBuy
+        },
+        {
+          path: '/mineData',
+          name: 'mineData',
+          component: mineData
+        },
+        {
+          path: '/mineQuestion',
+          name: 'mineQuestion',
+          component: mineQuestion
+        },
+        {
+          path: '/questionProgress',
+          name: 'questionProgress',
+          component: questionProgress
+        },
+        {
+          path: '/mineQuesDetail',
+          name: 'mineQuesDetail',
+          component: mineQuesDetail
+        },
+        {
+          path: '/mineBag',
+          name: 'mineBag',
+          component: mineBag
+        },
+        {
+          path: '/mineLearningCard',
+          name: 'mineLearningCard',
+          component: mineLearningCard
+        },
+        {
+          path: '/mineFinanceCard',
+          name: 'mineFinanceCard',
+          component: mineFinanceCard
+        },
+        {
+          path: '/mineBindFCard',
+          name: 'mineBindFCard',
+          component: mineBindFCard
+        },
+        {
+          path: '/smallClass',
+          name: 'smallClass',
+          component: smallClass
+        },
+        {
+          path: '/smallClassSearch',
+          name: 'smallClassSearch',
+          component: smallClassSearch
+        },
+        {
+          path: '/masterInterview',
+          name: 'masterInterview',
+          component: masterInterview
+        },
+        {
+          path: '/privateQuestion',
+          name: 'privateQuestion',
+          component: privateQuestion
+        },
+        {
+          path: '/bindFinanceCard',
+          name: 'bindFinanceCard',
+          component: bindFinanceCard
+        }
+      ],
+      beforeEnter (to, from, next) {
+        //获取地址栏参数
+        function getUrlParms(name){
+          var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+          var r = window.location.search.substr(1).match(reg);
+          if(r!=null)
+            return unescape(r[2]);
+          return null;
+        }
+        if(getUrlParms("id")){
+          // sessionStorage.setItem("cookieId","oPUdI0pZbHIYBCHUn_aQPCJAmRIU")
+        }else{
+          let cookieId = sessionStorage.getItem("cookieId")
+          if (!cookieId || !/\S/.test(cookieId)) {
+            next({ name: 'login' })
+          }
+        }
+        next()
+        // let cookieId = sessionStorage.getItem("cookieId")
+        // if (!cookieId || !/\S/.cookieId(cookieId)) {
+        //   next({ name: 'login' })
+        // }
+        // next()
+      }
     },
     {
       path: '/login',
       name: 'login',
       component: login
-    },
-    {
-      path: '/video',
-      name: 'video',
-      component: video
-    },
-    {
-      path: '/askQuestion',
-      name: 'askQuestion',
-      meta:{
-        title:'我要提问',
-      },
-      component: askQuestion
-    },
-    {
-      path: '/quesAnswerBank',
-      name: 'quesAnswerBank',
-      component: quesAnswerBank
-    },
-    {
-      path: '/payMethod',
-      name: 'payMethod',
-      component: payMethod
-    },
-    {
-      path: '/answerSearch',
-      name: 'answerSearch',
-      component: answerSearch
-    },
-    {
-      path: '/answerWacth',
-      name: 'answerWacth',
-      component: answerWacth
-    },
-    {
-      path: '/answerWacthDetail',
-      name: 'answerWacthDetail',
-      component: answerWacthDetail
-    },
-    {
-      path: '/mineEditPassword',
-      name: 'mineEditPassword',
-      component: mineEditPassword
-    },
-    {
-      path: '/mineInvoice',
-      name: 'mineInvoice',
-      component: mineInvoice
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: about
-    },
-    {
-      path: '/mineBuy',
-      name: 'mineBuy',
-      component: mineBuy
-    },
-    {
-      path: '/mineData',
-      name: 'mineData',
-      component: mineData
-    },
-    {
-      path: '/mineQuestion',
-      name: 'mineQuestion',
-      component: mineQuestion
-    },
-    {
-      path: '/questionProgress',
-      name: 'questionProgress',
-      component: questionProgress
-    },
-    {
-      path: '/mineQuesDetail',
-      name: 'mineQuesDetail',
-      component: mineQuesDetail
-    },
-    {
-      path: '/mineBag',
-      name: 'mineBag',
-      component: mineBag
-    },
-    {
-      path: '/mineLearningCard',
-      name: 'mineLearningCard',
-      component: mineLearningCard
-    },
-    {
-      path: '/mineFinanceCard',
-      name: 'mineFinanceCard',
-      component: mineFinanceCard
-    },
-    {
-      path: '/mineBindFCard',
-      name: 'mineBindFCard',
-      component: mineBindFCard
-    },
-    {
-      path: '/smallClass',
-      name: 'smallClass',
-      component: smallClass
-    },
-    {
-      path: '/smallClassSearch',
-      name: 'smallClassSearch',
-      component: smallClassSearch
-    },
-    {
-      path: '/masterInterview',
-      name: 'masterInterview',
-      component: masterInterview
-    },
-    {
-      path: '/privateQuestion',
-      name: 'privateQuestion',
-      component: privateQuestion
-    },
-    {
-      path: '/bindFinanceCard',
-      name: 'bindFinanceCard',
-      component: bindFinanceCard
     }
-    /*{
-      path: '/masterInterviewSearch',
-      name: 'masterInterviewSearch',
-      component: masterInterviewSearch
-    }*/
-
   ],
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }
   }
 })
+
 
 
 

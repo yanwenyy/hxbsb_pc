@@ -185,7 +185,7 @@
       data () {
           return{
             //头像出错
-            head_error:"this.src='../../static/img/user-img.png'",
+            head_error:"this.src='./static/img/user-img.png'",
             zan:1,
             //最新问答
             zxwd:[],

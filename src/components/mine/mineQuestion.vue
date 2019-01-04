@@ -42,7 +42,7 @@
             <tr class="mine-ques-tr box-sizing" v-for="item in questions">
               <td>{{item.content}}</td>
               <td>{{format(item.time)}}</td>
-              <td :class="item.status==1? 'time-msg':''" :data-time="item.status==1? item.endDate:''">{{cn_status(item.status)}}</td>
+              <td class="time-msg" :data-time="item.status==1? item.endDate:''" :data-status="item.status">{{cn_status(item.status)}}</td>
               <td><img src="../../../static/img/table-look.png" alt="" ><span class="blue" @click="$router.push({'name':'mineQuesDetail',query:{'uuid':item.uuid,'status':item.status}})">查看</span></td>
             </tr>
           </table>
@@ -65,7 +65,8 @@
             start:'1',
             end:'10',
             //提问列表
-            questions:[]
+            questions:[],
+            no_msg:true
           }
       },
       mounted(){
@@ -74,34 +75,47 @@
         this.ajax(this.http_url.url+"/question/admireList",{
           "sinceId":this.start,"maxId":this.end
         },this.get_list);
-        //分页插件初始化
-        $("#page").paging({
-            total: 20,
-            numberPage: 1,
-          },
-          function(msg) {
-            //回调函数 msg为选中页码
-            // tab(msg);
-            that.start=((msg-1)*10)+1;
-            that.end=msg*10;
-            that.ajax(that.http_url.url+"/question/admireList",{
-              "sinceId":that.start,"maxId":that.end
-            },that.page_msg)
-          });
-        setInterval(function(){
-          $(".time-msg").each(function(){
-            var t=$(this);
-            if(t.attr("data-time")){
-              t.html(that.get_djs(t.attr("data-time")));
-            }
-          })
-        },1000);
+        // setInterval(function(){
+        //   $(".time-msg").each(function(){
+        //     var t=$(this);
+        //     if(t.attr("data-time")){
+        //       t.html(that.get_djs(t.attr("data-time")));
+        //     }
+        //   })
+        // },1000);
       },
       methods:{
           //我的提问列表
         get_list:function(data){
+          var that=this;
           console.log(data);
           this.questions=data.questions;
+          //分页插件初始化
+          $("#page").paging({
+              total: data.count/10,
+              numberPage: 1,
+            },
+            function(msg) {
+              //回调函数 msg为选中页码
+              // tab(msg);
+              if(that.no_msg){
+                that.start=((msg-1)*10)+1;
+                that.end=msg*10;
+                that.ajax(that.http_url.url+"/question/admireList",{
+                  "sinceId":that.start,"maxId":that.end
+                },that.page_msg)
+              }
+            });
+          setInterval(function(){
+            $(".time-msg").each(function(){
+              var t=$(this);
+              if(t.attr("data-time")){
+                t.html(that.get_djs(t.attr("data-time")));
+              }else{
+                t.html(that.cn_status(t.attr("data-status")));
+              }
+            })
+          },1000);
         },
         //采纳倒计时
         get_djs:function(endTime){
@@ -176,7 +190,22 @@
         },
         //分页回调
         page_msg:function(data){
-          this.questions=data.questions;
+          var that=this;
+          if(data.questions!=""||data.questions!=null){
+            this.questions=data.questions;
+          }else{
+            this.no_msg=false;
+          }
+          setInterval(function(){
+            $(".time-msg").each(function(){
+              var t=$(this);
+              if(t.attr("data-time")){
+                t.html(that.get_djs(t.attr("data-time")));
+              }else{
+                t.html(that.cn_status(t.attr("data-status")));
+              }
+            })
+          },1000);
         }
       }
     }

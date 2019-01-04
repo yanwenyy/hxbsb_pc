@@ -220,7 +220,8 @@
                   if(data.code==1){
                     sessionStorage.setItem("userMessage",JSON.stringify(data));
                     if(data.ifNewRegist==0){
-                      that.$router.push({name:"Home"})
+                      that.$router.push({name:"Home"});
+                      sessionStorage.setItem("cookieId",data.cookieId);
                     }else{
                       that.$router.push({name:"bindFinanceCard"})
                     }
@@ -244,7 +245,8 @@
                  // console.log(data);
                   sessionStorage.setItem("userMessage",JSON.stringify(data));
                   if(data.ifNewRegist==0){
-                    that.$router.push({name:"Home"})
+                    that.$router.push({name:"Home"});
+                    sessionStorage.setItem("cookieId",data.cookieId);
                   }else{
                     that.$router.push({name:"bindFinanceCard"})
                   }
@@ -268,7 +270,8 @@
               if(data.code==1){
                 sessionStorage.setItem("userMessage",JSON.stringify(data));
                 if(data.ifNewRegist==0){
-                  that.$router.push({name:"Home"})
+                  that.$router.push({name:"Home"});
+                  sessionStorage.setItem("cookieId",data.cookieId);
                 }else{
                   that.$router.push({name:"bindFinanceCard"})
                 }
@@ -282,6 +285,8 @@
 </script>
 
 <style scoped>
+  @import "../../static/css/main.css";
+  @import "../../static/css/reset.css";
   .go-login{
     text-align: center;
     margin: 2rem 0;
@@ -371,11 +376,5 @@
   .login:before{
     display: table;
     content: '';
-  }
-  .login{
-    width:100%;
-    height:90%;
-    background: url("/static/img/login-bg.png");
-
   }
 </style>

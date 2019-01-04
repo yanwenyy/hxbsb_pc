@@ -25,7 +25,7 @@ export default{
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json;charset=utf-8",
-          "cookieId":"oPUdI0pZbHIYBCHUn_aQPCJAmRIU",
+          "cookieId":sessionStorage.getItem("cookieId"),
           "version":"1"
         },
         data:JSON.stringify(data),
@@ -51,7 +51,7 @@ export default{
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json;charset=utf-8",
-          "cookieId":"oPUdI0pZbHIYBCHUn_aQPCJAmRIU",
+          "cookieId":sessionStorage.getItem("cookieId"),
           "version":"1"
         },
         success:function(data){

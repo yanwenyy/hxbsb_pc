@@ -23,6 +23,7 @@
                   <li v-on:click="user_name_li"><router-link :to="{ name: 'mineBuy', params: { name:''  }}">我的购买</router-link></li>
                   <li v-on:click="user_name_li"><router-link :to="{ name: 'mineBag', params: { name:''  }}">我的钱包</router-link></li>
                   <li v-on:click="user_name_li"><router-link :to="{ name: 'mineLearningCard', params: { name:''  }}">学习顾问卡</router-link></li>
+                  <li v-on:click="user_name_li"><router-link :to="{ name: 'mineFinanceCard', params: { name:''  }}">财税问答卡</router-link></li>
                   <li v-on:click="user_name_li"><router-link :to="{ name: 'mineInvoice', params: { name:''  }}">开具发票</router-link></li>
                   <li v-on:click="user_name_li"><router-link :to="{ name: 'mineEditPassword', params: { name:''  }}">设置密码</router-link></li>
                   <li v-on:click="user_name_li"><router-link :to="{ name: 'login', params: { name:''  }}">退出</router-link></li>
@@ -102,11 +103,11 @@
         ques_btn:function(){
           if(this.title_code==1||this.title_code==2){
             this.$router.push({
-              name: 'answerSearch',params:{msg:this.message}
+              name: 'answerSearch',query:{msg:this.message}
             })
           }else if(this.title_code==4){
             this.$router.push({
-              name: 'smallClassSearch',params:{msg:this.message}
+              name: 'smallClassSearch',query:{msg:this.message}
             })
           }
         }

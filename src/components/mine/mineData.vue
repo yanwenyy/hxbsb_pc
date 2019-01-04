@@ -11,7 +11,7 @@
           </div>
           <div class="mine-data-user-msg">
             <div class="inline-block mine-data-user-img">
-              <img :src="user_img" alt=""  onerror="javascript:this.src='../../static/img/user-img.png';">
+              <img :src="user_img" alt=""  onerror="javascript:this.src='./static/img/user-img.png';">
               <input type="file" class="img-file" @change="head_img_sel()">
               <div>上传头像</div>
             </div>
