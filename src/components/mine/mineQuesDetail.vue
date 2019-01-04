@@ -9,7 +9,7 @@
         <div class="home-model-header">
           <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>我的提问</div>
         </div>
-        <div class="question-progress" v-if="questionUser.quType!=1" @click="go_progress()">问题进度</div>
+        <div class="question-progress" v-if="questionUser.quType!=1" @click="go_progress()" v-show="progress">问题进度</div>
         <div class="box-sizing mine-ques-detail">
             <div class="queser-grounp">
               <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'./static/img/user-img.png'"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
@@ -254,12 +254,18 @@
           //选择的税种
           sz_selece:[],
           //专题id
-          topicId:''
+          topicId:'',
+          //是否显示问题进度
+          progress:true
         }
       },
       mounted(){
         var that=this;
         // alert(this.$route.query.status);
+        //已采纳已纠错不显示问题进度按钮
+        if(this.$route.query.status=="3"||this.$route.query.status=="4"||this.$route.query.status=="9"){
+          this.progress=false
+        };
         //用户所有信息
         this.ajax_nodata(this.http_url.url+"/user/message",function(data){
           console.log(data);
