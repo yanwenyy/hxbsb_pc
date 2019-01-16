@@ -51,6 +51,10 @@
         },
         mounted () {
           //行业,税种,专题
+          var that=this;
+          function get_name(data){
+            that.userName=data.realName;
+          }
           this.ajax_nodata(this.http_url.url+'/category/tree',this.get_tree);
         },
         methods:{

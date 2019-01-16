@@ -231,7 +231,7 @@ input::-webkit-input-placeholder{
   text-align: center;
 }
 .title_act{
-  color:#2D86FD;
+  color:#2D86FD!important;
   border-bottom: 3px solid #2D86FD;
   font-weight: 800;
 }

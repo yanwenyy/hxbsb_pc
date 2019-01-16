@@ -27,7 +27,7 @@
           </div>
           <div class="answer-group">
             <div>
-              <img :src="head_src+answer_msg.headImage" onerror="javascript:this.src='./static/user-img.png'" alt="" class="queser-head">
+              <img :src="head_src+answer_msg.headImage" onerror="javascript:this.src='./static/img/user-img.png'" alt="" class="queser-head">
               <div class="inline-block queser-msg">
                 <div class="inline-block user_name">
                   {{answer_msg.realName}}

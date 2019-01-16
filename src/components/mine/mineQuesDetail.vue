@@ -57,7 +57,7 @@
                 <div class="inline-block best-answer" v-if="item.type==1">
                   <img src="../../../static/img/error-answer.png" alt="">
                 </div>
-                <div class="inline-block best-answer accept" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==1">
+                <div class="inline-block best-answer accept" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2">
                   采纳
                 </div>
               </div>
@@ -80,7 +80,7 @@
                     <span>{{item.opposeNum}}</span>
                   </div>
                 </div>
-                <div class="not-agree inline-block" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==1">不满意</div>
+                <div class="not-agree inline-block" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==2">不满意</div>
               </div>
               <div class="evaluate-model box-sizing " v-if="item.status==2||item.status==6||item.status==7">
                 <div class="evaluate-score">

@@ -33,16 +33,16 @@
           </div>
         </div>
       </div>
-      <div id="head-title">
-        <div class="container">
-          <div class="inline-block"><router-link :to="{ name: 'Home',params: { msg: 'sy'}}"><span  :class=" title_code==1? 'title_act':''" class="box-sizing" v-on:click="headT_click(1)">首页</span></router-link></div>
-          <div class="inline-block"><router-link :to="{ name: 'quesAnswerBank'}"><span  :class=" title_code==2? 'title_act':''" class="box-sizing"  v-on:click="headT_click(2)">问答库</span></router-link></div>
-          <div class="inline-block"><router-link :to="{ name: 'masterInterview'}"><span :class=" title_code==3? 'title_act':''" class="box-sizing"   v-on:click="headT_click(3)">大咖访谈</span></router-link></div>
-          <div class="inline-block"><router-link :to="{ name: 'smallClass'}"><span  :class=" title_code==4? 'title_act':''" class="box-sizing"  v-on:click="headT_click(4)">微课</span></router-link></div>
-          <div class="inline-block"><router-link :to="{ name: 'privateQuestion'}"><span :class=" title_code==5? 'title_act':''" class="box-sizing"  v-on:click="headT_click(5)">私密问</span></router-link></div>
-          <div class="inline-block"><router-link :to="{ name: 'about'}"><span :class=" title_code==6? 'title_act':''" class="box-sizing"  v-on:click="headT_click(6)">关于我们</span></router-link></div>
-        </div>
-      </div>
+      <!--<div id="head-title">-->
+        <!--<div class="container">-->
+          <!--<div class="inline-block"><router-link :to="{ name: 'Home',params: { msg: 'sy'}}"><span  :class=" title_code==1? 'title_act':''" class="box-sizing" v-on:click="headT_click(1)">首页</span></router-link></div>-->
+          <!--<div class="inline-block"><router-link :to="{ name: 'quesAnswerBank'}"><span  :class=" title_code==2? 'title_act':''" class="box-sizing"  v-on:click="headT_click(2)">问答库</span></router-link></div>-->
+          <!--<div class="inline-block"><router-link :to="{ name: 'masterInterview'}"><span :class=" title_code==3? 'title_act':''" class="box-sizing"   v-on:click="headT_click(3)">大咖访谈</span></router-link></div>-->
+          <!--<div class="inline-block"><router-link :to="{ name: 'smallClass'}"><span  :class=" title_code==4? 'title_act':''" class="box-sizing"  v-on:click="headT_click(4)">微课</span></router-link></div>-->
+          <!--<div class="inline-block"><router-link :to="{ name: 'privateQuestion'}"><span :class=" title_code==5? 'title_act':''" class="box-sizing"  v-on:click="headT_click(5)">私密问</span></router-link></div>-->
+          <!--<div class="inline-block"><router-link :to="{ name: 'about'}"><span :class=" title_code==6? 'title_act':''" class="box-sizing"  v-on:click="headT_click(6)">关于我们</span></router-link></div>-->
+        <!--</div>-->
+      <!--</div>-->
     </div>
   </div>
 </template>
@@ -70,9 +70,13 @@
         this.ajax_nodata(this.http_url.url+"/user/message",get_name);
         // var data=JSON.parse(sessionStorage.getItem("userMessage"));
         // this.userName=data.realName;
+        this.title_code=this.$route.query.msg;
       },
       methods:{
-          //用户名点击
+        init (id){
+          this.userName=id;
+        },
+        //用户名点击
         user_name:function(){
           if(this.head_scode==false){
             this.head_scode=true;

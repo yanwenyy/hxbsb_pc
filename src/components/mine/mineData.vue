@@ -20,7 +20,8 @@
               <div class="mine-data-user-duty-img">
                 <img :src="dj_img" alt="">
               </div>
-              <div class="mine-data-user-duty-date">快速问免费 有效期至 {{format(hangxin_date)}}</div>
+              <div v-if="usermsg.aision==0&&usermsg.vip==0" class="mine-data-user-duty-date">快速问免费 有效期至 {{format(hangxin_date)}}</div>
+              <div v-if="usermsg.aision==0&&usermsg.vip==1" class="mine-data-user-duty-date">航信会员已过期</div>
             </div>
           </div>
         </div>
@@ -115,6 +116,7 @@
         },
       data() {
         return {
+          usermsg:'',
           //公司所在行业
           hy:[],
           hy_show:false,
@@ -160,12 +162,13 @@
         get_usermessge:function(data){
           var that=this;
           console.log(data);
+          this.usermsg=data;
           this.user_img=this.head_src+data.headImage;
           console.log(this.user_img);
-          this.user_name=data.userName;
+          this.user_name=data.realName;
           this.dj_img=this.get_score(data.integralScore,data.aision,data.vip);
           this.hangxin_date=data.vipTime;
-          this.user_realNanme=data.realName;
+          this.user_realNanme=data.userName;
           this.birthday=data.birthday;
           this.phoneNumber=data.phone;
           this.companyName=data.companyName;
@@ -244,8 +247,8 @@
           }
           that.ajax(that.http_url.url+"/user/editUser",{
             "headImage":headImage,
-            "realName":that.user_realNanme,
-            "userName":that.user_name,
+            "realName":that.user_name,
+            "userName":that.user_realNanme,
             "sex":gender,
             "province":that.province,
             "trade":that.hy_msg,

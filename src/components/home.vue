@@ -1,11 +1,12 @@
 <template>
     <div class="home-body">
+      <headerTab ref="child" msg="首页"></headerTab>
       <Swiper></Swiper>
       <div class="container">
         <div class="home-main box-sizing">
           <div class="h-main-left inline-block">
             <div class="wg-notice box-sizing">
-              <img src="../../static/img/home-wg-tongtai.png" alt="">
+              <img src="../../static/img/home-wg-tongtai.png"alt="">
               <div class="inline-block">
                   <ul class="notice-ul">
                     <li class="notice-li" v-for="item in notice">
@@ -137,17 +138,63 @@
   import Swiper from '@/components/swiper'
   import HomeRight from '@/components/homeRight'
   import ScrollTop from '@/components/scrollTop'
+  import headerTab from "@/components/headerTab"
     export default {
         name: "home",
         components: {
           Swiper,
           HomeRight,
-          ScrollTop
+          ScrollTop,
+          headerTab
         },
-      created () {
-
-      },
       mounted () {
+          var that=this;
+          console.log(this.getUrlParms('data'));
+          // if(this.getUrlParms('data')&&this.getUrlParms('source')){
+          //   this.ajax(this.http_url.url+"/wx/user/aision",{
+          //     "code":'pc',
+          //     "source":this.getUrlParms('source'),
+          //     "data":this.getUrlParms('data')
+          //   },function(data){
+          //     if(data.code==1){
+          //       sessionStorage.setItem("cookieId",data.data);
+          //
+          //       //通告内容
+          //       that.ajax_nodata(that.http_url.url+'/indexOnLookQ',that.get_notice);
+          //       //最新
+          //       that.ajax(that.http_url.url+'/onlook/look/list',{
+          //         "sinceId":1,
+          //         "maxId":5,
+          //         "type":"new"
+          //       },that.get_new);
+          //       //专题
+          //       that.ajax_nodata(that.http_url.url+'/load/getconfig/message',that.get_set);
+          //       //最热
+          //       that.ajax(that.http_url.url+'/onlook/look/list',{
+          //         "sinceId":1,
+          //         "maxId":10,
+          //         "type":"hot"
+          //       },that.get_hot);
+          //     }
+          //   })
+          // }else{
+          //   //通告内容
+          //   this.ajax_nodata(this.http_url.url+'/indexOnLookQ',this.get_notice);
+          //   //最新
+          //   this.ajax(this.http_url.url+'/onlook/look/list',{
+          //     "sinceId":1,
+          //     "maxId":5,
+          //     "type":"new"
+          //   },this.get_new);
+          //   //专题
+          //   this.ajax_nodata(this.http_url.url+'/load/getconfig/message',this.get_set);
+          //   //最热
+          //   this.ajax(this.http_url.url+'/onlook/look/list',{
+          //     "sinceId":1,
+          //     "maxId":10,
+          //     "type":"hot"
+          //   },this.get_hot);
+          // }
           //通告栏
           var scroll=0,num=0;
           const timer = setInterval(() =>{
@@ -165,14 +212,14 @@
           this.$once('hook:beforeDestroy', () => {
             clearInterval(timer);
           });
-          //通告内容
-          this.ajax_nodata(this.http_url.url+'/indexOnLookQ',this.get_notice);
-          //最新
-          this.ajax(this.http_url.url+'/onlook/look/list',{
-            "sinceId":1,
-            "maxId":5,
-            "type":"new"
-          },this.get_new);
+        //通告内容
+        this.ajax_nodata(this.http_url.url+'/indexOnLookQ',this.get_notice);
+        //最新
+        this.ajax(this.http_url.url+'/onlook/look/list',{
+          "sinceId":1,
+          "maxId":5,
+          "type":"new"
+        },this.get_new);
         //专题
         this.ajax_nodata(this.http_url.url+'/load/getconfig/message',this.get_set);
         //最热
@@ -202,12 +249,17 @@
           }
         },
       methods:{
+          get_child:function(){
+            this.$nextTick(() => {
+              this.$refs.child.init("222")
+            });
+          },
           //一元围观
         weiguan:function(val,status){
           if(status==1){
             this.$router.push({ name: 'answerWacthDetail',query:{"uuid":val}})
           }else{
-            this.$router.push({ name: 'answerWacth',query: {"uuid":val,"money":1}});
+            this.$router.push({ name: 'answerWacth',query: {"url":"answerWacthDetail","uuid":val,"money":1}});
           }
           // this.$router.push({ name: 'answerWacth',query:{questionUuid:val}})
         },

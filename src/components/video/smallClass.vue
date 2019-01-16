@@ -1,5 +1,6 @@
 <template>
     <div class="home-body">
+      <headerTab msg="微课"></headerTab>
       <Swiper></Swiper>
       <!--<div class="sm-banner">
         <img src="../../../static/img/sm-class-banner.png">
@@ -54,10 +55,12 @@
 
 <script>
   import Swiper from '@/components/swiper'
+  import headerTab from "@/components/headerTab"
     export default {
         name: "small-class",
       components:{
         Swiper,
+        headerTab
       },
       data () {
         return{
