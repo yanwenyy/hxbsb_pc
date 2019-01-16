@@ -12,7 +12,7 @@
               <div class="upload-img-box">
                 <div class="upload-img inline-block" v-for="(item,index) in imgArr" >
                   <div class="close-btn" @click="delimg(index)" v-if="item.src!=''&&item.src!=null&&item.src!=undefined" >
-                    <img src="../../../static/img/ask-close-img.png">
+                    <img src="/static/img/ask-close-img.png">
                   </div>
                   <img :src="item.src?item.src:mrsrc">
                   <input type="file" class="file-img" @change="addPic"  :class="'file'+index" name="images"/>
