@@ -32,6 +32,7 @@ export default{
         success:function(data){
           if(data.code=="2"){
             alert(data.des);
+            return false;
             // window.location.href="../html/register-next.html"
           }else{
             succ(data);
@@ -57,6 +58,7 @@ export default{
         success:function(data){
           if(data.code=="2"){
             alert(data.des);
+            return false;
             // window.location.href="../html/register-next.html"
           }else{
             succ(data);
@@ -116,6 +118,21 @@ export default{
       }
       return categorys;
     }
+    //地址栏参数
+    Vue.prototype.getUrlParms=function(name){
+      var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+      var r = window.location.search.substr(1).match(reg);
+      if(r!=null)
+        return unescape(r[2]);
+      return null;
+    }
   }
 }
-
+//时间转换
+export function getUrlParms (name) {
+  var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+  var r = window.location.search.substr(1).match(reg);
+  if(r!=null)
+    return unescape(r[2]);
+  return null;
+}

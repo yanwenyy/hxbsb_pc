@@ -1,5 +1,6 @@
 <template>
   <div class="home-body">
+    <headerTab msg="大咖访谈"></headerTab>
     <Swiper></Swiper>
     <div class="container">
       <div class="wdk-select-group">
@@ -46,11 +47,13 @@
 </template>
 
 <script>
+  import headerTab from "@/components/headerTab"
   import Swiper from '@/components/swiper'
   export default {
     name: "small-class",
     components:{
       Swiper,
+      headerTab
     },
     data () {
       return{

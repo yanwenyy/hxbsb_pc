@@ -34,6 +34,7 @@
 </template>
 
 <script>
+  import md5 from 'js-md5'
   import mineLeft from '@/components/mineLeft'
     export default {
         name: "mine-edit-password",
@@ -53,16 +54,36 @@
           //密码提交
           sub:function(){
             // console.log(this.password+"..."+this.passwordConfirm);
+            var that=this;
             if(this.password==""||this.passwordConfirm==""){
               alert("密码不能为空")
             }else if(this.password!=this.passwordConfirm){
               alert("两次密码输入不一致")
             }else{
-              this.ajax_nodata(this.http_url.url+"/upatePwd",{
-                "newPwd":this.password,
-                "updateType":"0"
-              },function(data){
+              $.ajax({
+                type:"POST",
+                url:this.http_url.url+"/upatePwd",
+                headers: {
+                  "Accept": "application/json",
+                  "Content-Type": "application/json;charset=utf-8",
+                  "cookieId":sessionStorage.getItem("cookieId"),
+                  "version":"1"
+                },
+                data:JSON.stringify({
+                  "newPwd":md5(that.password),
+                  "updateType":"0"
+                }),
+                success:function(data){
+                  if(data.code=="1"){
+                    alert(data.des);
+                  }else{
+                    alert(data.des);
+                  }
 
+                },
+                error:function(){
+                  console.log("程序出错,请重试");
+                }
               })
             }
           }

@@ -103,6 +103,7 @@
             "source":2
           },this.wexin_pay);
         }else if(this.source=="我要提问"){
+          this.$route.query.data.payType="weixin";
           this.$route.query.data.source=2
           this.ajax(this.http_url.url+"question/releaseQuestion",this.$route.query.data,this.wexin_pay);
         }else if(this.source=="微课"){
@@ -168,9 +169,19 @@
           function get_msg(data){
             if(data.code==1){
               alert("支付成功");
-              that.$router.push({
-                name:that.$route.query.data.url
-              })
+              if(that.$route.query.source=="围观"){
+                that.$router.push({
+                  name:that.$route.query.data.url,
+                  query:{
+                    uuid:that.$route.query.data.uuid
+                  }
+                })
+              }else{
+                that.$router.push({
+                  name:that.$route.query.data.url,
+                })
+              }
+
             }else{
               alert(data.des);
             }

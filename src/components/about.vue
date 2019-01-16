@@ -1,5 +1,6 @@
 <template>
   <div class="home-body">
+    <headerTab msg="关于我们"></headerTab>
     <div class="about-header">
       <img class="ah-img" src="../../static/img/about-header.png"/>
       <div class="about-shadow about-us" ref="ab">
@@ -54,12 +55,16 @@
 </template>
 
 <script>
+    import headerTab from "@/components/headerTab"
     export default {
         name: "about",
         data(){
           return{
             ab_height:''
           }
+        },
+        components:{
+          headerTab
         },
       mounted (){
           console.log(this.$refs.ab.style.width)

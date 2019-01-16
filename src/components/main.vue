@@ -15,9 +15,7 @@
           Header,
           Footer
         },
-        mounted(){
 
-        }
     }
 </script>
 

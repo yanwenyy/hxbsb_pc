@@ -1,42 +1,44 @@
 <template>
+  <div>
+    <headerTab msg="首页"></headerTab>
     <div class="container">
       <BreadNav :breadName="title"></BreadNav>
       <div class="home-main box-sizing">
         <div class="h-main-left inline-block">
-            <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>问题内容</div>
-            <div class="textarea-box">
-              <textarea placeholder="请详细描述您的问题，可附上图片。针对税企争议，方案设计，棘手问题，创新模式等类问题不适用快速咨询请选择私密问或联系客服。" v-model="content" name="content"></textarea>
-            </div>
-            <div class="ask-img-box">
-              <div class="ask-head-title">添加图片(最多3张)</div>
-              <div class="upload-img-box">
-                <div class="upload-img inline-block" v-for="(item,index) in imgArr" >
-                  <div class="close-btn" @click="delimg(index)" v-if="item.src!=''&&item.src!=null&&item.src!=undefined" >
-                    <img src="../../../static/img/ask-close-img.png">
-                  </div>
-                  <img :src="item.src?item.src:mrsrc">
-                  <input type="file" class="file-img" @change="addPic"  :class="'file'+index" name="images"/>
+          <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>问题内容</div>
+          <div class="textarea-box">
+            <textarea placeholder="请详细描述您的问题，可附上图片。针对税企争议，方案设计，棘手问题，创新模式等类问题不适用快速咨询请选择私密问或联系客服。" v-model="content" name="content"></textarea>
+          </div>
+          <div class="ask-img-box">
+            <div class="ask-head-title">添加图片(最多3张)</div>
+            <div class="upload-img-box">
+              <div class="upload-img inline-block" v-for="(item,index) in imgArr" >
+                <div class="close-btn" @click="delimg(index)" v-if="item.src!=''&&item.src!=null&&item.src!=undefined" >
+                  <img src="../../../static/img/ask-close-img.png">
                 </div>
+                <img :src="item.src?item.src:mrsrc">
+                <input type="file" class="file-img" @change="addPic"  :class="'file'+index" name="images"/>
               </div>
             </div>
-            <div class="ask-trade-box">
-              <div class="ask-head-title">问题涉及行业：</div>
-              <input type="text" placeholder="请选择" readonly v-on:click="dropdown"  v-model="trade" />
-              <span class="select-icon"  :class="down_icon ? 'up-icon' : 'down-icon' " ></span>
-              <ul v-if="down_icon">
-                <li v-for="item in trade_list"  v-on:click="seleced_trade(item.name)">{{item.name}}</li>
-              </ul>
-            </div>
-            <div class="ask-head-title ask-price">提问金额：<i :class="vip?'no-v':''">￥15</i><span class="orange-font" v-show="vip">航信会员免费</span></div>
-            <div class="ask-anonymity-box checkbox-box" :class="check_icon ? 'checked-icon' : 'checkbox-icon' ">
-              <label class="inline-block icon"></label>
-              <!-- 0是匿名 1是不匿名 -->
-              <input type="checkbox" v-model="isAnon" :value="check_icon ? '0' : '1' " @click="check_icon = !check_icon;" name="isAnon"/><span>匿名提问</span>
-            </div>
-            <div class="aks-submit">
-              <input type="button" class="submit-btn" @click="check_sub" value="提交"/>
-            </div>
-            <input type="hidden" name="payType" :value="vip?'free':null" />
+          </div>
+          <div class="ask-trade-box">
+            <div class="ask-head-title">问题涉及行业：</div>
+            <input type="text" placeholder="请选择" readonly v-on:click="dropdown"  v-model="trade" />
+            <span class="select-icon"  :class="down_icon ? 'up-icon' : 'down-icon' " ></span>
+            <ul v-if="down_icon">
+              <li v-for="item in trade_list"  v-on:click="seleced_trade(item.name)">{{item.name}}</li>
+            </ul>
+          </div>
+          <div class="ask-head-title ask-price">提问金额：<i :class="vip?'no-v':''">￥15</i><span class="orange-font" v-show="vip">航信会员免费</span></div>
+          <div class="ask-anonymity-box checkbox-box" :class="check_icon ? 'checked-icon' : 'checkbox-icon' ">
+            <label class="inline-block icon"></label>
+            <!-- 0是匿名 1是不匿名 -->
+            <input type="checkbox" v-model="isAnon" :value="check_icon ? '0' : '1' " @click="check_icon = !check_icon;" name="isAnon"/><span>匿名提问</span>
+          </div>
+          <div class="aks-submit">
+            <input type="button" class="submit-btn" @click="check_sub" value="提交"/>
+          </div>
+          <input type="hidden" name="payType" :value="vip?'free':null" />
         </div>
         <div class="h-main-right inline-block box-sizing">
           <div class="inline-block home-head-title">悬赏规则</div>
@@ -53,15 +55,18 @@
       </div>
       <Diglog v-show="show"></Diglog>
     </div>
+  </div>
 </template>
 <script>
   import BreadNav from '@/components/breadNav';
   import Diglog from '@/components/askQuestion/sucDialog'
+  import headerTab from "@/components/headerTab"
     export default {
         name: "ask-question",
         components: {
           BreadNav,
-          Diglog
+          Diglog,
+          headerTab
         },
       data () {
         return {
@@ -155,10 +160,12 @@
                 if (vm.imgArr.length < 2) {
                   vm.imgArr.push({src: this.result,index:i});
                   vm.imgArr.push("");
-                  vm.images.push(this.result);
+                  var result=this.result.split(",")[1];
+                  vm.images.push(result);
                 } else if (vm.imgArr.length == 2) {
                   vm.imgArr.push({src: this.result,index:i});
-                  vm.images.push(this.result);
+                  var result=this.result.split(",")[1];
+                  vm.images.push(result);
                 }
               };
             }
