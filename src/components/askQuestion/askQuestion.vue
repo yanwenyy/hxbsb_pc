@@ -12,7 +12,7 @@
               <div class="upload-img-box">
                 <div class="upload-img inline-block" v-for="(item,index) in imgArr" >
                   <div class="close-btn" @click="delimg(index)" v-if="item.src!=''&&item.src!=null&&item.src!=undefined" >
-                    <img src="/static/img/ask-close-img.png">
+                    <img src="../../../static/img/ask-close-img.png"  onerror="javascript:this.src='./static/img/ask-close-img.png';" />
                   </div>
                   <img :src="item.src?item.src:mrsrc">
                   <input type="file" class="file-img" @change="addPic"  :class="'file'+index" name="images"/>
@@ -71,7 +71,7 @@
           trade_list:[],//问题涉及行业列表
           check_icon:false,//是否匿名
           title:"",//给面包屑传值
-          mrsrc:'../../../static/img/ask_up_img.png',//默认上传图片
+          mrsrc:'./static/img/ask_up_img.png',//默认上传图片
           imgArr: [''],//预览图片列表
           show:false,//发布成功
           content:null,//问题内容
@@ -165,7 +165,7 @@
         },
         //提交 + 表单验证
         check_sub:function () {
-          var query={url:"mineQuestion",content:this.content,isAnon:this.isAnon,money:15,payType:this.payType,trade:this.trade,images:this.images}
+          var query={url:"mineQuestion",content:this.content,isAnon:Number(this.isAnon),money:15,payType:this.payType,trade:this.trade,images:this.images}
           if(this.vip){
             if (this.content!=null&&this.content!="") {
               this.ajax(this.http_url.url+'question/releaseQuestion',query,this.show_dialog)

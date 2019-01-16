@@ -6,13 +6,13 @@
         </span>
       </div>
       <div class="success-box box-sizing">
-        <div class="inline-block suc-txt">
+        <div class="suc-txt">
           <img src="../../../static/img/icon_success.png"/>
           <h4>问题发布成功</h4>
           <p>可在我的提问查看回答,下载APP可及时接收回答消息和更多服务</p>
         </div>
-        <div class="inline-block card">
-          <img src="../../../static/img/qr-app.png"/>
+        <div class="card">
+          <img src="../../../static/img/qr-weixin.png" onerror="javascript:this.src='./static/img/qr-weixin.png';"/>
           <p>扫描二维码下载APP</p>
         </div>
       </div>
@@ -38,8 +38,8 @@
   .issue-quesition-suc{
     background:rgba(255,255,255,1);
     border-radius:6px;
-    width: 25rem;
-    height: 11.625rem;
+    width: 24rem;
+    height: 18rem;
     position: absolute;
     margin: auto;
     top: 0;
@@ -54,19 +54,18 @@
     color: #999999;
   }
   .success-box .suc-txt{
-    width: 11.4rem;
+    width: 14rem;
     height: 7.56rem;
     float: left;
-    padding: 0.5rem 1.5rem;
-    border-right:1px solid rgba(242,242,242,1);
+    padding: 0.5rem 5rem;
   }
   .success-box .suc-txt h4{
-    font-size: 1.125rem;
+    font-size: 1.3rem;
     color: #2D86FD;
     margin: 0.65rem 0;
   }
   .success-box .suc-txt p{
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     line-height: 1.2rem;
   }
   .success-box .suc-txt img{
@@ -74,13 +73,13 @@
     height: 2.4rem;
   }
   .success-box .card{
-    width: 10.5rem;
+    width: 24rem;
     height: 8.56rem;
     font-size: 0.625rem;
   }
   .success-box .card img{
-    width: 6.375rem;
-    height: 6.375rem;
-    margin-bottom: 0.8rem;
+    width: 5rem;
+    height: 5rem;
+    margin-bottom: 0.5rem;
   }
 </style>
