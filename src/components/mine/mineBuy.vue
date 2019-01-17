@@ -23,7 +23,7 @@
             <div class="mine-buy-main">
               <div class="mine-buy-wacth" v-if="headName=='我的围观'">
                 <div class="wdk-list-group box-sizing">
-                  <div class="wdk-list" v-for="item in questions">
+                  <div class="wdk-list" v-for="item in questions"  @click="$router.push({ name: 'answerWacthDetail',query:{'uuid':item.uuid}})">
                     <div class="inline-block">
                       <div class="wdk-name">
                         <img :src='head_src+item.headImage'  onerror="javascript:this.src='./static/img/user-img.png';">

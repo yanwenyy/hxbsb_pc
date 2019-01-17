@@ -222,11 +222,11 @@
         },
         //提交用户信息
         sub_msg:function(){
-          var that=this,address='',gender='',headImage='';
+          var that=this,address='',gender='',headImage='',address;
           if(that.province=="北京"||that.province=="上海"||that.province=="天津"||that.province=="重庆"){
-            var address=this.city;
+            address=this.city;
           }else{
-            var address=this.address;
+           address=this.address;
           }
           if(that.gender=="女"){
             gender=2;

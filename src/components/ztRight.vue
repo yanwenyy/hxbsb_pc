@@ -5,7 +5,7 @@
       </div>
       <div>
         <div class="wdk-list" v-for="item in zt">
-          <div class="inline-block">
+          <div class="inline-block" @click="item.status==1? $router.push({ name: 'answerWacthDetail',query:{'uuid':item.uuid}}): $router.push({ name: 'answerWacth',query: {'url':'answerWacthDetail','uuid':item.uuid,'money':1}})">
             <div class="wdk-name">
               <img :src="head_src+item.headImage" alt=""  onerror="javascript:this.src='./static/img/user-img.png';">
               <div class="inline-block user_name">{{item.realName||"匿名用户"}}</div>

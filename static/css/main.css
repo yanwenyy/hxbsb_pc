@@ -12,7 +12,12 @@ body{
 .uer-sel li:hover,.h-u-name:hover,#head-title>.container>div:hover,.wdk-name:hover,.hot-list-item>div:nth-child(2):hover,
 .home-model-header>div:nth-child(2):hover,.search-input>div:hover,.header-pro:hover,.h-model-input>div:hover,.zt-look-more:hover,
 .wdk-select-msg>div:hover,.selected-zt-msg>div:hover,.load-more-btn:hover,.header-search-answer:hover,
-.mine-left li:hover,.mine-buy-headname:hover,.login-btn:hover{
+.mine-left li:hover,.mine-buy-headname:hover,.login-btn:hover,.cw-people-num>span,.cwatch-weiguan:hover,.sz-model>div:hover,
+.jc_sub:hover,.question-progress:hover,.cz_group>div>img:hover,.pay-btn:hover,.look_ques:hover,.logo-img:hover,
+.gm-xxgwk:hover{
+  cursor: pointer;
+}
+.cursor{
   cursor: pointer;
 }
 .home-list-msg:hover,.selected-zt-msg>div:hover{

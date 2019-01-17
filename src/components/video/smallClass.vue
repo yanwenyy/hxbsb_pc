@@ -42,7 +42,7 @@
             <img :src="cover_src+item.image" alt="" @click="video_click(item)">
             <div>{{item.title}}</div>
             <p class="buy" v-if="item.ifBuy==1">已购买</p>
-            <p class="price" v-else-if="item.ifBuy!=1&&item.price!=0">¥：{{parseFloat(item.price).toFixed(2)}}</p>
+            <p class="price" v-else-if="item.ifBuy!=1&&item.price!=0">¥{{parseFloat(item.price).toFixed(2)}}</p>
             <p class="free" v-else-if="item.price==0">限时免费</p>
           </div>
         </div>
@@ -98,7 +98,8 @@
               if(data.ifBuy==1||data.price==0){
                 that.$router.push({name:'video',query:{vid:that.vid}})
               }else{
-                data={videoId:data.id,source:2,money:data.price,url:'video'}
+                data={videoId:data.id,source:2,money:data.price,url:'video'};
+                data=encodeURIComponent(JSON.stringify(data))
                 that.$router.push({ name: 'payMethod',query: {price: data.money ,source:"微课",data:data,}})
               }
             })

@@ -27,7 +27,62 @@
             <div class="error-eidt-btn inline-block" v-if="jc_btn_status"  @click="jc_status=!jc_status"><img src="../../../static/img/error-eidt-btn.png" alt="">我要纠错</div>
           </div>
           <div class="answer-group" v-for="item in answewrUsers">
-            <div class="home-model-header" style="margin-bottom: 1.31rem" v-if="item.type==1">
+            <div v-if="item.type!=1">
+              <div>
+                <img :src="head_src+item.headImage"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
+                <div class="inline-block queser-msg">
+                  <div class="inline-block user_name">
+                    {{item.userName}}
+                    <div class="inline-block zxs-img-show">
+                      <img src="../../../static/img/zxs-icon.png" alt="">
+                      {{item.levelName}}
+                    </div>
+                  </div>
+                  <div>{{item.counselorDuty}}</div>
+                </div>
+                <div class="inline-block best-answer" v-if="item.status==2||item.checkStatus==2||item.status==7">
+                  <img src="../../../static/img/best-answer.png" alt="">
+                </div>
+                <div class="inline-block best-answer" v-if="item.status==6">
+                  <img src="../../../static/img/error-answer.png" alt="">
+                </div>
+              </div>
+              <div class="answer-group-content">
+                {{item.content}}
+              </div>
+              <div class="answer-group-class">
+                <div class="inline-block box-sizing" v-for="w in item.tax.split(',')">#{{w}}#</div>
+                <div class="inline-block box-sizing"  v-for="s in item.topic.split(',')">#{{s}}#</div>
+              </div>
+              <div class="answer-group-footer">
+                <div class="inline-block">{{format(item.date)}}</div>
+                <div class="inline-block cz_group">
+                  <div class="inline-block">
+                    <img :src="item.praiseNum>0? './static/img/zan_click.png':zan_src" @click="zan(item.uuid,$event)" alt="">
+                    <span>{{item.approveNum}}</span>
+                  </div>
+                  <div class="inline-block">
+                    <img  :src="item.treadNum>0? './static/img/cai_click.png':cai_src" @click="cai(item.uuid,$event)" alt="">
+                    <span>{{item.opposeNum}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="evaluate-model box-sizing " v-if="item.status==2||item.status==6||item.status==7">
+                <div class="evaluate-score">
+                  评价得分:
+                  <div class="inline-block" v-for="s in 5">
+                    <img :src="s<=item.score? '../../../static/img/score-sel.png':'../../../static/img/score-unsel.png'" alt="">
+                    <!--<img src="../../../static/img/score-unsel.png" alt="">-->
+                  </div>
+                </div>
+                <div class="evaluate-content">
+                  {{item.appraisal||"暂无评价内容"}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="answer-group" v-for="item in answewrUsers" v-if="item.type==1">
+            <div class="home-model-header" style="margin-bottom: 1.31rem">
               <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>答案纠错</div>
             </div>
             <div>
@@ -42,10 +97,10 @@
                 </div>
                 <div>{{item.counselorDuty}}</div>
               </div>
-              <div class="inline-block best-answer" v-if="item.status==2||item.status==6||item.status==7">
+              <div class="inline-block best-answer" v-if="item.status==2||item.checkStatus==2||item.status==7">
                 <img src="../../../static/img/best-answer.png" alt="">
               </div>
-              <div class="inline-block best-answer" v-if="item.type==1">
+              <div class="inline-block best-answer" v-if="item.status==6">
                 <img src="../../../static/img/error-answer.png" alt="">
               </div>
             </div>
@@ -60,11 +115,11 @@
               <div class="inline-block">{{format(item.date)}}</div>
               <div class="inline-block cz_group">
                 <div class="inline-block">
-                  <img :src="item.praiseNum>0? '/static/img/zan_click.png':zan_src" @click="zan(item.uuid,$event)" alt="">
+                  <img :src="item.praiseNum>0? './static/img/zan_click.png':zan_src" @click="zan(item.uuid,$event)" alt="">
                   <span>{{item.approveNum}}</span>
                 </div>
                 <div class="inline-block">
-                  <img  :src="item.treadNum>0? '/static/img/cai_click.png':cai_src" @click="cai(item.uuid,$event)" alt="">
+                  <img  :src="item.treadNum>0? './static/img/cai_click.png':cai_src" @click="cai(item.uuid,$event)" alt="">
                   <span>{{item.opposeNum}}</span>
                 </div>
               </div>
@@ -82,7 +137,7 @@
               </div>
             </div>
           </div>
-          <div v-if="changerAnswer">
+          <div v-if="changerAnswer!=''&&changerAnswer">
             <div class="home-model-header">
               <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>我的纠错</div>
             </div>
@@ -100,7 +155,7 @@
                   <div>{{all_usermsg.counselorDuty}}</div>
                 </div>
                 <div class="inline-block queser-msg" v-if="all_usermsg.role==1">
-                  <div class="inline-block user_name">{{all_usermsg.isAnon==1? all_usermsg.realName:'匿名用户'}}</div>
+                  <div class="inline-block user_name">{{all_usermsg.realName}}</div>
                   <div class="inline-block user-dj"><img :src="get_score(all_usermsg.integralScore,all_usermsg.aision,all_usermsg.vip)" alt=""></div>
                 </div>
               </div>
@@ -115,11 +170,11 @@
                 <div class="inline-block">{{format(item.date)}}</div>
                 <div class="inline-block cz_group">
                   <div class="inline-block">
-                    <img :src="item.praiseNum>0? '/static/img/zan_click.png':zan_src" @click="zan(item.uuid,$event)" alt="">
+                    <img :src="item.praiseNum>0? './static/img/zan_click.png':zan_src" @click="zan(item.uuid,$event)" alt="">
                     <span>{{item.approveNum}}</span>
                   </div>
                   <div class="inline-block">
-                    <img  :src="item.treadNum>0? '/static/img/cai_click.png':cai_src" @click="cai(item.uuid,$event)" alt="">
+                    <img  :src="item.treadNum>0? './static/img/cai_click.png':cai_src" @click="cai(item.uuid,$event)" alt="">
                     <span>{{item.opposeNum}}</span>
                   </div>
                 </div>

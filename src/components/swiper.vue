@@ -5,16 +5,16 @@
         <div class="swiper-container s1">
           <ul class="swiper-wrapper">
             <li class="swiper-slide head-img">
-              <a href="" style="cursor: pointer;"><img class="banner-img" src="../assets/banner.png"  /></a>
+              <img class="banner-img" src="../assets/banner.png"  />
             </li>
             <li class="swiper-slide head-img">
-              <a href="" style="cursor: pointer;"><img class="banner-img"  src="../assets/banner2.png" /></a>
+              <img class="banner-img"  src="../assets/banner2.png" />
             </li>
             <li class="swiper-slide head-img">
-              <a href="" style="cursor: pointer;"><img class="banner-img"  src="../assets/banner3.png" /></a>
+              <img class="banner-img"  src="../assets/banner3.png" />
             </li>
             <li class="swiper-slide head-img">
-              <a href="" style="cursor: pointer;"><img class="banner-img"  src="../assets/banner4.png" /></a>
+              <img class="banner-img"  src="../assets/banner4.png" />
             </li>
           </ul>
           <div class="swiper-pagination"></div>

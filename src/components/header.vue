@@ -4,7 +4,7 @@
       <div id="header" class="box-sizing">
         <div class="header-search box-sizing">
           <div class="container">
-            <img src="../../static/img/header-logo.png" alt="" class="inline-block logo-img box-sizing">
+            <img @click="$router.push({name:'Home'})" src="../../static/img/header-logo.png" alt="" class="inline-block logo-img box-sizing">
             <div class="search-input-header inline-block">
               <input type="text" class="box-sizing" placeholder="请输入关键字" v-model="message">
               <div class="inline-block header-search-answer" @click="ques_btn()">搜索答案</div>

@@ -52,6 +52,7 @@
                 that.$router.push({name:'video',query:{vid:that.vid}})
               }else{
                 data={videoId:data.id,source:2,money:data.price,url:'video'}
+                data=encodeURIComponent(JSON.stringify(data))
                 that.$router.push({ name: 'payMethod',query: {price: data.money ,source:"微课",data:data,}})
               }
             })

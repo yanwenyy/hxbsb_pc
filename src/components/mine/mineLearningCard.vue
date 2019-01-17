@@ -16,7 +16,8 @@
             </div>
             <div class="inline-block money-record box-sizing">
               <div class="inline-block money-tx">
-                <div class="gm-xxgwk">购买</div>
+                <img src="../../../static/img/download-app.png" v-if="down_img" alt="">
+                <div class="gm-xxgwk" @click="down_img=!down_img">购买</div>
               </div>
               <div class="inline-block">
                 <div class="total-record-name">总收入（元）</div>
@@ -65,12 +66,13 @@
         return{
           start:1,
           end:10,
+          down_img:false,
           //余额显示
-          vipBalance:'',
+          vipBalance:0,
           //总收入
-          incomeSum:'',
+          incomeSum:0,
           //总支出
-          outpaySum:'',
+          outpaySum:0,
           //交易记录
           records:[],
           //总页数
@@ -134,7 +136,7 @@
 
 <style scoped>
   .gm-xxgwk{
-    margin-top: 2rem!important;
+    margin-top: 1rem!important;
   }
   .mine-ques-tr{
     height:2.625rem;

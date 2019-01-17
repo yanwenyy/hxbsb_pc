@@ -35,6 +35,16 @@
           </div>
         </div>
       </div>
+      <div class="inline-block" @click="pay_click('qa')" v-if="cswdc">
+        <img src="../../static/img/pay-selected.png" alt=""  v-if="qa">
+        <div class="pay-method-list box-sizing">
+          <img src="../../static/img/pay_qa.png" alt="">
+          <div>
+            <div class="pay-method-list-name">财税问答卡</div>
+            <div class="orange">余额:{{qa_money}}</div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="pay-wexin-code" v-if="wexin">
       <div class="pay-wexin-code-name">
@@ -64,6 +74,7 @@
           price:"",
           source:"",
           title:"",
+          cswdc:false,//是否显示财税问答卡支付
           //钱包余额
           bag_money:'',
           //学习顾问卡余额
@@ -71,6 +82,7 @@
           wexin:true,
           bag:false,
           card:false,
+          qa:false,
           btn_show:false,
           //支付类型
           payType:'',
@@ -87,7 +99,10 @@
           //随机字符串
           nonceStr:'',
           //签名
-          sign:''
+          sign:'',
+          //围观信息
+          weiguan_msg:'',
+          qa_money:0
         }
       },
       mounted () {
@@ -95,9 +110,13 @@
         this.price=this.$route.query.price;
         this.source=this.$route.query.source;
         this.title="首页> "+this.$route.query.source+" > 支付";
+        var data=JSON.parse(decodeURIComponent(this.$route.query.data));
         if(this.source=="围观"){
+          this.weiguan_msg=this.$route.query.data;
+          this.cswdc=true;
+          console.log(this.weiguan_msg);
           this.ajax(this.http_url.url+"/onlook/look/buy",{
-            "uuid":this.$route.query.data.uuid,
+            "uuid":data.uuid,
             "payType":"weixin",
             "money":this.$route.query.price,
             "source":2
@@ -105,13 +124,13 @@
         }else if(this.source=="我要提问"){
           this.$route.query.data.payType="weixin";
           this.$route.query.data.source=2
-          this.ajax(this.http_url.url+"question/releaseQuestion",this.$route.query.data,this.wexin_pay);
+          this.ajax(this.http_url.url+"question/releaseQuestion",data,this.wexin_pay);
         }else if(this.source=="微课"){
           console.log(this.$route.query)
           this.ajax(this.http_url.url+"video/buy",{
-            "videoId":this.$route.query.data.videoId,
+            "videoId":data.videoId,
             "payType":"weixin",
-            "money":this.$route.query.data.money,
+            "money":data.money,
             "source":2
           },this.wexin_pay);
         }
@@ -129,6 +148,7 @@
           console.log(data);
           this.bag_money=data.balance;
           this.card_money=data.vipBalance;
+          this.qa_money=data.qacardBlance;
         },
         //扫码支付
         wexin_pay:function(data){
@@ -165,20 +185,21 @@
         //钱包或学习顾问卡支付
         normal_pay:function(){
           var that=this;
-          this.$route.query.data.payType=this.payType;
+          var data_msg=JSON.parse(decodeURIComponent(this.$route.query.data));
+          data_msg.payType=this.payType;
           function get_msg(data){
             if(data.code==1){
               alert("支付成功");
               if(that.$route.query.source=="围观"){
                 that.$router.push({
-                  name:that.$route.query.data.url,
+                  name:data_msg.url,
                   query:{
-                    uuid:that.$route.query.data.uuid
+                    uuid:data_msg.uuid
                   }
                 })
               }else{
                 that.$router.push({
-                  name:that.$route.query.data.url,
+                  name:data_msg.url,
                 })
               }
 
@@ -190,8 +211,8 @@
           function go_video(data){
             if(data.code==1){
               alert("支付成功");
-              that.ajax(that.http_url.url+'video/vid',{id:that.$route.query.data.videoId},function (e) {
-                that.$router.push({name:that.$route.query.data.url,query:{vid:e.data.vid,pagetype:'pay'}})
+              that.ajax(that.http_url.url+'video/vid',{id:data_msg.videoId},function (e) {
+                that.$router.push({name:data_msg.url,query:{vid:e.data.vid,pagetype:'pay'}})
               })
             }else{
               alert(data.des);
@@ -199,11 +220,11 @@
           }
           //this.$route.query.data
           if(this.source=="围观"){
-              this.ajax(this.http_url.url+"/onlook/look/buy",this.$route.query.data,get_msg)
+              this.ajax(this.http_url.url+"/onlook/look/buy",data_msg,get_msg)
           }else if(this.source=="我要提问"){
-            this.ajax(this.http_url.url+"question/releaseQuestion",this.$route.query.data,get_msg)
+            this.ajax(this.http_url.url+"question/releaseQuestion",data_msg,get_msg)
           }else if(this.source=="微课"){
-            this.ajax(this.http_url.url+"video/buy",this.$route.query.data,go_video)
+            this.ajax(this.http_url.url+"video/buy",data_msg,go_video)
           }
         },
         //支付方式点击
@@ -214,6 +235,7 @@
               this.bag=false;
               this.card=false;
               this.btn_show=false;
+              this.qa=false;
             this.payType="weixin";
               setTimeout(function(){that.show_code(that.codeUrl);},1);
               // this.check_order();
@@ -223,16 +245,25 @@
               this.bag=true;
               this.wexin=false;
               this.card=false;
+              this.qa=false;
               this.payType="balance";
               clearInterval(this.timer);
               this.timer=null;
-            }else{//学习顾问卡卡支付
+            }else if(msg=="card"){//学习顾问卡卡支付
               this.card=true;
               this.wexin=false;
               this.payType="VipBalance";
               this.bag=false;
+              this.qa=false;
               clearInterval(this.timer);
               this.timer=null;
+            }else if(msg=="qa"){
+              this.qa=true;
+              this.card=false;
+              this.wexin=false;
+              this.payType="QACardBalance";
+              this.bag=false;
+              clearInterval(this.timer);
             }
           }
         },

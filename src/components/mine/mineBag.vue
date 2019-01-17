@@ -13,7 +13,7 @@
             <div class="inline-block user-money-msg">
               <div>可用余额（元）</div>
               <div>¥<span class="orange">{{parseFloat(balance).toFixed(2)}}</span></div>
-              <div>*提示：请下载解税宝APP进行提现。</div>
+              <div>*提示：请下载航信办税宝APP进行提现。</div>
             </div>
             <div class="inline-block money-record box-sizing">
               <div class="inline-block money-tx">
@@ -67,11 +67,11 @@
             start:1,
             end:10,
             //余额显示
-            balance:'',
+            balance:0,
             //总收入
-            incomeSum:'',
+            incomeSum:0,
             //总支出
-            outpaySum:'',
+            outpaySum:0,
             //交易记录
             records:[],
             //总页数

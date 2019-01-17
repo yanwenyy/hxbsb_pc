@@ -66,11 +66,11 @@
             start:1,
             end:10,
             //余额显示
-            balance:'',
+            balance:0,
             //总收入
-            incomeSum:'',
+            incomeSum:0,
             //总支出
-            outpaySum:'',
+            outpaySum:0,
             //交易记录
             records:[],
             //总页数

@@ -19,27 +19,27 @@
             <div class="queser-grounp-footer">
               <span>{{questionUser.area}} {{questionUser.quTrade}}</span>
               <span>点赞{{questionUser.approveNum}}</span>
-              <span>围观{{questionUser.lookNum}}</span>
-            </div>
-          </div>
-          <div class="home-model-header">
-            <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>回答</div>
-          </div>
-          <div class="answer-group">
-            <div>
-              <img :src="head_src+answer_msg.headImage" onerror="javascript:this.src='./static/img/user-img.png'" alt="" class="queser-head">
-              <div class="inline-block queser-msg">
-                <div class="inline-block user_name">
-                  {{answer_msg.realName}}
-                  <div class="inline-block zxs-img-show" v-if="answer_msg.role==2">
-                    <img src="../../../static/img/zxs-icon.png" alt="">
-                    {{answer_msg.levelName}}
-                  </div>
-                </div>
-                <div v-if="answer_msg.role==2">{{answer_msg.counselorDuty}}</div>
+          <span>围观{{questionUser.lookNum}}</span>
+        </div>
+      </div>
+      <div class="home-model-header">
+        <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>回答</div>
+      </div>
+      <div class="answer-group">
+        <div>
+          <img :src="head_src+answer_msg.headImage" onerror="javascript:this.src='./static/img/user-img.png'" alt="" class="queser-head">
+          <div class="inline-block queser-msg">
+            <div class="inline-block user_name">
+              {{answer_msg.realName}}
+              <div class="inline-block zxs-img-show" v-if="answer_msg.role==2">
+                <img src="../../../static/img/zxs-icon.png" alt="">
+                {{answer_msg.levelName}}
               </div>
             </div>
+            <div v-if="answer_msg.role==2">{{answer_msg.counselorDuty}}</div>
           </div>
+        </div>
+      </div>
           <div class="cwacth-notice">
             <span class="gray-line inline-block"></span>
             <span class="inline-block">只需1元即可查看答案</span>
@@ -48,7 +48,7 @@
           <div class="cwatch-weiguan" @click="weiguan()">一元围观</div>
           <div class="cwatch-list-people">
             <div class="cwatch-list-people-head">
-              <img v-for="item in look_list" :src="head_src+item.headImage" onerror="javascript:this.src='./static/img/user-img.png'" alt="">
+              <img v-for="item in 8" :src="item<look_length? head_src+look_list[item-1].headImage:'../../../static/img/user-img.png'" onerror="javascript:this.src='./static/img/user-img.png'" alt="">
             </div>
             <div class="cw-people-num">
               {{look_list_num}}人围观,
@@ -111,6 +111,7 @@
             shadow_status:false,
             //围观人员
             look_list:[],
+            look_length:0,
             //围观人数
             look_list_num:'',
             //围观详情列表
@@ -125,7 +126,9 @@
           // alert(this.$route.query.questionUuid);
         //围观人员查询
         this.ajax(this.http_url.url+"/onlook/onlookCountDetailList",{
-          "questionUuid":this.$route.query.uuid
+          "questionUuid":this.$route.query.uuid,
+          "sinceId":"1",
+          "maxId":"8",
         },this.look_num);
         //提问者和专家资料显示
         this.ajax(this.http_url.url+"/user/someUserMsg",{"questionUuid":this.$route.query.uuid},this.msg_show);
@@ -139,7 +142,8 @@
           //围观人员
         look_num:function(data){
             // console.log(data);
-            this.look_list=data.OnLookCountDetail.slice(0,5);
+            this.look_list=data.OnLookCountDetail;
+            this.look_length=this.look_list.length+1;
             this.look_list_detail=data.OnLookCountDetail;
             this.look_list_num=data.OnLookCount;
           },
@@ -154,8 +158,9 @@
         //一元围观
         weiguan:function(){
           var that=this;
+          var data=encodeURIComponent(JSON.stringify(this.$route.query));
           this.$router.push({
-            name:"payMethod",query:{ url:"answerWacthDetail",price: 1 ,source:"围观",data:this.$route.query}
+            name:"payMethod",query:{ url:"answerWacthDetail",price: 1 ,source:"围观",data:data}
           })
         },
         //回答者资料显示

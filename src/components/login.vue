@@ -16,7 +16,7 @@
               <li class="login-li">
                 <div class="inline-block login-li-img">
                   <div class="inline-block"><img src="../../static/img/login-sj.png" alt=""></div>
-                  <input type="text" @blur.prevent="get_codeimg()" v-model="info_phone" placeholder="请输入手机号">
+                  <input type="text" class="phones" @blur.prevent="get_codeimg()" v-model="info_phone" placeholder="请输入手机号">
                 </div>
               </li>
               <li class="login-li">
@@ -34,13 +34,14 @@
                   <input type="text" v-model="info_message" placeholder="请输入短信验证码">
                 </div>
                 <div class="inline-block" @click="info_getcode()">
-                  <span class="blue">获取验证码</span>
+                  <span v-if="!code_status" class="blue cursor">获取验证码</span>
+                  <span v-if="code_status">{{'重新发送:'+nums+"s"}}</span>
                 </div>
               </li>
             </ul>
             <div class="login-method-checked">
               <div class="inline-block"></div>
-              <div class="inline-block blue password_login" @click="pass=true;info=false;forget_pass=false">账号密码登录</div>
+              <div class="inline-block blue password_login cursor" @click="pass=true;info=false;forget_pass=false">账号密码登录</div>
             </div>
             <div class="login-btn" @click="info_sub()">注册/登录</div>
             <div class="login-must-know">登录即代表同意我们的《用户使用协议和隐私政策》</div>
@@ -66,8 +67,8 @@
               </li>
             </ul>
             <div class="login-method-checked">
-              <div class="inline-block blue sjdx_login" @click="pass=false;info=true;forget_pass=false">手机短信登录</div>
-              <div class="inline-block blue password_login" @click="pass=false;info=false;forget_pass=true">忘记密码</div>
+              <div class="inline-block blue sjdx_login cursor" @click="pass=false;info=true;forget_pass=false">手机短信登录</div>
+              <div class="inline-block blue password_login cursor" @click="pass=false;info=false;forget_pass=true">忘记密码</div>
             </div>
             <div class="login-btn" @click="pass_sub()">登录</div>
             <div class="login-must-know">登录即代表同意我们的《用户使用协议和隐私政策》</div>
@@ -82,7 +83,7 @@
               <li class="login-li">
                 <div class="inline-block login-li-img">
                   <div class="inline-block"><img src="../../static/img/login-sj.png" alt=""></div>
-                  <input type="text" v-model="info_phone" placeholder="请输入手机号">
+                  <input type="text" class="phones" v-model="info_phone" placeholder="请输入手机号">
                 </div>
               </li>
               <li class="login-li">
@@ -90,7 +91,7 @@
                   <div class="inline-block"><img src="../../static/img/login-txyzm.png" alt=""></div>
                   <input type="text" v-model="info_code" placeholder="图形验证">
                 </div>
-                <div class="inline-block">
+                <div class="inline-block" @click="info_img()">
                   <img  :src="http_url.url+'/random/randCode/'+info_codeimg" alt="" class="sjyzm">
                 </div>
               </li>
@@ -100,7 +101,8 @@
                   <input type="text" v-model="info_message" placeholder="请输入短信验证码">
                 </div>
                 <div class="inline-block" @click="info_getcode()">
-                  <span class="blue">获取验证码</span>
+                  <span v-if="!code_status" class="blue cursor">获取验证码</span>
+                  <span v-if="code_status">{{'重新发送:'+nums+"s"}}</span>
                 </div>
               </li>
               <li class="login-li">
@@ -117,13 +119,13 @@
               </li>
             </ul>
             <div class="login-btn" @click="forget_pass_sub()">完成</div>
-            <div class="go-login blue" @click="pass=false;info=true;forget_pass=false">去登录</div>
+            <div class="go-login blue cursor" @click="pass=false;info=true;forget_pass=false">去登录</div>
           </div>
         </div>
       </div>
     </div>
     <div id="footer" class="box-sizing">
-      <div>©2018 北京解税宝科技有限公司与航天信息股份有限公司版权所有，并保留所有权利</div>
+      <div>©2018 航天信息股份有限公司与北京解税宝科技有限公司版权所有，并保留所有权利</div>
       <div>京ICP备 16029821号-1</div>
     </div>
   </div>
@@ -145,6 +147,8 @@
             pass_phone:'',//账号密码登录的手机号
             pass_password:'',//账号密码登录的密码
             password_confrim:'',//确认输入的密码
+            code_status:false,
+            nums:60
           }
         },
         mounted(){
@@ -153,23 +157,34 @@
           var sjstring = Math.random().toString(36).substr(2);
           var codemessages = md5(sjstring+timestamp); //手机号+时间戳的MD5加密
           this.info_codeimg=codemessages;
-          //获取图片验证码
-          $(".phones").on("blur",function(){
-            var timestamp=new Date().getTime();
-            var phonenum = $(".phones").val();
-            if(phonenum == ''){
-              alert("请输入手机号码");
-              return false;
-            }
-
-            var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
-            if(!reg.test(phonenum) && phonenum != ''){
-              alert("手机号码输入有误!");
-              return false;
-            }
-          });
+          // //获取图片验证码
+          // $(".phones").on("blur",function(){
+          //   var timestamp=new Date().getTime();
+          //   var phonenum = $(".phones").val();
+          //   if(phonenum == ''){
+          //     alert("请输入手机号码");
+          //     return false;
+          //   }
+          //
+          //   var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+          //   if(!reg.test(phonenum) && phonenum != ''){
+          //     alert("手机号码输入有误!");
+          //     return false;
+          //   }
+          // });
         },
         methods:{
+          //发送倒计时
+          doLoop(){
+            this.nums--;
+            if(this.nums > 0){
+              // this.code_num='重新发送('+this.nums+')';
+            }else{
+              clearInterval(this.clock); //清除js定时器
+              this.code_status=false;
+              this.nums = 60; //重置时间
+            }
+          },
           //验证码点击
           info_img:function(){
             var timestamp=new Date().getTime();
@@ -180,7 +195,7 @@
           },
           //手机号登录失焦验证
           get_codeimg:function(){
-            // console.log(this.info_phone)
+            console.log(this.info_phone)
             var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
             if(!reg.test(this.info_phone) && this.info_phone != ''){
               alert("手机号码输入有误!");
@@ -200,6 +215,8 @@
                 if(data.code==1){
                   alert("短信已发送");
                   that.info_smsMessageSid=data.smsMessageSid;
+                  that.clock = setInterval(that.doLoop, 1000);
+                  that.code_status=true;
                 }else{
                   alert(data.des);
                 }
