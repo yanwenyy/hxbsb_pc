@@ -36,7 +36,7 @@
               <div class="error-eidt-btn inline-block" v-if="jc_btn_status"  @click="jc_status=!jc_status"><img src="../../../static/img/error-eidt-btn.png" alt="">我要纠错</div>
             </div>
             <div class="answer-group"  v-if="questionUser.quType!=1" v-for="item in answewrUsers">
-              <div  v-if="item.status!=1">
+              <div  v-if="item.status!=6">
                 <div>
                   <img :src="head_src+item.headImage"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
                   <div class="inline-block queser-msg">
@@ -55,7 +55,7 @@
                   <div class="inline-block best-answer" v-if="item.status==6">
                     <img src="../../../static/img/error-answer.png" alt="">
                   </div>
-                  <div class="inline-block best-answer accept" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2">
+                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2">
                     采纳
                   </div>
                 </div>
@@ -80,7 +80,7 @@
                   </div>
                   <div class="not-agree inline-block" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==2">不满意</div>
                 </div>
-                <div class="evaluate-model box-sizing " v-if="item.status==2||item.status==6||item.status==7">
+                <div class="evaluate-model box-sizing " v-if="item.status==2||item.status==7">
                   <div class="evaluate-score">
                     评价得分:
                     <div class="inline-block" v-for="s in 5">
@@ -91,11 +91,12 @@
                   <div class="evaluate-content">
                     {{item.appraisal||"暂无评价内容"}}
                   </div>
+                  <div v-if="item.score==0" class="go_pj" @click="bu_pj(item)" >去评价</div>
                 </div>
               </div>
             </div>
             <div class="answer-group"  v-if="questionUser.quType!=1"  v-for="item in answewrUsers">
-              <div v-if="item.status==1">
+              <div v-if="item.status==6">
                 <div class="home-model-header" style="margin-bottom: 1.31rem">
                   <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>答案纠错</div>
                 </div>
@@ -117,7 +118,7 @@
                   <div class="inline-block best-answer" v-if="item.status==6">
                     <img src="../../../static/img/error-answer.png" alt="">
                   </div>
-                  <div class="inline-block best-answer accept" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2">
+                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2">
                     采纳
                   </div>
                 </div>
@@ -141,18 +142,6 @@
                     </div>
                   </div>
                   <div class="not-agree inline-block" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==2">不满意</div>
-                </div>
-                <div class="evaluate-model box-sizing " v-if="item.status==2||item.status==6||item.status==7">
-                  <div class="evaluate-score">
-                    评价得分:
-                    <div class="inline-block" v-for="s in 5">
-                      <img :src="s<=item.score? '../../../static/img/score-sel.png':'../../../static/img/score-unsel.png'" alt="">
-                      <!--<img src="../../../static/img/score-unsel.png" alt="">-->
-                    </div>
-                  </div>
-                  <div class="evaluate-content">
-                    {{item.appraisal||"暂无评价内容"}}
-                  </div>
                 </div>
               </div>
           </div>
@@ -226,7 +215,7 @@
             <li><span class="inline-block"></span>2、如果填写的答案与他人的重复则按提交先后判定。</li>
           </ul>
         </div>
-        <div class="jc_sub" @click="sub_jc()">提交</div>
+        <div class="jc_sub cursor" @click="sub_jc()">提交</div>
       </div>
     </div>
     <div class="shadow-box" v-if="pj_status">
@@ -257,7 +246,7 @@
             </div>
           </div>
           <textarea v-model="pj_content" class="cn_textare box-sizing" placeholder="写下您对咨询师的评价吧（30字内）" id="" cols="30" rows="10"></textarea>
-          <div class="cn-pj-sub" @click="pj_sub(pj_msg.uuid)">提交</div>
+          <div class="cn-pj-sub cursor" @click="pj_sub(pj_msg.uuid)">提交</div>
         </div>
       </div>
     </div>
@@ -387,18 +376,22 @@
         },
         //评价按钮点击
         pj_sub:function(val){
-          this.ajax(this.http_url.url+"/answer/score",{
-            "score":this.cn_score,
-            "uuid":val,
-            "appraisal":this.pj_content
-          },function(data){
-            if(data.code==1){
-              alert("评价成功");
-              window.location.reload();
-            }else{
-              alert(data.des);
-            }
-          });
+          if(this.pj_content==""){
+            return false;
+          }else{
+            this.ajax(this.http_url.url+"/answer/score",{
+              "score":this.cn_score,
+              "uuid":val,
+              "appraisal":this.pj_content
+            },function(data){
+              if(data.code==1){
+                alert("评价成功");
+                window.location.reload();
+              }else{
+                alert(data.des);
+              }
+            });
+          }
         },
         //采纳评价分数点击
         cn_score_click:function(val){
@@ -410,11 +403,18 @@
             "status":"3","answerUuid":val
           },function(data){
             if(data.code==1){
-              window.location.reload()
+              alert(data.des);
+              window.location.reload();
             }else{
               alert(data.des);
             }
           });
+        },
+        //补交评价
+        bu_pj(val){
+          var that=this;
+          this.pj_msg=val;
+          that.pj_status=true;
         },
         //采纳按钮点击
         cn_btn:function(val){
@@ -424,6 +424,7 @@
             "status":"2","answerUuid":val.uuid
           },function(data){
               if(data.code==1){
+                alert(data.des);
                 that.pj_status=true;
               }else{
                 alert(data.des);
@@ -507,6 +508,13 @@
 </script>
 
 <style scoped>
+  .go_pj{
+    position: absolute;
+    top:1rem;
+    right:1rem;
+    color:#2D86FD;
+    cursor: pointer;
+  }
   .release_again{
     background: #FE6D27;
     color:#fff;
@@ -783,6 +791,7 @@
     height:auto;
     background: #F6F6F6;
     padding:0 0.69rem;
+    position:relative;
   }
   .evaluate-model:before{
     display:table;
@@ -894,7 +903,7 @@
     font-size: 0.875rem;
     margin: 1rem 0;
   }
-  .answer-group{
-    border-bottom: 1px solid #eee;
-  }
+  /*.answer-group{*/
+    /*border-bottom: 1px solid #eee;*/
+  /*}*/
 </style>

@@ -113,7 +113,6 @@
         var data=JSON.parse(decodeURIComponent(this.$route.query.data));
         if(this.source=="围观"){
           this.weiguan_msg=this.$route.query.data;
-          this.cswdc=true;
           console.log(this.weiguan_msg);
           this.ajax(this.http_url.url+"/onlook/look/buy",{
             "uuid":data.uuid,
@@ -122,8 +121,9 @@
             "source":2
           },this.wexin_pay);
         }else if(this.source=="我要提问"){
-          this.$route.query.data.payType="weixin";
-          this.$route.query.data.source=2
+          this.cswdc=true;
+          data.payType="weixin";
+          data.source=2
           this.ajax(this.http_url.url+"question/releaseQuestion",data,this.wexin_pay);
         }else if(this.source=="微课"){
           console.log(this.$route.query)

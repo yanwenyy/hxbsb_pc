@@ -27,7 +27,7 @@
             <div class="error-eidt-btn inline-block" v-if="jc_btn_status"  @click="jc_status=!jc_status"><img src="../../../static/img/error-eidt-btn.png" alt="">我要纠错</div>
           </div>
           <div class="answer-group" v-for="item in answewrUsers">
-            <div v-if="item.type!=1">
+            <div v-if="item.type!=6">
               <div>
                 <img :src="head_src+item.headImage"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
                 <div class="inline-block queser-msg">
@@ -81,7 +81,7 @@
               </div>
             </div>
           </div>
-          <div class="answer-group" v-for="item in answewrUsers" v-if="item.type==1">
+          <div class="answer-group" v-for="item in answewrUsers" v-if="item.type==6">
             <div class="home-model-header" style="margin-bottom: 1.31rem">
               <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>答案纠错</div>
             </div>

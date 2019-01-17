@@ -175,9 +175,9 @@
           this.hy_msg=data.trade;
           this.gender=data.gender;
           this.position=data.position;
-          if(data.province=="北京"||data.province=="上海"||data.province=="天津"||data.province=="重庆"){
-            this.province=data.province+"市";
-            this.city=data.province+"城区";
+          if(data.province=="北京市"||data.province=="上海市"||data.province=="天津市"||data.province=="重庆市"){
+            this.province=data.province;
+            this.city=data.province.split("市")[0]+"城区";
             this.area=data.address;
           }else{
             this.province=data.province;
@@ -222,11 +222,11 @@
         },
         //提交用户信息
         sub_msg:function(){
-          var that=this,address='',gender='',headImage='',address;
-          if(that.province=="北京"||that.province=="上海"||that.province=="天津"||that.province=="重庆"){
-            address=this.city;
+          var that=this,address='',gender='',headImage='';
+          if(that.province=="北京市"||that.province=="上海市"||that.province=="天津市"||that.province=="重庆市"){
+            address=this.area;
           }else{
-           address=this.address;
+            address=this.city;
           }
           if(that.gender=="女"){
             gender=2;
@@ -240,7 +240,8 @@
           }
           function edit_user_msg(data){
             if(data.code==1){
-              alert(data.des)
+              alert(data.des);
+              location.reload();
             }else{
               alert(data.des)
             }
