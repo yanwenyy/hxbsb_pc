@@ -12,7 +12,7 @@
           <p>可在我的提问查看回答,下载APP可及时接收回答消息和更多服务</p>
         </div>
         <div class="card">
-          <img src="../../../static/img/qr-weixin.png" onerror="javascript:this.src='./static/img/qr-weixin.png';"/>
+          <img src="../../../static/img/qr-app.png" onerror="javascript:this.src='./static/img/qr-app.png';"/>
           <p>扫描二维码下载APP</p>
         </div>
       </div>
