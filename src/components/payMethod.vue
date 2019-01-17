@@ -58,19 +58,23 @@
     <div class="pay-btn" v-if="btn_show" @click="normal_pay()">
       确认支付 <span>{{price}}</span>元
     </div>
+    <Diglog v-show="suc_show"></Diglog>
   </div>
 </template>
 
 <script>
   import BreadNav from '@/components/breadNav'
   import QRCode from 'qrcodejs2'
+  import Diglog from '@/components/askQuestion/sucDialog'
     export default {
       name: "pay-method",
       components: {
-        BreadNav
+        BreadNav,
+        Diglog
       },
       data () {
         return{
+          suc_show:false,
           price:"",
           source:"",
           title:"",
@@ -189,20 +193,23 @@
           data_msg.payType=this.payType;
           function get_msg(data){
             if(data.code==1){
-              alert("支付成功");
-              if(that.$route.query.source=="围观"){
-                that.$router.push({
-                  name:data_msg.url,
-                  query:{
-                    uuid:data_msg.uuid
-                  }
-                })
+              if(that.$route.query.source=="我要提问"){
+                that.suc_show=true
               }else{
-                that.$router.push({
-                  name:data_msg.url,
-                })
+                alert("支付成功");
+                if(that.$route.query.source=="围观"){
+                  that.$router.push({
+                    name:data_msg.url,
+                    query:{
+                      uuid:data_msg.uuid
+                    }
+                  })
+                }else{
+                  that.$router.push({
+                    name:data_msg.url,
+                  })
+                }
               }
-
             }else{
               alert(data.des);
             }
