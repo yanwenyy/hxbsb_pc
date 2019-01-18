@@ -84,13 +84,16 @@
               "typeContent":this.typeContent
             },that.get_list);
           });
-          this.ajax(this.http_url.url+'/onlook/serarch',{
-            "sinceId":1,
-            "maxId":10,
-            "content":this.msg,
-            "type":this.type,
-            "typeContent":this.typeContent
-          },this.get_list);
+          setTimeout(function(){
+            that.ajax(that.http_url.url+'/onlook/serarch',{
+              "sinceId":1,
+              "maxId":10,
+              "content":that.msg,
+              "type":that.type,
+              "typeContent":that.typeContent
+            },that.get_list);
+          },1500);
+
         },
         methods:{
           //一元围观

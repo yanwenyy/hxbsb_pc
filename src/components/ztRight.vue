@@ -5,7 +5,7 @@
       </div>
       <div>
         <div class="wdk-list" v-for="item in zt">
-          <div class="inline-block" @click="item.status==1? $router.push({ name: 'answerWacthDetail',query:{'uuid':item.uuid}}): $router.push({ name: 'answerWacth',query: {'url':'answerWacthDetail','uuid':item.uuid,'money':1}})">
+          <div class="inline-block" @click="list(item.status,item.uuid)">
             <div class="wdk-name">
               <img :src="head_src+item.headImage" alt=""  onerror="javascript:this.src='./static/img/user-img.png';">
               <div class="inline-block user_name">{{item.realName||"匿名用户"}}</div>
@@ -78,6 +78,18 @@
               "typeContent":this.zt_name
             },that.get_zt);
           },
+          //list点击
+          list(status,id){
+            // item.status==1? $router.push({ name: 'answerWacthDetail',query:{'uuid':item.uuid}}): $router.push({ name: 'answerWacth',query: {'url':'answerWacthDetail','uuid':item.uuid,'money':1}})
+            if(status==1){
+              this.$router.push({ name: 'answerWacthDetail',query:{'uuid':id}});
+              this.$emit('zt_method2', id);
+            }else{
+              this.$router.push({ name: 'answerWacth',query: {'url':'answerWacthDetail','uuid':id,'money':1}});
+              this.$emit('zt_method', {'url':'answerWacthDetail','uuid':id,'money':1});
+            }
+
+          }
         }
     }
 </script>

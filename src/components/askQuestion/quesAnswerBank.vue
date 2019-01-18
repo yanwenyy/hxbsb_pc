@@ -3,7 +3,7 @@
     <Swiper></Swiper>
     <div class="container">
       <div class="home-main box-sizing">
-        <div class="h-main-left inline-block">
+        <div class="inline-block">
           <div class="wdk-select-group">
             <ul>
               <li>
@@ -75,9 +75,9 @@
             <span class="inline-block gray-line"></span>
           </div>
         </div>
-        <div class="h-main-right inline-block box-sizing">
-          <HomeRight></HomeRight>
-        </div>
+        <!--<div class="h-main-right inline-block box-sizing">-->
+          <!--<HomeRight></HomeRight>-->
+        <!--</div>-->
         <div class="go-top"></div>
       </div>
     </div>

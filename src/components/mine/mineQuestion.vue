@@ -43,7 +43,7 @@
               <td>{{item.content}}</td>
               <td>{{format(item.time)}}</td>
               <td class="time-msg" :data-time="item.status==1? item.endDate:''" :data-status="item.status">{{cn_status(item.status)}}</td>
-              <td><img src="../../../static/img/table-look.png" alt="" ><span class="look_ques blue" @click="$router.push({'name':'mineQuesDetail',query:{'uuid':item.uuid,'status':item.status}})">查看</span></td>
+              <td><img src="../../../static/img/table-look.png" alt="" ><span class="look_ques blue" @click="$router.push({'name':'mineQuesDetail',query:{'uuid':item.uuid,'status':item.status,'quType':item.quType}})">查看</span></td>
             </tr>
           </table>
         </div>

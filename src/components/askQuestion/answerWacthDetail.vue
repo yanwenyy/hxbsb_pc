@@ -71,7 +71,7 @@
                 <div class="evaluate-score">
                   评价得分:
                   <div class="inline-block" v-for="s in 5">
-                    <img :src="s<=item.score? '../../../static/img/score-sel.png':'../../../static/img/score-unsel.png'" alt="">
+                    <img :src="s<=item.score? './static/img/score-sel.png':'./static/img/score-unsel.png'" alt="">
                     <!--<img src="../../../static/img/score-unsel.png" alt="">-->
                   </div>
                 </div>
@@ -209,7 +209,7 @@
           </div>
         </div>
         <div class="h-main-right inline-block box-sizing">
-          <ztRight></ztRight>
+          <ztRight @zt_method2="zt_method2"></ztRight>
         </div>
       </div>
     </div>
@@ -273,9 +273,9 @@
         no_more:true,
         more_msg:"点击加载更多",
         //赞的src
-        zan_src:"/static/img/zan.png",
+        zan_src:"./static/img/zan.png",
         //踩的src
-        cai_src:"/static/img/cai.png",
+        cai_src:"./static/img/cai.png",
         hy:[],
         sz:[],
         //选择的税种
@@ -288,7 +288,7 @@
       var that=this;
       //用户所有信息
       this.ajax_nodata(this.http_url.url+"/user/message",function(data){
-        console.log(data);
+        // console.log(data);
         that.all_usermsg=data;
       });
       //回答者和提问者信息
@@ -319,6 +319,12 @@
       })
     },
     methods:{
+      //接收专题的事件
+      zt_method2(data){
+        // console.log(data);
+        //回答者和提问者信息
+        this.ajax_nodata(this.http_url.url+"/onlook/wx/onlookAuthorized?uuid="+data,this.que_msg);
+      },
       //回答者和提问者信息
       que_msg:function(data){
         // console.log(data);

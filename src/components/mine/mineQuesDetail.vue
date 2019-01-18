@@ -78,7 +78,7 @@
                       <span>{{item.opposeNum}}</span>
                     </div>
                   </div>
-                  <div class="not-agree inline-block" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==2">不满意</div>
+                  <div class="not-agree inline-block" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==2&&$route.query.quType!=2">不满意</div>
                 </div>
                 <div class="evaluate-model box-sizing " v-if="item.status==2||item.status==7">
                   <div class="evaluate-score">
@@ -141,7 +141,7 @@
                       <span>{{item.opposeNum}}</span>
                     </div>
                   </div>
-                  <div class="not-agree inline-block" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==2">不满意</div>
+                  <div class="not-agree inline-block" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==2&&route.query.quType!=2">不满意</div>
                 </div>
               </div>
           </div>
@@ -296,9 +296,9 @@
           no_more:true,
           more_msg:"点击加载更多",
           //赞的src
-          zan_src:"/static/img/zan.png",
+          zan_src:"./static/img/zan.png",
           //踩的src
-          cai_src:"/static/img/cai.png",
+          cai_src:"./static/img/cai.png",
           hy:[],
           sz:[],
           //选择的税种

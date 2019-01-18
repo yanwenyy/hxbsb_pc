@@ -179,8 +179,16 @@
             this.province=data.province;
             this.city=data.province.split("市")[0]+"城区";
             this.area=data.address;
+          }if(data.province=="北京"||data.province=="上海"||data.province=="天津"||data.province=="重庆"){
+            this.province=data.province+"市";
+            this.city=data.province+"城区";
+            this.area=data.address;
           }else{
-            this.province=data.province;
+            if(data.province.indexOf("省")!=-1){
+              this.province=data.province;
+            }else{
+              this.province=data.province+"省";
+            }
             this.city=data.address;
           }
         },
@@ -246,18 +254,22 @@
               alert(data.des)
             }
           }
-          that.ajax(that.http_url.url+"/user/editUser",{
-            "headImage":headImage,
-            "realName":that.user_name,
-            "userName":that.user_realNanme,
-            "sex":gender,
-            "province":that.province,
-            "trade":that.hy_msg,
-            "address":address,
-            "companyName":that.companyName,
-            "birthdayDate":that.birthday,
-            "position":that.position
-          },edit_user_msg)
+          if(that.user_name==""){
+            alert("昵称不能为空")
+          }else{
+            that.ajax(that.http_url.url+"/user/editUser",{
+              "headImage":headImage,
+              "realName":that.user_name,
+              "userName":that.user_realNanme,
+              "sex":gender,
+              "province":that.province,
+              "trade":that.hy_msg,
+              "address":address,
+              "companyName":that.companyName,
+              "birthdayDate":that.birthday,
+              "position":that.position
+            },edit_user_msg)
+          }
         }
       },
     }

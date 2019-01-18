@@ -37,7 +37,7 @@
           <table class="mine-ques-table box-sizing">
             <tr>
               <td width="25">类型</td>
-              <td width="25">收入类型</td>
+              <td width="25">收支类型</td>
               <td width="20">支付完成日期</td>
               <td width="20">金额</td>
             </tr>
@@ -99,8 +99,8 @@
           //交易记录
         get_msg:function(data){
           // console.log(data);
-          this.incomeSum=data.incomeSum;
-          this.outpaySum=data.outpaySum;
+          this.incomeSum=data.incomeSum||0;
+          this.outpaySum=data.outpaySum||0;
           this.records=data.records;
           this.count=data.count/10;
           this.page(this.count);

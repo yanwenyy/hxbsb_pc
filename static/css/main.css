@@ -1009,7 +1009,7 @@ input::-webkit-input-placeholder{
   font-size: 0.75rem;
   margin:1.25rem ;
   vertical-align: middle;
-  width:26%;
+  width:29%;
 }
 .user-money-msg>div{
   margin-bottom: 0.81rem;
@@ -1024,7 +1024,7 @@ input::-webkit-input-placeholder{
   font-size: 1.25rem;
 }
 .money-record{
-  width:68%;
+  width:65%;
   vertical-align: middle;
 }
 .money-record>div{

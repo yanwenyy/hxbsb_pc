@@ -95,7 +95,7 @@ export default{
         if(0<=data&&data<6){
           score_img="./static/img/icon-pthy.png"
         }else if(6<=data&&data<20){
-          score_img="./static/img/icon-pthy.png"
+          score_img="./static/img/icon-tphy.png"
         }else if(20<=data&&data<50){
           score_img="./static/img/icon-yphy.png"
         }else if(50<=data&&data<100){

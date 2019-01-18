@@ -13,7 +13,7 @@
             <span class="inline-block round" ><img :src="index==0?'./static/img/round-blue.png':'./static/img/round.png'"/></span>
             <div class="inline-block">{{item.behavior}}<br><span class="cp-time">{{format(item.createdate)}}</span></div>
           </div>
-          <div class="back"><span @click="$router.go(-1)"><img src="/static/img/blue_back_icon.png">返回</span></div>
+          <div class="back"><span @click="$router.go(-1)"><img src="../../../static/img/blue_back_icon.png">返回</span></div>
         </div>
       </div>
     </div>

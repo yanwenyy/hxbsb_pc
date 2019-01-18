@@ -21,7 +21,7 @@
           <img src="../../static/img/pay_bag.png" alt="">
           <div>
             <div class="pay-method-list-name">我的钱包</div>
-            <div class="orange">余额:{{bag_money}}</div>
+            <div class="orange">余额:{{parseFloat(bag_money).toFixed(2)}}</div>
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@
           <img src="../../static/img/pay_card.png" alt="">
           <div>
             <div class="pay-method-list-name">学习顾问卡</div>
-            <div class="orange">余额:{{card_money}}</div>
+            <div class="orange">余额:{{parseFloat(card_money).toFixed(2)}}</div>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@
           <img src="../../static/img/pay_qa.png" alt="">
           <div>
             <div class="pay-method-list-name">财税问答卡</div>
-            <div class="orange">余额:{{qa_money}}</div>
+            <div class="orange">余额:{{parseFloat(qa_money).toFixed(2)}}</div>
           </div>
         </div>
       </div>
@@ -174,6 +174,27 @@
         check_order:function(){
           function get_msg(data){
             console.log(data);
+            var that=this;
+            var data_msg=JSON.parse(decodeURIComponent(this.$route.query.data));
+            if(data.code==1){
+                if(that.$route.query.source=="我要提问"){
+                  that.suc_show=true
+                }else {
+                  alert("支付成功");
+                  if (that.$route.query.source == "围观") {
+                    that.$router.push({
+                      name: data_msg.url,
+                      query: {
+                        uuid: data_msg.uuid
+                      }
+                    })
+                  } else {
+                    that.$router.push({
+                      name: data_msg.url,
+                    })
+                  }
+                }
+            }
           };
           var that=this;
           this.timer=setInterval(function(){

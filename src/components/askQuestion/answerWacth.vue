@@ -57,7 +57,7 @@
           </div>
         </div>
         <div class="h-main-right inline-block box-sizing">
-          <ztRight></ztRight>
+          <ztRight @zt_method="zt_method"></ztRight>
         </div>
       </div>
     </div>
@@ -118,6 +118,7 @@
             look_list_detail:[],
             //回答者信息
             answer_msg:'',
+            zt_method_data:''
         }
       },
       mounted (){
@@ -128,21 +129,36 @@
         this.ajax(this.http_url.url+"/onlook/onlookCountDetailList",{
           "questionUuid":this.$route.query.uuid,
           "sinceId":"1",
-          "maxId":"8",
+          "maxId":"1000000",
         },this.look_num);
         //提问者和专家资料显示
         this.ajax(this.http_url.url+"/user/someUserMsg",{"questionUuid":this.$route.query.uuid},this.msg_show);
         },
       methods:{
+        //接收专题的事件
+        zt_method(data) {
+          this.zt_method_data=data;
+          //问题者信息
+          this.ajax_nodata(this.http_url.url+"/onlook/wx/onlookAuthorized?uuid="+this.zt_method_data.uuid,this.que_msg);
+          // alert(this.$route.query.questionUuid);
+          //围观人员查询
+          this.ajax(this.http_url.url+"/onlook/onlookCountDetailList",{
+            "questionUuid":this.zt_method_data.uuid,
+            "sinceId":"1",
+            "maxId":"8",
+          },this.look_num);
+          //提问者和专家资料显示
+          this.ajax(this.http_url.url+"/user/someUserMsg",{"questionUuid":this.zt_method_data.uuid},this.msg_show);
+        },
           //问题者信息
         que_msg:function(data){
-          console.log(data);
+          // console.log(data);
           this.questionUser=data.questionUser;
         },
           //围观人员
         look_num:function(data){
             // console.log(data);
-            this.look_list=data.OnLookCountDetail;
+            this.look_list=data.OnLookCountDetail.slice(0,8);
             this.look_length=this.look_list.length+1;
             this.look_list_detail=data.OnLookCountDetail;
             this.look_list_num=data.OnLookCount;
@@ -158,7 +174,7 @@
         //一元围观
         weiguan:function(){
           var that=this;
-          var data=encodeURIComponent(JSON.stringify(this.$route.query));
+          var data=encodeURIComponent(JSON.stringify(this.$route.query))||encodeURIComponent(JSON.stringify(this.zt_method_data));
           this.$router.push({
             name:"payMethod",query:{ url:"answerWacthDetail",price: 1 ,source:"围观",data:data}
           })

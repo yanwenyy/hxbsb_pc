@@ -105,15 +105,24 @@
         },
         //我要提问点击
         ques_btn:function(){
-          if(this.title_code==1||this.title_code==2){
+          if(this.$route.path=="/home"||this.$route.path=="/quesAnswerBank"){
             this.$router.push({
               name: 'answerSearch',query:{msg:this.message}
             })
-          }else if(this.title_code==4){
+          }else if(this.$route.path=="/smallClass"){
             this.$router.push({
               name: 'smallClassSearch',query:{msg:this.message}
             })
           }
+          // if(this.title_code==1||this.title_code==2){
+          //   this.$router.push({
+          //     name: 'answerSearch',query:{msg:this.message}
+          //   })
+          // }else if(this.title_code==4){
+          //   this.$router.push({
+          //     name: 'smallClassSearch',query:{msg:this.message}
+          //   })
+          // }
         }
       }
     }
