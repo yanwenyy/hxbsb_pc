@@ -14,7 +14,7 @@
               {{questionUser.content}}
             </div>
             <div class="queser-grounp-img">
-              <img :src="question_src+item" alt="" v-for="item in questionUser.images">
+              <img :src="question_src+item" alt="" v-for="item in questionUser.images" @click="lookImgFn(questionUser.images)">
             </div>
             <div class="queser-grounp-footer">
               <span>{{questionUser.area}} {{questionUser.quTrade}}</span>
@@ -226,18 +226,22 @@
         <div class="jc_sub" @click="sub_jc()">提交</div>
       </div>
     </div>
+    <look-img v-if="lookImgVisible" ref="lookImg" @refreshMask="maskShow"></look-img>
   </div>
 </template>
 
 <script>
   import ztRight from '@/components/ztRight'
+  import lookImg from '@/components/lookImg'
   export default {
     name: "answer-wacth",
     components:{
-      ztRight
+      ztRight,
+      lookImg
     },
     data(){
       return{
+        lookImgVisible:false,//图片放大组件控制
         //用户所有信息
         all_usermsg:'',
         //纠错框状态
@@ -307,6 +311,17 @@
       })
     },
     methods:{
+      //图片放大组件控制
+      lookImgFn:function (list) {
+        this.lookImgVisible = true
+        this.$nextTick(() => {
+          this.$refs.lookImg.init(list)
+        })
+      },
+      //图片放大组件控制
+      maskShow:function () {
+        this.lookImgVisible = false
+      },
       //接收专题的事件
       zt_method2(data){
         // console.log(data);
