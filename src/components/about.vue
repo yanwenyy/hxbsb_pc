@@ -1,7 +1,7 @@
 <template>
   <div class="home-body">
     <headerTab msg="关于我们"></headerTab>
-    <div class="about-header">
+    <!--<div class="about-header">
       <img class="ah-img" src="../../static/img/about-header.png"/>
       <div class="about-shadow about-us" ref="ab">
         <div class="au-left inline-block">
@@ -38,17 +38,17 @@
           </li>
         </ul>
       </div>
-    </div>
+    </div>-->
     <div class="about-footer">
       <img class="ah-img" src="../../static/img/about-footer.png"/>
       <div class="about-contact about-shadow">
         <div><img class="ac-cn" src="../../static/img/contact-us-cn.png"/></div>
         <div><img class="" src="../../static/img/contact-us-en.png"/></div>
         <span class="inline-block br" style="width: 11%"></span>
-        <p style="color:#2286FF;font-size: 1.125rem;margin-bottom: 30px">北京解税宝科技有限公司</p>
-        <p class="about-txt"><span><img src="../../static/img/about-dh.png"/></span>电话：010-5779 707</p>
-        <p class="about-txt"><span><img src="../../static/img/about-dz.png"/></span>网址：</p>
-        <p class="about-txt"><span><img src="../../static/img/about-dw.png"/></span>地址：北京市海淀区永定路2号院8号楼二层</p>
+        <!--<p style="color:#2286FF;font-size: 1.125rem;margin-bottom: 30px">北京解税宝科技有限公司</p>-->
+        <p class="about-txt"><span><img src="../../static/img/about-dh.png"/></span>电话：010-57797504</p>
+        <p class="about-txt"><span><!--<img src="../../static/img/about-dz.png"/>--></span>邮箱：jsb@jieshuibao.com</p>
+        <!--<p class="about-txt"><span><img src="../../static/img/about-dw.png"/></span>地址：北京市海淀区永定路2号院8号楼二层</p>-->
       </div>
     </div>
   </div>
@@ -147,7 +147,7 @@
     font-size: 0.875rem;
   }
   .about-contact{
-    width: 31.97%;
+    width: 40%;
     text-align: center;
     margin: 0 auto;
     padding-bottom: 20px;
@@ -162,6 +162,7 @@
   .about-contact>div>img.ac-cn{
     width: 20%;
     margin-top: 20px;
+    cursor: default;
   }
   .about-txt{
     font-size: 1rem;

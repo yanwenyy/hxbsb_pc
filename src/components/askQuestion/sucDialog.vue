@@ -11,10 +11,7 @@
           <h4>问题发布成功</h4>
           <p>可在我的提问查看回答,下载APP可及时接收回答消息和更多服务</p>
         </div>
-        <div class="card">
-          <img src="../../../static/img/qr-app.png" onerror="javascript:this.src='./static/img/qr-app.png';"/>
-          <p>扫描二维码下载APP</p>
-        </div>
+
       </div>
 
     </div>
@@ -39,7 +36,7 @@
     background:rgba(255,255,255,1);
     border-radius:6px;
     width: 24rem;
-    height: 18rem;
+    height: 12rem;
     position: absolute;
     margin: auto;
     top: 0;
