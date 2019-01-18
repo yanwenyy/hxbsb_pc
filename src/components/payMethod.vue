@@ -115,6 +115,7 @@
         this.source=this.$route.query.source;
         this.title="首页> "+this.$route.query.source+" > 支付";
         var data=JSON.parse(decodeURIComponent(this.$route.query.data));
+
         if(this.source=="围观"){
           this.weiguan_msg=this.$route.query.data;
           console.log(this.weiguan_msg);
@@ -172,10 +173,11 @@
         },
         //查询订单
         check_order:function(){
+          var that=this;
+          var data_msg=JSON.parse(decodeURIComponent(that.$route.query.data));
           function get_msg(data){
             console.log(data);
-            var that=this;
-            var data_msg=JSON.parse(decodeURIComponent(this.$route.query.data));
+            console.log(data_msg)
             if(data.code==1){
                 if(that.$route.query.source=="我要提问"){
                   that.suc_show=true
@@ -210,7 +212,7 @@
         //钱包或学习顾问卡支付
         normal_pay:function(){
           var that=this;
-          var data_msg=JSON.parse(decodeURIComponent(this.$route.query.data));
+          var data_msg=JSON.parse(decodeURIComponent(that.$route.query.data));
           data_msg.payType=this.payType;
           function get_msg(data){
             if(data.code==1){

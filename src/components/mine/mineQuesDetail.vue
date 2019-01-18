@@ -511,20 +511,28 @@
         //提交纠错
         sub_jc:function(val){
           var that=this;
-          this.ajax(this.http_url.url+"/changerError/answer/add",{
-            "content":$("#content").val(),
-            "taxId":this.sz_selece.join(","),
-            "topicId":this.topicId,
-            "uuid":that.comment_id
-          },function(data){
-            console.log(data);
-            if(data.code==1){
-              alert("提交成功");
-              window.location.reload();
-            }else{
-              alert(data.des);
-            }
-          })
+          if($("#content").val()==""){
+            alert("请输入内容")
+          }else if(this.sz_selece==""){
+            alert("税种不能为空")
+          }else if(this.topicId==""){
+            alert("专题不能为空")
+          }else{
+            this.ajax(this.http_url.url+"/changerError/answer/add",{
+              "content":$("#content").val(),
+              "taxId":this.sz_selece.join(","),
+              "topicId":this.topicId,
+              "uuid":that.comment_id
+            },function(data){
+              console.log(data);
+              if(data.code==1){
+                alert("提交成功");
+                window.location.reload();
+              }else{
+                alert(data.des);
+              }
+            })
+          }
         }
       }
     }

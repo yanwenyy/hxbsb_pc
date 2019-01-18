@@ -16,7 +16,7 @@
             </div>
             <div class="inline-block money-record box-sizing">
               <div class="inline-block money-tx">
-                <div v-if="financeCard_status" @click="bind_card">绑定问答卡</div>
+                <div v-if="financeCard_status" class="cursor" @click="bind_card">绑定问答卡</div>
               </div>
               <div class="inline-block">
                 <div class="total-record-name">收入（元）</div>
