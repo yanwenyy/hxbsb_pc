@@ -266,6 +266,9 @@
     line-height: 1.2;
     position: relative;
   }
+  .sm-class-video>div>div{
+    line-height: 1.4;
+  }
   .sm-class-video>div>img{
     width:100%;
     height:9.4rem;
