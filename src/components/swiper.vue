@@ -4,7 +4,7 @@
       <div class="head-banner clearfix">
         <div class="swiper-container s1">
           <ul class="swiper-wrapper">
-            <li class="swiper-slide head-img" style="background: url('../../static/img/img1920.jpg') center">
+            <li class="swiper-slide head-img" style="background: url('./static/img/img1920.jpg') center">
             </li>
           </ul>
           <div class="swiper-pagination"></div>
