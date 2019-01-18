@@ -171,6 +171,9 @@
   .about-txt img{
     width: 1rem;
   }
+  .about-footer{
+    height: 81vh !important;
+  }
   @media (max-width: 960px) {
     .about-us{
       width: 35.625rem;
