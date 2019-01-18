@@ -5,21 +5,21 @@
         <div class="swiper-container s1">
           <ul class="swiper-wrapper">
             <li class="swiper-slide head-img">
-              <img class="banner-img" src="../assets/banner.png"  />
+              <img class="banner-img" src="../assets/banner.jpg"  />
             </li>
-            <li class="swiper-slide head-img">
-              <img class="banner-img"  src="../assets/banner2.png" />
-            </li>
-            <li class="swiper-slide head-img">
-              <img class="banner-img"  src="../assets/banner3.png" />
-            </li>
-            <li class="swiper-slide head-img">
-              <img class="banner-img"  src="../assets/banner4.png" />
-            </li>
+            <!--<li class="swiper-slide head-img">-->
+              <!--<img class="banner-img"  src="../assets/banner2.png" />-->
+            <!--</li>-->
+            <!--<li class="swiper-slide head-img">-->
+              <!--<img class="banner-img"  src="../assets/banner3.png" />-->
+            <!--</li>-->
+            <!--<li class="swiper-slide head-img">-->
+              <!--<img class="banner-img"  src="../assets/banner4.png" />-->
+            <!--</li>-->
           </ul>
           <div class="swiper-pagination"></div>
-          <div class="swiper-button-prev"></div><!--左箭头-->
-          <div class="swiper-button-next"></div><!--右箭头-->
+          <!--<div class="swiper-button-prev"></div>&lt;!&ndash;左箭头&ndash;&gt;-->
+          <!--<div class="swiper-button-next"></div>&lt;!&ndash;右箭头&ndash;&gt;-->
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
         },
         mounted () {
           var mySwiper = new Swiper('.s1', {
-            autoplay: 3000, //可选选项，自动滑动
+            // autoplay: 3000, //可选选项，自动滑动
             //autoHeight: true,
             speed: 2000,
             autoplayDisableOnInteraction: false,
@@ -62,7 +62,7 @@
             // pagination: '.swiper-pagination',
             type: 'bullets',
             paginationClickable: true,
-            loop: true, //循环播放
+            // loop: true, //循环播放
             //touchRatio:1,
             observer: true, //修改swiper自己或子元素时，自动初始化swiper
             observeParents: true ,//修改swiper的父元素时，自动初始化swiper

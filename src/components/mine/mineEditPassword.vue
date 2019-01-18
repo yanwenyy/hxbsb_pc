@@ -24,7 +24,7 @@
               </li>
               <li>
                 <span class="inline-block"></span>
-                <div class="sub-password inline-block" @click="sub()">完  成</div>
+                <div class="sub-password inline-block cursor" @click="sub()">完  成</div>
               </li>
             </ul>
           </div>

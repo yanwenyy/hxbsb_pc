@@ -94,8 +94,8 @@
 
                 </span>
                 <div class="inline-block mine-data-btn">
-                  <div class="data-sub-btn inline-block" @click="sub_msg()">保存</div>
-                  <div class="data-reset-btn inline-block">取消</div>
+                  <div class="data-sub-btn inline-block cursor" @click="sub_msg()">保存</div>
+                  <div class="data-reset-btn inline-block cursor">取消</div>
                 </div>
               </li>
             </ul>
@@ -179,7 +179,7 @@
             this.province=data.province;
             this.city=data.province.split("市")[0]+"城区";
             this.area=data.address;
-          }if(data.province=="北京"||data.province=="上海"||data.province=="天津"||data.province=="重庆"){
+          }else if(data.province=="北京"||data.province=="上海"||data.province=="天津"||data.province=="重庆"){
             this.province=data.province+"市";
             this.city=data.province+"城区";
             this.area=data.address;

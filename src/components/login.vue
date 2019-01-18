@@ -224,6 +224,7 @@
           },
           //手机号登录
           info_sub:function(){
+            sessionStorage.removeItem("cookieId");
             var that=this;
             if(this.info_phone==""||this.info_message==""||this.info_code==""){
               alert("请完善信息")
@@ -250,6 +251,7 @@
           },
           //账号密码登录
           pass_sub:function(){
+            sessionStorage.removeItem("cookieId");
             var that=this;
             if(this.pass_phone==""||this.pass_password==''){
               alert("请完善信息")
@@ -276,6 +278,7 @@
           },
           //忘记密码登录
           forget_pass_sub:function(){
+            sessionStorage.removeItem("cookieId");
             var that=this;
             this.ajax(this.http_url.url+"/newFindPwdOne",{
               "pwd":md5(this.pass_password),
@@ -320,7 +323,7 @@
   .login-must-know{
     font-size: 0.75rem;
     color:#999;
-    text-decoration: underline;
+    text-decoration: u;
   }
   .login-btn{
     height:3.5rem;

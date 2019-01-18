@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="home-zt-img">
-        <img src="../../static/img/ceshi.jpg" alt="">
+        <img src="../../static/img/zt_banner.jpg" alt="">
       </div>
       <div class="selected-zt">
         <div class="selected-zt-title">

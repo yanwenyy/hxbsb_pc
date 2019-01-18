@@ -20,7 +20,7 @@
               </li>
               <li>
                 <span class="inline-block"></span>
-                <div class="sub-password inline-block" @click="sub()">绑  定</div>
+                <div class="sub-password inline-block cursor" @click="sub()">绑  定</div>
               </li>
             </ul>
           </div>

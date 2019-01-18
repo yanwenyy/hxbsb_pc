@@ -9,7 +9,7 @@
         <div class="home-model-header">
           <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>我的提问</div>
         </div>
-        <div class="question-progress" v-if="questionUser.stauts==1||questionUser.stauts==2" @click="go_progress()" v-show="progress">问题进度</div>
+        <div class="question-progress" v-if="questionUser.quType!=1" @click="go_progress()" v-show="progress">问题进度</div>
         <div class="box-sizing mine-ques-detail">
             <div class="queser-grounp">
               <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'./static/img/user-img.png'"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
