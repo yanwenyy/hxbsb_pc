@@ -28,15 +28,19 @@
       <div class="answer-group">
         <div>
           <img :src="head_src+answer_msg.headImage" onerror="javascript:this.src='./static/img/user-img.png'" alt="" class="queser-head">
-          <div class="inline-block queser-msg">
+          <div class="inline-block queser-msg" v-if="answer_msg.role==2">
             <div class="inline-block user_name">
-              {{answer_msg.realName}}
-              <div class="inline-block zxs-img-show" v-if="answer_msg.role==2">
+              {{answer_msg.role==2? answer_msg.userName:answer_msg.realName}}
+              <div class="inline-block zxs-img-show" v-if="answer_msg.role!=1">
                 <img src="../../../static/img/zxs-icon.png" alt="">
                 {{answer_msg.levelName}}
               </div>
             </div>
-            <div v-if="answer_msg.role==2">{{answer_msg.counselorDuty}}</div>
+            <div  v-if="answer_msg.role!=1">{{answer_msg.counselorDuty}}</div>
+          </div>
+          <div class="inline-block queser-msg"  v-if="answer_msg.role==1">
+            <div class="inline-block user_name">{{answer_msg.realName}}</div>
+            <div class="inline-block user-dj"><img :src="get_score(answer_msg.integralScore,answer_msg.aision,answer_msg.vip)" alt=""></div>
           </div>
         </div>
       </div>

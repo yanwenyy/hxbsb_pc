@@ -39,15 +39,19 @@
               <div  v-if="item.status!=6">
                 <div>
                   <img :src="head_src+item.headImage"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
-                  <div class="inline-block queser-msg">
+                  <div class="inline-block queser-msg" v-if="item.role==2">
                     <div class="inline-block user_name">
-                      {{item.userName}}
-                      <div class="inline-block zxs-img-show">
+                      {{item.role==2? item.userName:item.realName}}
+                      <div class="inline-block zxs-img-show" v-if="item.role!=1">
                         <img src="../../../static/img/zxs-icon.png" alt="">
                         {{item.levelName}}
                       </div>
                     </div>
-                    <div>{{item.counselorDuty}}</div>
+                    <div  v-if="item.role!=1">{{item.counselorDuty}}</div>
+                  </div>
+                  <div class="inline-block queser-msg"  v-if="item.role==1">
+                    <div class="inline-block user_name">{{item.realName}}</div>
+                    <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
                   </div>
                   <div class="inline-block best-answer" v-if="item.status==2||item.checkStatus==2||item.status==7">
                     <img src="../../../static/img/best-answer.png" alt="">
@@ -102,15 +106,19 @@
                 </div>
                 <div>
                   <img :src="head_src+item.headImage"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
-                  <div class="inline-block queser-msg">
+                  <div class="inline-block queser-msg" v-if="item.role==2">
                     <div class="inline-block user_name">
-                      {{item.userName}}
-                      <div class="inline-block zxs-img-show">
+                      {{item.role==2? item.userName:item.realName}}
+                      <div class="inline-block zxs-img-show" v-if="item.role!=1">
                         <img src="../../../static/img/zxs-icon.png" alt="">
                         {{item.levelName}}
                       </div>
                     </div>
-                    <div>{{item.counselorDuty}}</div>
+                    <div  v-if="item.role!=1">{{item.counselorDuty}}</div>
+                  </div>
+                  <div class="inline-block queser-msg"  v-if="item.role==1">
+                    <div class="inline-block user_name">{{item.realName}}</div>
+                    <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
                   </div>
                   <div class="inline-block best-answer" v-if="item.status==2||item.checkStatus==2||item.status==7">
                     <img src="../../../static/img/best-answer.png" alt="">

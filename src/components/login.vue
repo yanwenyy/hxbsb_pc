@@ -237,6 +237,7 @@
               },function(data){
                   if(data.code==1){
                     sessionStorage.setItem("userMessage",JSON.stringify(data));
+                    sessionStorage.setItem("cookieId",data.cookieId);
                     if(data.ifNewRegist==0){
                       that.$router.push({name:"Home"});
                       sessionStorage.setItem("cookieId",data.cookieId);
@@ -263,6 +264,7 @@
                if(data.code==1){
                  // console.log(data);
                   sessionStorage.setItem("userMessage",JSON.stringify(data));
+                 sessionStorage.setItem("cookieId",data.cookieId);
                   if(data.ifNewRegist==0){
                     that.$router.push({name:"Home"});
                     sessionStorage.setItem("cookieId",data.cookieId);
@@ -290,6 +292,7 @@
               // console.log(data);
               if(data.code==1){
                 sessionStorage.setItem("userMessage",JSON.stringify(data));
+                sessionStorage.setItem("cookieId",data.cookieId);
                 if(data.ifNewRegist==0){
                   // that.$router.push({name:"Home"});
                   alert("修改成功");
