@@ -22,7 +22,7 @@
                 {{questionUser.content}}
               </div>
               <div class="queser-grounp-img">
-                <img :src="question_src+item" alt="" v-for="item in questionUser.images">
+                <img :src="question_src+item" alt="" v-for="item in questionUser.images" @click="lookImgFn(questionUser.images)">
               </div>
               <div class="queser-grounp-footer">
                 <span>{{questionUser.area}} {{questionUser.quTrade}}</span>
@@ -250,18 +250,22 @@
         </div>
       </div>
     </div>
+    <look-img v-if="lookImgVisible" ref="lookImg" @refreshMask="maskShow"></look-img>
   </div>
 </template>
 
 <script>
   import mineLeft from '@/components/mineLeft'
+  import lookImg from '@/components/lookImg'
     export default {
       name: "mine-ques-detail",
       components:{
         mineLeft,
+        lookImg
       },
       data(){
         return{
+          lookImgVisible:false,//图片放大组件控制
           // //是否重新发布
           // release_again:false,
           // release_no:true,
@@ -356,6 +360,17 @@
         })
       },
       methods:{
+        //图片放大组件控制
+       lookImgFn:function (list) {
+         this.lookImgVisible = true
+         this.$nextTick(() => {
+           this.$refs.lookImg.init(list)
+         })
+       },
+        //图片放大组件控制
+        maskShow:function () {
+          this.lookImgVisible = false
+        },
         //重新发布问题
         release_question:function(){
         var that=this;
