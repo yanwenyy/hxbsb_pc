@@ -256,12 +256,12 @@ input::-webkit-input-placeholder{
 }
 #lunbo{
   width:100%;
-  height:21.56rem;
+  /*height:21.56rem;*/
 }
 .banner-img,.head-img,.head-banner,.swiper-container,.swiper-wrapper{
   width:100%!important;
   margin:0!important;
-  height:21.56rem;
+  /*height:21.56rem;*/
 }
 /*搜索栏*/
 #search-group{
@@ -821,9 +821,9 @@ input::-webkit-input-placeholder{
   margin: 0.625rem 0.625rem 0 0;
 }
 .gray-line{
-  background: #BBBBBB;
+  background: #e8e8e8;
   width:1.25rem;
-  height:2px;
+  height:1px;
   vertical-align: middle;
 }
 .load-more{

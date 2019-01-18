@@ -1,25 +1,15 @@
 <template>
-  <div class="lubo-group container">
+  <div class="lubo-group">
     <div id="lunbo">
       <div class="head-banner clearfix">
         <div class="swiper-container s1">
           <ul class="swiper-wrapper">
-            <li class="swiper-slide head-img">
-              <img class="banner-img" src="../assets/banner.jpg"  />
+            <li class="swiper-slide head-img" style="background: url('../../static/img/img1920.jpg') center">
             </li>
-            <!--<li class="swiper-slide head-img">-->
-              <!--<img class="banner-img"  src="../assets/banner2.png" />-->
-            <!--</li>-->
-            <!--<li class="swiper-slide head-img">-->
-              <!--<img class="banner-img"  src="../assets/banner3.png" />-->
-            <!--</li>-->
-            <!--<li class="swiper-slide head-img">-->
-              <!--<img class="banner-img"  src="../assets/banner4.png" />-->
-            <!--</li>-->
           </ul>
           <div class="swiper-pagination"></div>
-          <!--<div class="swiper-button-prev"></div>&lt;!&ndash;左箭头&ndash;&gt;-->
-          <!--<div class="swiper-button-next"></div>&lt;!&ndash;右箭头&ndash;&gt;-->
+          <!--<div class="swiper-button-prev"></div>&lt;!&ndash;左箭头&ndash;&gt;
+          <div class="swiper-button-next"></div>&lt;!&ndash;右箭头&ndash;&gt;-->
         </div>
       </div>
     </div>
@@ -122,5 +112,10 @@
   }
   .lubo-group:hover .swiper-button-prev,.lubo-group:hover .swiper-button-next{
     display: block;
+  }
+  .swiper-slide{
+    height: 17.5rem;
+    width: 100%;
+    background-size: cover;
   }
 </style>
