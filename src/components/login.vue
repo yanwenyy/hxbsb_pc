@@ -323,7 +323,7 @@
   .login-must-know{
     font-size: 0.75rem;
     color:#999;
-    text-decoration: u;
+    text-decoration: underline;
   }
   .login-btn{
     height:3.5rem;
