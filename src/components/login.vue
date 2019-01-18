@@ -44,7 +44,7 @@
               <div class="inline-block blue password_login cursor" @click="pass=true;info=false;forget_pass=false">账号密码登录</div>
             </div>
             <div class="login-btn" @click="info_sub()">注册/登录</div>
-            <div class="login-must-know">登录即代表同意我们的《用户使用协议和隐私政策》</div>
+            <div class="login-must-know cursor" @click="$router.push({name:'userAgreement'})">登录即代表同意我们的《用户使用协议和隐私政策》</div>
           </div>
         </div>
         <div class="password-way" v-if="pass">
@@ -71,7 +71,7 @@
               <div class="inline-block blue password_login cursor" @click="pass=false;info=false;forget_pass=true">忘记密码</div>
             </div>
             <div class="login-btn" @click="pass_sub()">登录</div>
-            <div class="login-must-know">登录即代表同意我们的《用户使用协议和隐私政策》</div>
+            <div class="login-must-know cursor" @click="$router.push({name:'userAgreement'})">登录即代表同意我们的《用户使用协议和隐私政策》</div>
           </div>
         </div>
         <div class="forget-password-way"  v-if="forget_pass">
@@ -276,6 +276,7 @@
           },
           //忘记密码登录
           forget_pass_sub:function(){
+            var that=this;
             this.ajax(this.http_url.url+"/newFindPwdOne",{
               "pwd":md5(this.pass_password),
               "phoneNumber":this.info_phone,
@@ -287,7 +288,10 @@
               if(data.code==1){
                 sessionStorage.setItem("userMessage",JSON.stringify(data));
                 if(data.ifNewRegist==0){
-                  that.$router.push({name:"Home"});
+                  // that.$router.push({name:"Home"});
+                  alert("修改成功");
+                  that.pass=true;
+                  that.forget_pass=false;
                   sessionStorage.setItem("cookieId",data.cookieId);
                 }else{
                   that.$router.push({name:"bindFinanceCard"})
@@ -316,6 +320,7 @@
   .login-must-know{
     font-size: 0.75rem;
     color:#999;
+    text-decoration: underline;
   }
   .login-btn{
     height:3.5rem;

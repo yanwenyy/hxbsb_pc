@@ -15,12 +15,12 @@
               <div>¥<span class="orange">{{parseFloat(vipBalance).toFixed(2)}}</span></div>
             </div>
             <div class="inline-block money-record box-sizing">
-              <div class="inline-block money-tx">
-                <img src="../../../static/img/download-app.png" v-if="down_img" alt="">
-                <div class="gm-xxgwk" @click="down_img=!down_img">购买</div>
-              </div>
+              <!--<div class="inline-block money-tx">-->
+                <!--<img src="../../../static/img/download-app.png" v-if="down_img" alt="">-->
+                <!--<div class="gm-xxgwk" @click="down_img=!down_img">购买</div>-->
+              <!--</div>-->
               <div class="inline-block">
-                <div class="total-record-name">总收入（元）</div>
+                <div class="total-record-name">充值金额</div>
                 <div>¥<span>{{parseFloat(incomeSum).toFixed(2)}}</span></div>
               </div>
               <div class="inline-block">

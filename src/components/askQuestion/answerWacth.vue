@@ -48,7 +48,7 @@
           <div class="cwatch-weiguan" @click="weiguan()">一元围观</div>
           <div class="cwatch-list-people">
             <div class="cwatch-list-people-head">
-              <img v-for="item in 8" :src="item<look_length? head_src+look_list[item-1].headImage:'../../../static/img/user-img.png'" onerror="javascript:this.src='./static/img/user-img.png'" alt="">
+              <img v-for="item in 10" :src="item<look_length? head_src+look_list[item-1].headImage:'../../../static/img/user-img.png'" onerror="javascript:this.src='./static/img/user-img.png'" alt="">
             </div>
             <div class="cw-people-num">
               {{look_list_num}}人围观,
@@ -158,7 +158,7 @@
           //围观人员
         look_num:function(data){
             // console.log(data);
-            this.look_list=data.OnLookCountDetail.slice(0,8);
+            this.look_list=data.OnLookCountDetail.slice(0,10);
             this.look_length=this.look_list.length+1;
             this.look_list_detail=data.OnLookCountDetail;
             this.look_list_num=data.OnLookCount;

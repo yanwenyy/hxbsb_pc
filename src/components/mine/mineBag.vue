@@ -16,9 +16,9 @@
               <div>*提示：请下载航信办税宝APP进行提现。</div>
             </div>
             <div class="inline-block money-record box-sizing">
-              <div class="inline-block money-tx">
-                <img src="../../../static/img/download-app.png" alt="">
-              </div>
+              <!--<div class="inline-block money-tx">-->
+                <!--<img src="../../../static/img/download-app.png" alt="">-->
+              <!--</div>-->
               <div class="inline-block">
                 <div class="total-record-name">总收入（元）</div>
                 <div>¥<span>{{parseFloat(incomeSum).toFixed(2)}}</span></div>

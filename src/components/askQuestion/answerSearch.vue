@@ -64,7 +64,10 @@
             nomsg:false,
             msg:'',
             type:'',
-            typeContent:''
+            typeContent:'',
+            start:1,
+            end:10,
+            num:1,
           }
         },
         mounted () {
@@ -132,6 +135,7 @@
                 if(data[i].content.length>40){
                   data[i].content=data[i].content.substr(0,40)+"...";
                 }
+                console.log(data);
                 this.list.push(data[i]);
               }
             }else{
@@ -143,10 +147,12 @@
             this.num+=1;
             this.count_start=((this.num-1)*10)+1;
             this.count_end=this.num*10;
-            this.ajax(this.http_url.url+'/onlook/look/list',{
+            this.ajax(this.http_url.url+'/onlook/serarch',{
               "sinceId":this.count_start,
               "maxId":this.count_end,
-              "type":this.type
+              "content":this.msg||undefined,
+              "type":this.type||undefined,
+              "typeContent":this.typeContent||undefined
             },this.get_list_more);
           }
         }

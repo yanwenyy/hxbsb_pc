@@ -27,18 +27,18 @@
             <div class="error-eidt-btn inline-block" v-if="jc_btn_status"  @click="jc_status=!jc_status"><img src="../../../static/img/error-eidt-btn.png" alt="">我要纠错</div>
           </div>
           <div class="answer-group" v-for="item in answewrUsers">
-            <div v-if="item.type!=6">
+            <div v-if="item.status!=6">
               <div>
                 <img :src="head_src+item.headImage"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
                 <div class="inline-block queser-msg">
                   <div class="inline-block user_name">
-                    {{item.userName}}
-                    <div class="inline-block zxs-img-show">
+                    {{item.role==2? item.userName:item.realName}}
+                    <div class="inline-block zxs-img-show" v-if="item.role!=1">
                       <img src="../../../static/img/zxs-icon.png" alt="">
                       {{item.levelName}}
                     </div>
                   </div>
-                  <div>{{item.counselorDuty}}</div>
+                  <div v-if="item.role!=1">{{item.counselorDuty}}</div>
                 </div>
                 <div class="inline-block best-answer" v-if="item.status==2||item.checkStatus==2||item.status==7">
                   <img src="../../../static/img/best-answer.png" alt="">
@@ -81,7 +81,7 @@
               </div>
             </div>
           </div>
-          <div class="answer-group" v-for="item in answewrUsers" v-if="item.type==6">
+          <div class="answer-group" v-for="item in answewrUsers" v-if="item.status==6">
             <div class="home-model-header" style="margin-bottom: 1.31rem">
               <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>答案纠错</div>
             </div>
@@ -89,13 +89,13 @@
               <img :src="head_src+item.headImage"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
               <div class="inline-block queser-msg">
                 <div class="inline-block user_name">
-                  {{item.userName}}
-                  <div class="inline-block zxs-img-show">
+                  {{item.role==2? item.userName:item.realName}}
+                  <div class="inline-block zxs-img-show" v-if="item.role!=1">
                     <img src="../../../static/img/zxs-icon.png" alt="">
                     {{item.levelName}}
                   </div>
                 </div>
-                <div>{{item.counselorDuty}}</div>
+                <div  v-if="item.role!=1">{{item.counselorDuty}}</div>
               </div>
               <div class="inline-block best-answer" v-if="item.status==2||item.checkStatus==2||item.status==7">
                 <img src="../../../static/img/best-answer.png" alt="">
@@ -124,18 +124,6 @@
                 </div>
               </div>
             </div>
-            <div class="evaluate-model box-sizing " v-if="item.status==2||item.status==6||item.status==7">
-              <div class="evaluate-score">
-                评价得分:
-                <div class="inline-block" v-for="s in 5">
-                  <img :src="s<=item.score? '../../../static/img/score-sel.png':'../../../static/img/score-unsel.png'" alt="">
-                  <!--<img src="../../../static/img/score-unsel.png" alt="">-->
-                </div>
-              </div>
-              <div class="evaluate-content">
-                {{item.appraisal||"暂无评价内容"}}
-              </div>
-            </div>
           </div>
           <div v-if="changerAnswer!=''&&changerAnswer">
             <div class="home-model-header">
@@ -147,14 +135,14 @@
                 <div class="inline-block queser-msg" v-if="all_usermsg.role==2">
                   <div class="inline-block user_name">
                     {{all_usermsg.userName}}
-                    <div class="inline-block zxs-img-show">
+                    <div class="inline-block zxs-img-show" >
                       <img src="../../../static/img/zxs-icon.png" alt="">
                       {{all_usermsg.levelName}}
                     </div>
                   </div>
-                  <div>{{all_usermsg.counselorDuty}}</div>
+                  <div  v-if="item.role!=1">{{all_usermsg.counselorDuty}}</div>
                 </div>
-                <div class="inline-block queser-msg" v-if="all_usermsg.role==1">
+                <div class="inline-block queser-msg" >
                   <div class="inline-block user_name">{{all_usermsg.realName}}</div>
                   <div class="inline-block user-dj"><img :src="get_score(all_usermsg.integralScore,all_usermsg.aision,all_usermsg.vip)" alt=""></div>
                 </div>
@@ -398,7 +386,7 @@
         },function(data){
 
           if(data.code==1){
-            event="/static/img/zan_click.png";
+            event="./static/img/zan_click.png";
             span.innerHTML=Number(span.innerHTML)+1;
           }else{
             alert(data.des);
@@ -412,7 +400,7 @@
           "answerUuid": val, "status":2
         },function(data){
           if(data.code==1){
-            event.src="/static/img/cai_click.png";
+            event.src="./static/img/cai_click.png";
             span.innerHTML=Number(span.innerHTML)+1;
           }else{
             alert(data.des);
@@ -753,7 +741,7 @@
     font-size: 0.875rem;
     margin: 1rem 0;
   }
-  .answer-group{
-    border-bottom: 1px solid #eee;
-  }
+  /*.answer-group{*/
+    /*border-bottom: 1px solid #eee;*/
+  /*}*/
 </style>

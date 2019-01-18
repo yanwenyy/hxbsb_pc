@@ -26,11 +26,11 @@
             </ul>
             <div class="inline-block">
               <p class="label-txt">*有财税问答卡请务必填写，后期无法补填。
-                填写后点完成，没有点跳过。
+                填写后点绑定，没有点跳过。
               </p>
             </div>
             <div class="login-btn" @click="sub()">绑定</div>
-            <div class="skip blue" @click="cross()">跳过</div>
+            <div class="skip blue cursor" @click="cross()">跳过</div>
           </div>
         </div>
       </div>
@@ -177,7 +177,7 @@
   .login{
     width:100%;
     height:90%;
-    background: url("/static/img/login-bg.png");
+    background: url(../../static/img/login-bg.png);
 
   }
   .label-txt{
