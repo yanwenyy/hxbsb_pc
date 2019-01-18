@@ -88,7 +88,7 @@
           }
         });
         //余额
-        // this.ajax_nodata(this.http_url.url+"/user/message",this.get_balance);
+        this.ajax_nodata(this.http_url.url+"/user/message",this.get_balance);
         // var data=JSON.parse(sessionStorage.getItem("userMessage"));
         // this.balance=data.qacardBlance;
         //交易记录
@@ -101,9 +101,9 @@
       },
       methods:{
           //获取余额
-        get_balance:function(data){
-          this.balance=data.qacardBlance;
-        },
+          get_balance:function(data){
+            this.balance=data.qacardBlance;
+          },
           //交易记录
         get_msg:function(data){
           // console.log(data);

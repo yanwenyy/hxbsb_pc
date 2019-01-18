@@ -24,10 +24,10 @@
       <img :src="msg=='财税问答卡'? '../../static/img/mine-cswdk-click.png':'../../static/img/mine-cswdk.png'" alt="">
       财税问答卡
     </li>
-    <li :class="msg=='开具发票'?  'mine-li-act':''" @click="mine_left_li('mineInvoice')">
-      <img :src="msg=='开具发票'? '../../static/img/mine-fp-click.png':'../../static/img/mine-fp.png'" alt="">
-      开具发票
-    </li>
+    <!--<li :class="msg=='开具发票'?  'mine-li-act':''" @click="mine_left_li('mineInvoice')">-->
+      <!--<img :src="msg=='开具发票'? '../../static/img/mine-fp-click.png':'../../static/img/mine-fp.png'" alt="">-->
+      <!--开具发票-->
+    <!--</li>-->
     <li :class="msg=='设置密码'?  'mine-li-act':''"  @click="mine_left_li('mineEditPassword')">
       <img :src="msg=='设置密码'? '../../static/img/mine-mm-click.png':'../../static/img/mine-mm.png'" alt="">
       设置密码

@@ -1,3 +1,4 @@
+import Router from '../../src/router/index'
 export default{
   install:function(Vue,options)
   {
@@ -31,9 +32,9 @@ export default{
         data:JSON.stringify(data),
         success:function(data){
           if(data.code=="2"){
-            alert(data.des);
+            // alert(data.des);
+            Router.push({name:'login'});
             return false;
-            // window.location.href="../html/register-next.html"
           }else{
             succ(data);
           }
@@ -57,9 +58,8 @@ export default{
         },
         success:function(data){
           if(data.code=="2"){
-            alert(data.des);
-            return false;
-            // window.location.href="../html/register-next.html"
+            // this.$router.push({name:'login'});
+            Router.push({name:'login'});
           }else{
             succ(data);
           }

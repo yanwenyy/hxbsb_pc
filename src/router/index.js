@@ -6,6 +6,7 @@ import Home from '@/components/home'
 import cookieId from '@/components/cookieId'
 import video from '@/components/video/video'
 import login from '@/components/login'
+import userAgreement from '@/components/userAgreement'
 import ask from '@/components/askQuestion/ask' //我要提问主入口
 import mine from '@/components/mine/mine' //我要提问主入口
 import askQuestion from '@/components/askQuestion/askQuestion' //我要提问
@@ -227,13 +228,21 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: login
+      component: login,
     },
     {
       path: '/cookieId',
       name: 'cookieId',
       component: cookieId
-    }
+    },
+    {
+      path: '/userAgreement',
+      name: 'userAgreement',
+      meta:{
+        title:'用户协议'
+      },
+      component: userAgreement
+    },
   ],
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }

@@ -12,7 +12,7 @@
           <div class="mine-data-user-msg">
             <div class="inline-block mine-data-user-img">
               <img :src="user_img" alt=""  onerror="javascript:this.src='./static/img/user-img.png';">
-              <input type="file" class="img-file" @change="head_img_sel()">
+              <input type="file" class="img-file cursor" @change="head_img_sel()">
               <div>上传头像</div>
             </div>
             <div class="inline-block mine-data-user-duty">
@@ -256,6 +256,8 @@
           }
           if(that.user_name==""){
             alert("昵称不能为空")
+          }else if(that.province=="省"||address==""){
+            alert("请完善所在城市信息")
           }else{
             that.ajax(that.http_url.url+"/user/editUser",{
               "headImage":headImage,
@@ -279,6 +281,7 @@
   .img-file{
     position: absolute;
     top:0;
+    left:0;
     width: 5.375rem;
     height: 5.375rem;
     opacity: 0;

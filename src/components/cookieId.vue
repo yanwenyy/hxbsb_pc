@@ -28,7 +28,7 @@
                 //that.$router.push({name:"Home"});
                 sessionStorage.setItem("cookieId",data.data);
                 if(sessionStorage.getItem("cookieId")){
-                  that.$router.push({name:"Home"});
+                  that.$router.push({name:"askQuestion"});
                 }
                 console.log(sessionStorage.getItem("cookieId"));
               }

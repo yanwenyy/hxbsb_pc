@@ -9,7 +9,7 @@
         <div class="home-model-header">
           <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>我的提问</div>
         </div>
-        <div class="question-progress" v-if="questionUser.quType!=1" @click="go_progress()" v-show="progress">问题进度</div>
+        <div class="question-progress" v-if="questionUser.stauts==1||questionUser.stauts==2" @click="go_progress()" v-show="progress">问题进度</div>
         <div class="box-sizing mine-ques-detail">
             <div class="queser-grounp">
               <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'./static/img/user-img.png'"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
@@ -26,11 +26,11 @@
               </div>
               <div class="queser-grounp-footer">
                 <span>{{questionUser.area}} {{questionUser.quTrade}}</span>
-                <span>点赞{{questionUser.approveNum}}</span>
+                <!--<span>点赞{{questionUser.approveNum}}</span>-->
                 <span>围观{{questionUser.lookNum}}</span>
               </div>
             </div>
-            <div class="release_again" @click="release_question()" v-if="questionUser.quType==1">免费重新发布</div>
+            <div class="release_again cursor" @click="release_question()" v-if="questionUser.quType==1">免费重新发布</div>
             <div class="home-model-header home-model-header2"  v-if="questionUser.quType!=1">
               <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>回答</div>
               <div class="error-eidt-btn inline-block" v-if="jc_btn_status"  @click="jc_status=!jc_status"><img src="../../../static/img/error-eidt-btn.png" alt="">我要纠错</div>
@@ -55,7 +55,7 @@
                   <div class="inline-block best-answer" v-if="item.status==6">
                     <img src="../../../static/img/error-answer.png" alt="">
                   </div>
-                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2">
+                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2&&$route.query.quType!=2">
                     采纳
                   </div>
                 </div>
@@ -68,23 +68,23 @@
                 </div>
                 <div class="answer-group-footer">
                   <div class="inline-block">{{format(item.date)}}</div>
-                  <div class="inline-block cz_group">
-                    <div class="inline-block">
-                      <img :src="item.praiseNum>0? './static/img/zan_click.png':zan_src" @click="zan(item.uuid,$event)" alt="">
-                      <span>{{item.approveNum}}</span>
-                    </div>
-                    <div class="inline-block">
-                      <img  :src="item.treadNum>0? './static/img/cai_click.png':cai_src" @click="cai(item.uuid,$event)" alt="">
-                      <span>{{item.opposeNum}}</span>
-                    </div>
-                  </div>
-                  <div class="not-agree inline-block" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==2&&$route.query.quType!=2">不满意</div>
+                  <!--<div class="inline-block cz_group">-->
+                    <!--<div class="inline-block">-->
+                      <!--<img :src="item.praiseNum>0? './static/img/zan_click.png':zan_src" @click="zan(item.uuid,$event)" alt="">-->
+                      <!--<span>{{item.approveNum}}</span>-->
+                    <!--</div>-->
+                    <!--<div class="inline-block">-->
+                      <!--<img  :src="item.treadNum>0? './static/img/cai_click.png':cai_src" @click="cai(item.uuid,$event)" alt="">-->
+                      <!--<span>{{item.opposeNum}}</span>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <div class="not-agree inline-block cursor" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==2&&$route.query.quType!=2">不满意</div>
                 </div>
                 <div class="evaluate-model box-sizing " v-if="item.status==2||item.status==7">
                   <div class="evaluate-score">
                     评价得分:
                     <div class="inline-block" v-for="s in 5">
-                      <img :src="s<=item.score? '../../../static/img/score-sel.png':'../../../static/img/score-unsel.png'" alt="">
+                      <img :src="s<=item.score? './static/img/score-sel.png':'../../../static/img/score-unsel.png'" alt="">
                       <!--<img src="../../../static/img/score-unsel.png" alt="">-->
                     </div>
                   </div>
@@ -118,7 +118,7 @@
                   <div class="inline-block best-answer" v-if="item.status==6">
                     <img src="../../../static/img/error-answer.png" alt="">
                   </div>
-                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2">
+                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2&&$route.query.quType!=2">
                     采纳
                   </div>
                 </div>
@@ -131,17 +131,17 @@
                 </div>
                 <div class="answer-group-footer">
                   <div class="inline-block">{{format(item.date)}}</div>
-                  <div class="inline-block cz_group">
-                    <div class="inline-block">
-                      <img :src="item.praiseNum>0? './static/img/zan_click.png':zan_src" @click="zan(item.uuid,$event)" alt="">
-                      <span>{{item.approveNum}}</span>
-                    </div>
-                    <div class="inline-block">
-                      <img  :src="item.treadNum>0? './static/img/cai_click.png':cai_src" @click="cai(item.uuid,$event)" alt="">
-                      <span>{{item.opposeNum}}</span>
-                    </div>
-                  </div>
-                  <div class="not-agree inline-block" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==2&&route.query.quType!=2">不满意</div>
+                  <!--<div class="inline-block cz_group">-->
+                    <!--<div class="inline-block">-->
+                      <!--<img :src="item.praiseNum>0? './static/img/zan_click.png':zan_src" @click="zan(item.uuid,$event)" alt="">-->
+                      <!--<span>{{item.approveNum}}</span>-->
+                    <!--</div>-->
+                    <!--<div class="inline-block">-->
+                      <!--<img  :src="item.treadNum>0? './static/img/cai_click.png':cai_src" @click="cai(item.uuid,$event)" alt="">-->
+                      <!--<span>{{item.opposeNum}}</span>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <div class="not-agree inline-block cursor" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==2&&route.query.quType!=2">不满意</div>
                 </div>
               </div>
           </div>
@@ -163,7 +163,7 @@
                     <div>{{all_usermsg.counselorDuty}}</div>
                   </div>
                   <div class="inline-block queser-msg" v-if="all_usermsg.role==1">
-                    <div class="inline-block user_name">{{all_usermsg.isAnon==1? all_usermsg.realName:'匿名用户'}}</div>
+                    <div class="inline-block user_name">{{all_usermsg.realName}}</div>
                     <div class="inline-block user-dj"><img :src="get_score(all_usermsg.integralScore,all_usermsg.aision,all_usermsg.vip)" alt=""></div>
                   </div>
                 </div>
@@ -176,16 +176,16 @@
                 </div>
                 <div class="answer-group-footer">
                   <div class="inline-block">{{format(item.date)}}</div>
-                  <div class="inline-block cz_group">
-                    <div class="inline-block">
-                      <img :src="item.praiseNum>0? './static/img/zan_click.png':zan_src" @click="zan(item.uuid,$event)" alt="">
-                      <span>{{item.approveNum}}</span>
-                    </div>
-                    <div class="inline-block">
-                      <img  :src="item.treadNum>0? './static/img/cai_click.png':cai_src" @click="cai(item.uuid,$event)" alt="">
-                      <span>{{item.opposeNum}}</span>
-                    </div>
-                  </div>
+                  <!--<div class="inline-block cz_group">-->
+                    <!--<div class="inline-block">-->
+                      <!--<img :src="item.praiseNum>0? './static/img/zan_click.png':zan_src" @click="zan(item.uuid,$event)" alt="">-->
+                      <!--<span>{{item.approveNum}}</span>-->
+                    <!--</div>-->
+                    <!--<div class="inline-block">-->
+                      <!--<img  :src="item.treadNum>0? './static/img/cai_click.png':cai_src" @click="cai(item.uuid,$event)" alt="">-->
+                      <!--<span>{{item.opposeNum}}</span>-->
+                    <!--</div>-->
+                  <!--</div>-->
                 </div>
               </div>
             </div>
@@ -241,7 +241,7 @@
           <div class="cn-pj">
             评价得分:
             <div class="inline-block" v-for="s in 5">
-              <img :src="s<=cn_score? '../../../static/img/score-sel.png':'../../../static/img/score-unsel.png'" @click="cn_score_click(s)" alt="">
+              <img :src="s<=cn_score? './static/img/score-sel.png':'./static/img/score-unsel.png'" @click="cn_score_click(s)" alt="">
               <!--<img src="../../../static/img/score-unsel.png" alt="">-->
             </div>
           </div>
@@ -418,7 +418,7 @@
             "status":"3","answerUuid":val
           },function(data){
             if(data.code==1){
-              alert(data.des);
+              alert("操作成功");
               window.location.reload();
             }else{
               alert(data.des);
@@ -439,7 +439,7 @@
             "status":"2","answerUuid":val.uuid
           },function(data){
               if(data.code==1){
-                alert(data.des);
+                alert("操作成功");
                 that.pj_status=true;
               }else{
                 alert(data.des);
