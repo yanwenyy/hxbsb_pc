@@ -44,7 +44,7 @@
       <div class="about-contact about-shadow">
         <div><img class="ac-cn" src="../../static/img/contact-us-cn.png"/></div>
         <div><img class="" src="../../static/img/contact-us-en.png"/></div>
-        <span class="inline-block br" style="width: 11%"></span>
+        <span class="inline-block br" style="width:11%"></span>
         <!--<p style="color:#2286FF;font-size: 1.125rem;margin-bottom: 30px">北京解税宝科技有限公司</p>-->
         <p class="about-txt"><span><img src="../../static/img/about-dh.png"/></span>电话：010-57797504</p>
         <p class="about-txt"><span><!--<img src="../../static/img/about-dz.png"/>--></span>邮箱：jsb@jieshuibao.com</p>
@@ -67,7 +67,7 @@
           headerTab
         },
       mounted (){
-          console.log(this.$refs.ab.style.width)
+          // console.log(this.$refs.ab.style.width)
       }
     }
 </script>

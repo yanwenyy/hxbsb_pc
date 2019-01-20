@@ -16,7 +16,7 @@
                 {{userName}}
                 <img src="../../static/img/header-down.png"  alt="">
               </div>
-              <div class="uer-sel" v-if="head_scode">
+              <div class="uer-sel">
                 <ul>
                   <li v-on:click="user_name_li"><router-link :to="{ name: 'mineData', params: { name:''  }}">我的资料</router-link></li>
                   <li v-on:click="user_name_li"><router-link :to="{ name: 'mineQuestion', params: { name:''  }}">我的提问</router-link></li>
@@ -24,7 +24,7 @@
                   <li v-on:click="user_name_li"><router-link :to="{ name: 'mineBag', params: { name:''  }}">我的钱包</router-link></li>
                   <li v-on:click="user_name_li"><router-link :to="{ name: 'mineLearningCard', params: { name:''  }}">学习顾问卡</router-link></li>
                   <li v-on:click="user_name_li"><router-link :to="{ name: 'mineFinanceCard', params: { name:''  }}">财税问答卡</router-link></li>
-                  <li v-on:click="user_name_li"><router-link :to="{ name: 'mineInvoice', params: { name:''  }}">开具发票</router-link></li>
+                  <!--<li v-on:click="user_name_li"><router-link :to="{ name: 'mineInvoice', params: { name:''  }}">开具发票</router-link></li>-->
                   <li v-on:click="user_name_li"><router-link :to="{ name: 'mineEditPassword', params: { name:''  }}">设置密码</router-link></li>
                   <li v-on:click="user_name_li"><router-link :to="{ name: 'login', params: { name:''  }}">退出</router-link></li>
                 </ul>
@@ -105,13 +105,13 @@
         },
         //我要提问点击
         ques_btn:function(){
-          if(this.$route.path=="/home"||this.$route.path=="/quesAnswerBank"){
-            this.$router.push({
-              name: 'answerSearch',query:{msg:this.message}
-            })
-          }else if(this.$route.path=="/smallClass"){
+          if(this.$route.path=="/smallClass"){
             this.$router.push({
               name: 'smallClassSearch',query:{msg:this.message}
+            });
+          }else{
+            this.$router.push({
+              name: 'answerSearch',query:{msg:this.message}
             })
           }
           // if(this.title_code==1||this.title_code==2){
@@ -130,6 +130,12 @@
 
 <style scoped>
   @import '../../static/css/swiper.min.css';
+  .uer-sel{
+    display: none;
+  }
+  .header-user:hover .uer-sel{
+    display: block;
+  }
   .swiper-pagination-bullet{
     width: 8px;
     height: 8px;

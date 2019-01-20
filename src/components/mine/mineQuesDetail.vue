@@ -59,7 +59,7 @@
                   <div class="inline-block best-answer" v-if="item.status==6">
                     <img src="../../../static/img/error-answer.png" alt="">
                   </div>
-                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2&&$route.query.quType!=2">
+                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2">
                     采纳
                   </div>
                 </div>
@@ -126,7 +126,7 @@
                   <div class="inline-block best-answer" v-if="item.status==6">
                     <img src="../../../static/img/error-answer.png" alt="">
                   </div>
-                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2&&$route.query.quType!=2">
+                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2">
                     采纳
                   </div>
                 </div>
@@ -427,7 +427,7 @@
           },function(data){
             if(data.code==1){
               alert("操作成功");
-              window.location.reload();
+              location.reload();
             }else{
               alert(data.des);
             }

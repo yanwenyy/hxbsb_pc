@@ -101,7 +101,7 @@
                 data={videoId:data.id,source:2,money:data.price,url:'video'};
                 var money=data.money;
                 data=encodeURIComponent(JSON.stringify(data));
-                that.$router.push({ name: 'payMethod',query: {price:money ,source:"微课",data:data,}})
+                that.$router.push({ name: 'payMethod',query: {url:'video',price:money ,source:"微课",data:data,}})
               }
             })
           },
@@ -128,8 +128,8 @@
               this.nomsg=false
             }
             for(var i=0;i<data_list.length;i++){
-              if(data_list[i].title.length>40){
-                data_list[i].title=data_list[i].title.substr(0,35)+"...";
+              if(data_list[i].title.length>32){
+                data_list[i].title=data_list[i].title.substr(0,32)+"...";
               }
             }
             this.video_list=data_list;

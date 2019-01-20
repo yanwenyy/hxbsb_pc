@@ -176,8 +176,8 @@
           var that=this;
           var data_msg=JSON.parse(decodeURIComponent(that.$route.query.data));
           function get_msg(data){
-            console.log(data);
-            console.log(data_msg)
+            // console.log(data);
+            // console.log(data_msg)
             if(data.code==1){
                 if(that.$route.query.source=="我要提问"){
                   that.suc_show=true
@@ -185,14 +185,22 @@
                   alert("支付成功");
                   if (that.$route.query.source == "围观") {
                     that.$router.push({
-                      name: data_msg.url,
+                      name: that.$route.query.url,
                       query: {
                         uuid: data_msg.uuid
                       }
                     })
-                  } else {
+                  } else if(that.$route.query.source=="微课"){
+                    that.ajax(that.http_url.url+'video/vid',{id:data_msg.videoId},function (e) {
+                      console.log(e.data.vid);
+                      that.$router.push({name:that.$route.query.url,query:{vid:e.data.vid,pagetype:'pay'}})
+                    })
+                  }else {
                     that.$router.push({
-                      name: data_msg.url,
+                      name: that.$route.query.url,
+                      query: {
+                        uuid: data_msg.uuid
+                      }
                     })
                   }
                 }
@@ -221,15 +229,16 @@
               }else{
                 alert("支付成功");
                 if(that.$route.query.source=="围观"){
+                  console.log(that.$route.query.source)
                   that.$router.push({
-                    name:data_msg.url,
+                    name:that.$route.query.url,
                     query:{
                       uuid:data_msg.uuid
                     }
                   })
                 }else{
                   that.$router.push({
-                    name:data_msg.url,
+                    name:that.$route.query.url,
                   })
                 }
               }
@@ -242,7 +251,8 @@
             if(data.code==1){
               alert("支付成功");
               that.ajax(that.http_url.url+'video/vid',{id:data_msg.videoId},function (e) {
-                that.$router.push({name:data_msg.url,query:{vid:e.data.vid,pagetype:'pay'}})
+                // console.log(e.data.vid);
+                that.$router.push({name:that.$route.query.url,query:{vid:e.data.vid,pagetype:'pay'}})
               })
             }else{
               alert(data.des);

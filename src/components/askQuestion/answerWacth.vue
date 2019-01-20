@@ -40,7 +40,7 @@
           </div>
           <div class="inline-block queser-msg"  v-if="answer_msg.role==1">
             <div class="inline-block user_name">{{answer_msg.realName}}</div>
-            <div class="inline-block user-dj"><img :src="get_score(answer_msg.integralScore,answer_msg.aision,answer_msg.vip)" alt=""></div>
+            <div class="inline-block user-dj"><img :src="get_score(answer_msg.integralSum,answer_msg.aision,answer_msg.vip)" alt=""></div>
           </div>
         </div>
       </div>
@@ -164,7 +164,7 @@
           this.ajax(this.http_url.url+"/onlook/onlookCountDetailList",{
             "questionUuid":this.zt_method_data.uuid,
             "sinceId":"1",
-            "maxId":"8",
+            "maxId":"100000",
           },this.look_num);
           //提问者和专家资料显示
           this.ajax(this.http_url.url+"/user/someUserMsg",{"questionUuid":this.zt_method_data.uuid},this.msg_show);

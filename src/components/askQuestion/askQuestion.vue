@@ -194,12 +194,14 @@
         show_dialog:function (data) {
           if(data.code==1){
             this.show=true
+          }else{
+            alert(data.des);
           }
         },
         //跳转支付（带参）
         go_pay:function (data) {
           data=encodeURIComponent(JSON.stringify(data));
-          this.$router.push({ name: 'payMethod',query: {price: 15 ,source:"我要提问",data:data}})
+          this.$router.push({ name: 'payMethod',query: {url:'mineQuestion',price: 15 ,source:"我要提问",data:data}})
         }
       }
     }

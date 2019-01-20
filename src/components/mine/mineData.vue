@@ -186,10 +186,12 @@
           }else{
             if(data.province.indexOf("省")!=-1){
               this.province=data.province;
+              this.city=data.address;
             }else{
               this.province=data.province+"省";
+              this.city=data.address;
             }
-            this.city=data.address;
+            this.city=data.address+"市";
           }
         },
        //省市选择
@@ -234,7 +236,7 @@
           if(that.province=="北京市"||that.province=="上海市"||that.province=="天津市"||that.province=="重庆市"){
             address=this.area;
           }else{
-            address=this.city;
+            address=this.city.split("市")[0];
           }
           if(that.gender=="女"){
             gender=2;

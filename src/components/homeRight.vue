@@ -17,6 +17,7 @@
         </div>
       </div>
       <div class="hx-qr-code box-sizing">
+        <div class="title-notice">想体验更多功能,请使用移动端</div>
         <div class="qr-title">航信办税宝</div>
         <div class="qr-code-img-group">
           <div class="inline-block">
@@ -88,5 +89,8 @@
 </script>
 
 <style scoped>
-
+  .title-notice{
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
 </style>
