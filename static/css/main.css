@@ -110,6 +110,14 @@ input::-webkit-input-placeholder{
     box-sizing: border-box;
   }
 }
+@media screen and (max-width: 1366px){
+  .jc_body{
+    height:30.5rem!important;
+  }
+  .jc_main{
+    height:22.94rem!important;
+  }
+}
 @media screen and (min-width: 1200px){
   .container{
     width:1000px;

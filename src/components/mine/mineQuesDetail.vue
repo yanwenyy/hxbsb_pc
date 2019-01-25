@@ -59,7 +59,7 @@
                   <div class="inline-block best-answer" v-if="item.status==6">
                     <img src="../../../static/img/error-answer.png" alt="">
                   </div>
-                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2">
+                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&query_status==2">
                     采纳
                   </div>
                 </div>
@@ -82,7 +82,7 @@
                       <!--<span>{{item.opposeNum}}</span>-->
                     <!--</div>-->
                   <!--</div>-->
-                  <div class="not-agree inline-block cursor" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==2&&$route.query.quType!=2">不满意</div>
+                  <div class="not-agree inline-block cursor" @click="jb_btn(item.uuid)" v-if="item.status==1&&query_status==2&&$route.query.quType!=2">不满意</div>
                 </div>
                 <div class="evaluate-model box-sizing " v-if="item.status==2||item.status==7">
                   <div class="evaluate-score">
@@ -126,7 +126,7 @@
                   <div class="inline-block best-answer" v-if="item.status==6">
                     <img src="../../../static/img/error-answer.png" alt="">
                   </div>
-                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&$route.query.status==2">
+                  <div class="inline-block best-answer accept cursor" @click="cn_btn(item)" v-if="item.status==1&&query_status==2">
                     采纳
                   </div>
                 </div>
@@ -149,7 +149,7 @@
                       <!--<span>{{item.opposeNum}}</span>-->
                     <!--</div>-->
                   <!--</div>-->
-                  <div class="not-agree inline-block cursor" @click="jb_btn(item.uuid)" v-if="item.status==1&&$route.query.status==2&&route.query.quType!=2">不满意</div>
+                  <div class="not-agree inline-block cursor" @click="jb_btn(item.uuid)" v-if="item.status==1&&query_status==2&&$route.query.quType!=2">不满意</div>
                 </div>
               </div>
           </div>
@@ -318,11 +318,13 @@
           //专题id
           topicId:'',
           //是否显示问题进度
-          progress:true
+          progress:true,
+          query_status:''
         }
       },
       mounted(){
         var that=this;
+        this.query_status=this.$route.query.status;
         // alert(this.$route.query.status);
         //已采纳已纠错不显示问题进度按钮
         if(this.$route.query.status=="3"||this.$route.query.status=="4"||this.$route.query.status=="9"){
@@ -449,6 +451,7 @@
               if(data.code==1){
                 alert("操作成功");
                 that.pj_status=true;
+                that.query_status=3;
               }else{
                 alert(data.des);
               }

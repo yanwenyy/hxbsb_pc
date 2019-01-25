@@ -9,7 +9,7 @@
           var that=this;
           $.ajax({
             type:"POST",
-            url:"http://test.jieshuibao.com/jsb_webserver/wx/user/aision",
+            url:this.http_url.url+"/wx/user/aision",
             dataType: "json",
             headers: {
               "Accept": "application/json",
@@ -31,6 +31,8 @@
                   that.$router.push({name:"askQuestion"});
                 }
                 console.log(sessionStorage.getItem("cookieId"));
+              }else{
+                alert(data.des);
               }
             },
             error:function(){

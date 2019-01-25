@@ -6,7 +6,7 @@ export default{
     Vue.prototype.http_url = {
       test:'http://test.jieshuibao.com/jsb_webserver/',
       formal: "https://api.jieshuibao.com/",
-      url:  "https://api.jieshuibao.com/",
+      url:  "http://test.jieshuibao.com/jsb_webserver/",
     };
     //头像变量
     Vue.prototype.head_src = Vue.prototype.http_url.url+"showImg/head/";
