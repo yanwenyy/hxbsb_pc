@@ -95,7 +95,7 @@
                 </span>
                 <div class="inline-block mine-data-btn">
                   <div class="data-sub-btn inline-block cursor" @click="sub_msg()">保存</div>
-                  <div class="data-reset-btn inline-block cursor">取消</div>
+                  <!--<div class="data-reset-btn inline-block cursor">取消</div>-->
                 </div>
               </li>
             </ul>

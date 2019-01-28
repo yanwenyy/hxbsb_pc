@@ -3,7 +3,7 @@
       <div class="swiper-container s1">
         <ul class="swiper-wrapper">
           <li class="swiper-slide" v-for="item in imageList">
-            <img class="look-imgs" :src="question_src+item"  />
+            <img class="look-imgs" :src="question_src+item" />
           </li>
         </ul>
         <div class="swiper-pagination"></div>
@@ -47,7 +47,7 @@
       },
       methods:{
         init (list) {
-          this.imageList=list
+          this.imageList=list;
         }
       }
     }

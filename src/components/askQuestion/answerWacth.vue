@@ -243,7 +243,7 @@
     font-weight: 400;
     color:#333;
     line-height: 1.6rem;
-    margin-top: 0.4rem;
+    margin-top: 0.8rem;
   }
   .queser-grounp-footer{
     font-size: 0.875rem;
