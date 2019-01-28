@@ -14,7 +14,7 @@
               {{questionUser.content}}
             </div>
             <div class="queser-grounp-img">
-              <img :src="question_src+item" alt="" v-for="item in questionUser.images" @click="lookImgFn(questionUser.images)">
+              <img :src="question_src+item" alt="" v-for="(item,index) in questionUser.images" @click="lookImgFn(questionUser.images,index)">
             </div>
             <div class="queser-grounp-footer">
               <span>{{questionUser.area}} {{questionUser.quTrade}}</span>
@@ -340,10 +340,10 @@
         }
       },
       //图片放大组件控制
-      lookImgFn:function (list) {
-        this.lookImgVisible = true;
+      lookImgFn:function (list,index) {
+        this.lookImgVisible = true
         this.$nextTick(() => {
-          this.$refs.lookImg.init(list)
+          this.$refs.lookImg.init(list,index)
         })
       },
       //图片放大组件控制
