@@ -5,7 +5,10 @@
       <BreadNav :breadName="title"></BreadNav>
       <div class="home-main box-sizing">
         <div class="h-main-left inline-block">
-            <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>问题内容</div>
+            <div class="inline-block home-head-title">
+              <span class="inline-block span-blue-line"></span>问题内容
+              <div class="ask-head-title ask-price">提问金额：<i :class="vip?'no-v':''">￥15</i><span class="orange-font" v-show="vip">航信会员免费</span></div>
+            </div>
             <div class="textarea-box">
               <textarea placeholder="请详细描述您的问题，可附上图片。针对税企争议，方案设计，棘手问题，创新模式等类问题不适用快速咨询请选择私密问或联系客服。" v-model="content" name="content"></textarea>
             </div>
@@ -23,20 +26,19 @@
           </div>
           <div class="ask-trade-box">
             <div class="ask-head-title">问题涉及行业：</div>
-            <input type="text" placeholder="请选择" readonly v-on:click="dropdown"  v-model="trade" />
-            <span class="select-icon"  :class="down_icon ? 'up-icon' : 'down-icon' " ></span>
-            <ul v-if="down_icon">
-              <li v-for="item in trade_list"  v-on:click="seleced_trade(item.name)">{{item.name}}</li>
+            <!--<input type="text" placeholder="请选择" readonly v-on:click="dropdown"  v-model="trade" />
+            <span class="select-icon"  :class="down_icon ? 'up-icon' : 'down-icon' " ></span>-->
+            <ul>
+              <li v-for="(item,index) in trade_list"  v-on:click="seleced_trade(item.name,index)" :class="{sld_trade:index==current}">{{item.name}}</li>
             </ul>
-          </div>
-          <div class="ask-head-title ask-price">提问金额：<i :class="vip?'no-v':''">￥15</i><span class="orange-font" v-show="vip">航信会员免费</span></div>
-          <div class="ask-anonymity-box checkbox-box" :class="check_icon ? 'checked-icon' : 'checkbox-icon' ">
-            <label class="inline-block icon"></label>
-            <!-- 0是匿名 1是不匿名 -->
-            <input type="checkbox" v-model="isAnon" :value="check_icon ? '0' : '1' " @click="check_icon = !check_icon;" name="isAnon"/><span>匿名提问</span>
           </div>
           <div class="aks-submit">
             <input type="button" class="submit-btn" @click="check_sub" value="提交"/>
+            <div class="ask-anonymity-box checkbox-box" :class="check_icon ? 'checked-icon' : 'checkbox-icon' ">
+              <label class="inline-block icon"></label>
+              <!-- 0是匿名 1是不匿名 -->
+              <input type="checkbox" v-model="isAnon" :value="check_icon ? '0' : '1' " @click="check_icon = !check_icon;" name="isAnon"/><span>匿名提问</span>
+            </div>
           </div>
           <input type="hidden" name="payType" :value="vip?'free':null" />
         </div>
@@ -70,6 +72,7 @@
         },
       data () {
         return {
+          current:undefined,
           vip:false,//判断是否vip
           down_icon:false,//仿select做上下三角样式
           trade:null,//行业名
@@ -104,13 +107,10 @@
             this.vip=true
             this.payType='free'
           }
-        },
-        //问题涉及行业列仿select下拉图标
-        dropdown:function(){
-          if(this.down_icon==false){
-            this.down_icon=true;
-          }else{
-            this.down_icon=false;
+          for(var i=0;i<$(".ask-trade-box li").length;i++){
+            if($(".ask-trade-box li").eq(i).text()===this.trade){
+              this.current=i
+            }
           }
         },
         //获取问题涉及行业列表
@@ -120,9 +120,14 @@
           this.trade_list=this.get_category(categorys,"行业");
         },
         //选择问题涉及行业select
-        seleced_trade:function (trade) {
-          this.trade=trade;
-          this.dropdown()
+        seleced_trade:function (trade,index) {
+          if($(".ask-trade-box li").eq(index).attr("class")=="sld_trade"){
+            this.trade='';
+            this.current=undefined;
+          }else{
+            this.trade=trade;
+            this.current=index;
+          }
         },
         //删除图片
         delimg:function (e) {
@@ -241,17 +246,29 @@
   .orange-font{
     color: #FE6D27;
   }
+  .home-head-title{
+    width: 100%;
+  }
   .ask-head-title{
     margin-top: 2rem;
     margin-bottom: 1rem;
     font-size: 0.875rem;
     color: #333;
   }
+  .home-head-title .ask-head-title{
+    font-size: 0.875rem;
+    color: #333;
+    float: right;
+    line-height: 18px;
+    margin: 0;
+  }
   .ask-price i{
     font-style: normal;
     margin-right: 5px;
+    color: #FE6D27;
   }
   .ask-price i.no-v{
+    color: #333333;
     text-decoration: line-through;
   }
   .upload-img-box  >>> .upload-img{
@@ -305,13 +322,16 @@
     z-index: 1;
   }
   .ask-trade-box input{
-    width: 8.565rem;
-    height: 2rem;
-    border: 1px solid #F2F2F2;
+    width: 100%;
+    height: 28px;
     color: #333333;
     padding-left: 0.81rem;
     cursor: default;
     font-size: 0.875rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
   }
   .ask-trade-box span{
     width: 0.81rem;
@@ -333,32 +353,33 @@
     color: #999999;
   }
   .ask-trade-box ul{
-    width: 9.325rem;
-    height: 10rem;
-    border: 1px solid #F2F2F2;
-    overflow-y: scroll;
     margin-top: 1px;
-    position: absolute;
     background: #fff;
     z-index: 2;
+    width: 90%;
   }
   .ask-trade-box ul li{
-    height: 2rem;
-    line-height: 2rem;
+    padding: 0 1rem;
+    display: inline-block;
+    height:28px;
+    line-height: 28px;
     cursor: default;
-    padding-left: 0.81rem;
     color: #333333;
+    border:1px solid rgba(221,221,221,1);
+    border-radius:2px;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
   }
-  .ask-trade-box ul li:hover{
-    background: #F2F2F2;
+  .ask-trade-box ul li:hover,.ask-trade-box ul li.sld_trade{
+    border: 1px solid #2D86FD;
     color: #2D86FD;
   }
   .checkbox-box{
     font-size: 0.875rem;
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
     position: relative;
-
+    display: inline-block;
+    margin-left: 1rem;
   }
   .checkbox-icon{
     color: #999;
