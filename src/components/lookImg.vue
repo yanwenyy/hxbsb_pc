@@ -57,7 +57,6 @@
                 imageList:function() {
                      this.$nextTick(function(){
                             for(var i=0;i<this.$refs.imgRef.length;i++){
-
                               if(this.$refs.imgRef[i].width>=this.$refs.imgRef[i].height){
                                 this.$refs.imgRef[i].style.width="60%";
                               }else{
