@@ -546,7 +546,7 @@ input::-webkit-input-placeholder{
 }
 .see-num{
   margin-left: 1.5rem;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color:#999;
   vertical-align: middle;
 }
@@ -784,19 +784,23 @@ input::-webkit-input-placeholder{
   text-align: center;
   font-weight: 400;
   color:#000;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
 }
 .qr-code-img-group{
   display: flex;
   justify-content: space-between;
+  padding:0 0.2rem;
+}
+.qr-code-img-group>div{
+  text-align: center;
 }
 .qr-code-img-group>div>img{
-  width:6.625rem;
-  height:6.625rem;
+  width:6.4rem;
+  height:6.4rem;
 }
 .qr-code-footer{
   text-align: center;
-  margin-top: 0.875rem;
+  margin-top: 0.6rem;
   font-size: 0.75rem;
   line-height: 1rem;
   color:#555;

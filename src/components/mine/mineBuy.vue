@@ -62,7 +62,7 @@
             </div>
           </div>
         </div>
-        <div id="page" class="paging"></div>
+        <div id="page" class="paging" v-show="page_show"></div>
       </div>
     </div>
   </div>
@@ -80,7 +80,8 @@
               //围观列表
               questions:[],
               video:[],
-              count:''
+              count:'',
+              page_show:true,
             }
         },
         components:{
@@ -130,10 +131,16 @@
           },
           //围观数据
           get_wg:function(data){
-              // console.log(data);
-            this.questions=data.questions;
-            this.count=data.count/6;
-            this.page(this.count);
+              console.log(data);
+            this.page_show=true;
+            if(data.questions!=""){
+              this.questions=data.questions;
+              this.count=data.count/6;
+              this.page(this.count);
+            }else{
+              this.page_show=false;
+            }
+
           },
           //分页围观回调
           get_wg_page:function(data){
@@ -142,9 +149,15 @@
           //已购视频
           get_video:function(data){
             console.log(data);
-            this.video=data.data;
-            this.count=data.count/6;
-            this.page(this.count);
+            this.page_show=true;
+            if(data.data!=""){
+              this.video=data.data;
+              this.count=data.count/6;
+              this.page(this.count);
+            }else{
+              this.page_show=false;
+            }
+
           },
           //分页已购视频回调
           get_video_page:function(data){

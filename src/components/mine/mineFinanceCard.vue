@@ -13,6 +13,7 @@
             <div class="inline-block user-money-msg">
               <div>财税问答余额（元）</div>
               <div>¥<span class="orange">{{parseFloat(balance).toFixed(2)}}</span></div>
+              <div v-if="financeCard_status" >*提示：注册24小时内可以再次绑卡。</div>
             </div>
             <div class="inline-block money-record box-sizing">
               <div class="inline-block money-tx">

@@ -28,6 +28,7 @@
         methods:{
           //head点击
           headT_click:function(e){
+            $(".search-input-header>input").val('');
             if(this.$route.path=="/smallClass"){
               $(".header-search-answer").html("搜索视频");
               $(".header-search-ques").hide();

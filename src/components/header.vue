@@ -4,7 +4,7 @@
       <div id="header" class="box-sizing">
         <div class="header-search box-sizing">
           <div class="container">
-            <img @click="$router.push({name:'Home'})" src="../../static/img/header-logo.png" alt="" class="inline-block logo-img box-sizing">
+            <img @click="header_clcik" src="../../static/img/header-logo.png" alt="" class="inline-block logo-img box-sizing">
             <div class="search-input-header inline-block">
               <input type="text" class="box-sizing" placeholder="请输入关键字" v-model="message">
               <div class="inline-block header-search-answer" @click="ques_btn()">搜索答案</div>
@@ -73,6 +73,7 @@
         this.title_code=this.$route.query.msg;
       },
       methods:{
+
         init (id){
           this.userName=id;
         },
@@ -84,28 +85,34 @@
             this.head_scode=false;
           }
         },
+        header_clcik:function(){
+          $(".search-input-header>input").val('');
+          this.$router.push({name:'Home'});
+          $(".header-search-answer").html("搜索答案");
+          $(".header-search-ques").show();
+        },
         //我的列表点击
         user_name_li:function(){
           this.head_scode=false;
           this.title_code=1;
         },
         //head点击
-        headT_click:function(e){
-            this.title_code=e;
-            if(e==4){
-              $(".header-search-answer").html("搜索视频");
-              $(".header-search-ques").hide();
-            }else{
-              $(".header-search-answer").html("搜索答案");
-              $(".header-search-ques").show();
-            }
-            // if(e==5){
-            //   alert("请下载航信办税宝app进行操作")
-            // }
-        },
+        // headT_click:function(e){
+        //     this.title_code=e;
+        //     if(e==4){
+        //       $(".header-search-answer").html("搜索视频");
+        //       $(".header-search-ques").hide();
+        //     }else{
+        //       $(".header-search-answer").html("搜索答案");
+        //       $(".header-search-ques").show();
+        //     }
+        //     // if(e==5){
+        //     //   alert("请下载航信办税宝app进行操作")
+        //     // }
+        // },
         //我要提问点击
         ques_btn:function(){
-          if(this.$route.path=="/smallClass"){
+          if(this.$route.path=="/smallClass"||this.$route.path=="/video"){
             this.$router.push({
               name: 'smallClassSearch',query:{msg:this.message}
             });

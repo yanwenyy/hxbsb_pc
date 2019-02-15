@@ -51,7 +51,6 @@
             nextButton: '.swiper-button-next',
             prevButton: '.swiper-button-prev',
           });
-
         }
       },
       watch: {  //imageList渲染完后，获取高度
