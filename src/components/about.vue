@@ -1,6 +1,6 @@
 <template>
   <div class="home-body">
-    <headerTab msg="关于我们"></headerTab>
+    <headerTab msg="联系我们"></headerTab>
     <!--<div class="about-header">
       <img class="ah-img" src="../../static/img/about-header.png"/>
       <div class="about-shadow about-us" ref="ab">
