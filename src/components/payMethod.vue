@@ -6,15 +6,6 @@
       <span class="pay-title-money orange">¥<span>{{price}}</span>元</span>
     </div>
     <div class="pay-sel">
-      <div class="inline-block" @click="pay_click('wexin')">
-        <img src="../../static/img/pay-selected.png" alt="" v-if="wexin">
-        <div class="pay-method-list box-sizing">
-          <img src="../../static/img/pay_wechat.png" alt="">
-          <div>
-            <div class="pay-method-list-name">微信支付</div>
-          </div>
-        </div>
-      </div>
       <div class="inline-block" @click="pay_click('bag')">
         <img src="../../static/img/pay-selected.png" alt=""  v-if="bag">
         <div class="pay-method-list box-sizing">
@@ -42,6 +33,15 @@
           <div>
             <div class="pay-method-list-name">财税问答卡</div>
             <div class="orange">余额:{{parseFloat(qa_money).toFixed(2)}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="inline-block" @click="pay_click('wexin')">
+        <img src="../../static/img/pay-selected.png" alt="" v-if="wexin">
+        <div class="pay-method-list box-sizing">
+          <img src="../../static/img/pay_wechat.png" alt="">
+          <div>
+            <div class="pay-method-list-name">微信支付</div>
           </div>
         </div>
       </div>
@@ -83,13 +83,13 @@
           bag_money:'',
           //学习顾问卡余额
           card_money:'',
-          wexin:true,
-          bag:false,
+          wexin:false,
+          bag:true,
           card:false,
           qa:false,
-          btn_show:false,
+          btn_show:true,
           //支付类型
-          payType:'',
+          payType:'balance',
           //二维码图片
           codeUrl:'',
           //订单定时器

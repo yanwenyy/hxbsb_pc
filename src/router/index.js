@@ -25,6 +25,7 @@ import questionProgress from '@/components/mine/questionProgress' //我的提问
 import mineQuesDetail from '@/components/mine/mineQuesDetail' //我的提问详情
 import mineBag from '@/components/mine/mineBag' //我的钱包
 import mineLearningCard from '@/components/mine/mineLearningCard' //学习顾问卡
+import mineLearningCardPay from '@/components/mine/mineLearningCardPay' //学习顾问卡购买
 import mineFinanceCard from '@/components/mine/mineFinanceCard' //财税问答卡
 import mineBindFCard from '@/components/mine/mineBindFCard' //财税问答卡-绑定财税问答卡
 import about from '@/components/about' //关于我们
@@ -151,6 +152,11 @@ export default new Router({
               path: '/mineLearningCard',
               name: 'mineLearningCard',
               component: mineLearningCard
+            },
+            {
+              path: '/mineLearningCardPay',
+              name: 'mineLearningCardPay',
+              component: mineLearningCardPay
             },
             {
               path: '/mineFinanceCard',
