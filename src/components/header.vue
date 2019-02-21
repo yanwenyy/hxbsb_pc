@@ -30,6 +30,9 @@
                 </ul>
               </div>
             </div>
+            <div class="inline-block ask-index">
+              <img src="../../static/img/ask_index.gif" alt="">
+            </div>
           </div>
         </div>
       </div>
@@ -137,6 +140,17 @@
 
 <style scoped>
   @import '../../static/css/swiper.min.css';
+  .ask-index{
+    position: absolute;
+    width: 7.5rem;
+    height: 2rem;
+    top:4rem;
+    right:2rem;
+  }
+  .ask-index>img{
+    width: 100%;
+    height:100%;
+  }
   .uer-sel{
     display: none;
   }

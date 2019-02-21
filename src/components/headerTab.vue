@@ -32,9 +32,11 @@
             if(this.$route.path=="/smallClass"){
               $(".header-search-answer").html("搜索视频");
               $(".header-search-ques").hide();
+              $(".ask-index").hide();
             }else{
               $(".header-search-answer").html("搜索答案");
               $(".header-search-ques").show();
+              $(".ask-index").show();
             }
           },
         }
