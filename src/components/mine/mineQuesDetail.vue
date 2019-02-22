@@ -88,7 +88,7 @@
                   <div class="evaluate-score">
                     评价得分:
                     <div class="inline-block" v-for="s in 5">
-                      <img :src="s<=item.score? './static/img/score-sel.png':'../../../static/img/score-unsel.png'" alt="">
+                      <img :src="s<=item.score? './static/img/score-sel.png':'./static/img/score-unsel.png'" alt="">
                       <!--<img src="../../../static/img/score-unsel.png" alt="">-->
                     </div>
                   </div>

@@ -146,6 +146,7 @@
     height: 2rem;
     top:4rem;
     right:2rem;
+    z-index: 100000;
   }
   .ask-index>img{
     width: 100%;
