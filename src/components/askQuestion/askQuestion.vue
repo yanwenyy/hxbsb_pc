@@ -7,7 +7,7 @@
         <div class="h-main-left inline-block">
             <div class="inline-block home-head-title">
               <span class="inline-block span-blue-line"></span>问题内容
-              <div class="ask-head-title ask-price">提问金额：<i :class="vip?'no-v':''">￥15</i><span class="orange-font" v-show="vip">航信会员免费</span></div>
+              <div class="ask-head-title ask-price">提问金额：<i :class="vip?'no-v':''">￥15</i><span class="orange-font" v-show="vip">{{vip_free}}</span></div>
             </div>
             <div class="textarea-box">
               <textarea placeholder="请详细描述您的问题，可附上图片。针对税企争议，方案设计，棘手问题，创新模式等类问题不适用快速咨询请选择私密问或联系客服。" v-model="content" name="content"></textarea>
@@ -73,6 +73,7 @@
       data () {
         return {
           current:undefined,
+          vip_free:'航信会员免费',//判断身份
           vip:false,//判断是否vip
           down_icon:false,//仿select做上下三角样式
           trade:null,//行业名
@@ -94,16 +95,21 @@
         //调用接口-问题涉及行业
         this.ajax_nodata(this.http_url.url+'category/tree',this.get_trade);
         //获取登录账号的个人信息
-        this.ajax_nodata(this.http_url.url+'user/message',this.get_vip);
+        this.ajax_nodata(this.http_url.url+'user/message',this.get_aision);
 
       },
       methods:{
         //判断是否为航信会员航信会员
-        get_vip:function(data){
+        get_aision:function(data){
           this.trade=data.trade
-          if(data.vip==1){
-            this.vip=false
-          }else{
+          if(data.aision==0){
+            if(data.vip==0){
+              this.vip=true
+              this.payType='free'
+              this.vip_free="航信会员免费"
+            }
+          }else if(data.aision==2){
+            this.vip_free="个税会员免费"
             this.vip=true
             this.payType='free'
           }
