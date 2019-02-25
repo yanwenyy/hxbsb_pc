@@ -15,7 +15,16 @@
           Header,
           Footer
         },
-
+        watch:{
+          $route(to,from){
+            // console.log(to.path);
+            if(to.path=="/video"||to.path=="/smallClass"){
+              $(".ask-index").hide();
+            }else{
+              $(".ask-index").show();
+            }
+          }
+        },
     }
 </script>
 

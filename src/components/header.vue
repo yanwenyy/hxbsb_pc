@@ -154,6 +154,7 @@
   }
   .uer-sel{
     display: none;
+    z-index: 10000021;
   }
   .header-user:hover .uer-sel{
     display: block;
