@@ -115,7 +115,6 @@
         this.source=this.$route.query.source;
         this.title="首页> "+this.$route.query.source+" > 支付";
         var data=JSON.parse(decodeURIComponent(this.$route.query.data));
-
         if(this.source=="围观"){
           this.weiguan_msg=this.$route.query.data;
           console.log(this.weiguan_msg);
@@ -131,7 +130,8 @@
           data.source=2
           this.ajax(this.http_url.url+"question/releaseQuestion",data,this.wexin_pay);
         }else if(this.source=="微课"){
-          console.log(this.$route.query)
+          // console.log(this.$route.query);
+          console.log(111);
           this.ajax(this.http_url.url+"video/buy",{
             "videoId":data.videoId,
             "payType":"weixin",
@@ -278,7 +278,7 @@
               this.qa=false;
             this.payType="weixin";
               setTimeout(function(){that.show_code(that.codeUrl);},1);
-              // this.check_order();
+              this.check_order();
           }else {
             this.btn_show=true;
             if(msg=="bag"){//钱包支付

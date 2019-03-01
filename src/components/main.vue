@@ -18,7 +18,7 @@
         watch:{
           $route(to,from){
             // console.log(to.path);
-            if(to.path=="/video"||to.path=="/smallClass"){
+            if(to.path=="/video"||to.path=="/smallClass"||to.path=="/smallClassSearch"||to.path=="/payMethod"){
               $(".ask-index").hide();
             }else{
               $(".ask-index").show();

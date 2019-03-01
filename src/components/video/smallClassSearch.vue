@@ -51,9 +51,11 @@
               if(data.ifBuy==1||data.price==0){
                 that.$router.push({name:'video',query:{vid:that.vid}})
               }else{
-                data={videoId:data.id,source:2,money:data.price,url:'video'}
-                data=encodeURIComponent(JSON.stringify(data))
-                that.$router.push({ name: 'payMethod',query: {price: data.money ,source:"微课",data:data,}})
+                var sdata='';
+                sdata={videoId:data.id,source:2,money:data.price,url:'video'}
+                sdata=encodeURIComponent(JSON.stringify(sdata))
+                // console.log(data);
+                that.$router.push({ name: 'payMethod',query: {price: data.price,source:"微课",data:sdata}})
               }
             })
           },

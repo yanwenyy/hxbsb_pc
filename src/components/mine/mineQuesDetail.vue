@@ -216,14 +216,14 @@
           </select>
           <div class="jc_main_title">所属税种：</div>
           <div class="sz-model">
-            <div class="inline-block"  v-for="item in sz">{{item.name}}</div>
+            <div class="inline-block" :class="sz_selece.indexOf(item.name)!=-1? 'sz-model-act':''" @click="sz_click(item)"  v-for="item in sz">{{item.name}}</div>
           </div>
           <ul class="notice">
             <li><span class="inline-block">提示：</span>1、纠错答案采纳后将公开显示供其他用户参考。</li>
             <li><span class="inline-block"></span>2、如果填写的答案与他人的重复则按提交先后判定。</li>
           </ul>
         </div>
-        <div class="jc_sub cursor" @click="sub_jc()">提交</div>
+        <div class="jc_sub" @click="sub_jc()">提交</div>
       </div>
     </div>
     <div class="shadow-box" v-if="pj_status">
@@ -370,6 +370,26 @@
         })
       },
       methods:{
+        sz_click:function(item){
+          //删除数组内某项的构造函数
+          Array.prototype.indexOf = function(val) {
+            for (var i = 0; i < this.length; i++) {
+              if (this[i] == val) return i;
+            }
+            return -1;
+          };
+          Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+              this.splice(index, 1);
+            }
+          };
+          if(this.sz_selece.indexOf(item.name)!=-1){
+            this.sz_selece.remove(item.name);
+          }else{
+            this.sz_selece.push(item.name);
+          }
+        },
         //图片放大组件控制
        lookImgFn:function (list,index) {
          this.lookImgVisible = true
@@ -401,7 +421,7 @@
         },
         //评价按钮点击
         pj_sub:function(val){
-          if(this.pj_content==""){
+          if(this.cn_score==0){
             return false;
           }else{
             this.ajax(this.http_url.url+"/answer/score",{
@@ -536,6 +556,7 @@
               }
             })
           }
+
         }
       }
     }

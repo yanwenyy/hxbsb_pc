@@ -101,7 +101,7 @@
                 data={videoId:data.id,source:2,money:data.price,url:'video'};
                 var money=data.money;
                 data=encodeURIComponent(JSON.stringify(data));
-                that.$router.push({ name: 'payMethod',query: {url:'video',price:money ,source:"微课",data:data,}})
+                that.$router.push({ name: 'payMethod',query: {url:'video',price:money ,source:"微课",data:data}})
               }
             })
           },
