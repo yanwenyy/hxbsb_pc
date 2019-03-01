@@ -7,7 +7,7 @@
         <div class="h-main-left inline-block">
             <div class="inline-block home-head-title">
               <span class="inline-block span-blue-line"></span>问题内容
-              <div class="ask-head-title ask-price">提问金额：<i :class="vip?'no-v':''">￥15</i><span class="orange-font" v-show="vip">{{vip_free}}</span></div>
+              <div class="ask-head-title ask-price">提问金额：<i :class="vip?'no-v':''">￥15</i><span class="orange-font" v-show="vip">会员免费</span></div>
             </div>
             <div class="textarea-box">
               <textarea placeholder="请详细描述您的问题，可附上图片。针对税企争议，方案设计，棘手问题，创新模式等类问题不适用快速咨询请选择私密问或联系客服。" v-model="content" name="content"></textarea>
@@ -73,7 +73,6 @@
       data () {
         return {
           current:undefined,
-          vip_free:'航信会员免费',//判断身份
           vip:false,//判断是否vip
           down_icon:false,//仿select做上下三角样式
           trade:null,//行业名
@@ -106,10 +105,11 @@
             if(data.vip==0){
               this.vip=true
               this.payType='free'
-              this.vip_free="航信会员免费"
             }
           }else if(data.aision==2){
-            this.vip_free="个税会员免费"
+            this.vip=true
+            this.payType='free'
+          }else if(data.tsfTime!=""&&data.tsfTime!=null&&data.tsfTime!=undefined&&data.tsfTime>new Date().getTime()){
             this.vip=true
             this.payType='free'
           }
@@ -184,7 +184,7 @@
         //提交 + 表单验证
         check_sub:function () {
           var query={url:"mineQuestion",content:this.content,isAnon:Number(this.isAnon),money:15,payType:this.payType,trade:this.trade,images:this.images};
-
+          $(".submit-btn").attr("disabled","true")
           if(this.vip){
             if (this.content!=null&&this.content!="") {
               this.ajax(this.http_url.url+'question/releaseQuestion',query,this.show_dialog)
@@ -206,6 +206,7 @@
           if(data.code==1){
             this.show=true
           }else{
+            $(".submit-btn").attr("disabled","false")
             alert(data.des);
           }
         },
