@@ -32,7 +32,7 @@
               </div>
             </div>
           </div>
-          <table class="mine-ques-table box-sizing">
+          <table class="mine-ques-table box-sizing" v-if="questions!=''">
             <tr>
               <td width="65">提问内容</td>
               <td width="15">提问日期</td>
@@ -40,12 +40,16 @@
               <td width="10">操作</td>
             </tr>
             <tr class="mine-ques-tr box-sizing" v-for="item in questions">
-              <td>{{item.content}}</td>
-              <td>{{format(item.time)}}</td>
-              <td class="time-msg" :data-time="item.status==1? item.endDate:''" :data-status="item.status">{{cn_status(item.status)}}</td>
-              <td><img src="../../../static/img/table-look.png" alt="" ><span class="look_ques blue" @click="$router.push({'name':'mineQuesDetail',query:{'uuid':item.uuid,'status':item.status,'quType':item.quType}})">查看</span></td>
+              <td style="text-align: left;padding:0 1rem">{{item.content.length>70?item.content.slice(0,70)+"...":item.content}}</td>
+              <td style="padding:0 0.5rem">{{format(item.time)}}</td>
+              <td style="padding:0 0.5rem" class="time-msg" :data-time="item.status==1? item.endDate:''" :data-status="item.status">{{cn_status(item.status)}}</td>
+              <td style="padding:0 0.5rem"><img src="../../../static/img/table-look.png" alt="" ><span class="look_ques blue" @click="$router.push({'name':'mineQuesDetail',query:{'uuid':item.uuid,'status':item.status,'quType':item.quType}})">查看</span></td>
             </tr>
           </table>
+          <div class="no-msg-img" v-show="questions==''">
+            <img src="../../../static/img/answer-nomsg.png" alt="">
+            <div>暂无任何记录～</div>
+          </div>
         </div>
         <div id="page" class="paging"></div>
       </div>
@@ -66,7 +70,8 @@
             end:'10',
             //提问列表
             questions:[],
-            no_msg:true
+            no_msg:true,
+            timer:''
           }
       },
       mounted(){
@@ -75,6 +80,10 @@
         this.ajax(this.http_url.url+"/question/admireList",{
           "sinceId":this.start,"maxId":this.end
         },this.get_list);
+        this.$once('hook:beforeDestroy', () => {
+          clearInterval(this.timer);
+          this.timer=null;
+        });
         // setInterval(function(){
         //   $(".time-msg").each(function(){
         //     var t=$(this);
@@ -196,7 +205,7 @@
           }else{
             this.no_msg=false;
           }
-          setInterval(function(){
+          this.timer=setInterval(function(){
             $(".time-msg").each(function(){
               var t=$(this);
               if(t.attr("data-time")){

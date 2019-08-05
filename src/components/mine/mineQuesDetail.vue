@@ -14,7 +14,7 @@
             <div class="queser-grounp">
               <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'./static/img/user-img.png'"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
               <div class="inline-block queser-msg">
-                <div class="inline-block user_name">{{questionUser.isAnon==1? questionUser.realName:'匿名用户'}}</div>
+                <div class="inline-block user_name">{{get_name(questionUser)}}</div>
                 <div class="inline-block user-dj"><img :src="get_score(questionUser.integralScore,questionUser.aision,questionUser.vip)" alt=""></div>
                 <div>{{format(questionUser.date)}}</div>
               </div>
@@ -198,6 +198,7 @@
               </div>
             </div>
         </div>
+        <div class="back"><div class="cursor" @click="$router.push({name:'mineQuestion'})">返回</div></div>
       </div>
     </div>
   </div>
@@ -408,10 +409,12 @@
             "questionUuid":this.$route.query.uuid
           },function(data){
               if(data.code==1){
-                alert("发布成功");
+                // alert("发布成功");
+                that.$myToast.success("发布成功");
                 that.$router.push({name:"mineQuestion"})
               }else{
-                alert(data.des);
+                // alert(data.des);
+                that.$myToast.error(data.des);
               }
           })
         },
@@ -421,6 +424,7 @@
         },
         //评价按钮点击
         pj_sub:function(val){
+          var that=this;
           if(this.cn_score==0){
             return false;
           }else{
@@ -430,10 +434,12 @@
               "appraisal":this.pj_content
             },function(data){
               if(data.code==1){
-                alert("评价成功");
+                // alert("评价成功");
+                that.$myToast.success("评价成功");
                 window.location.reload();
               }else{
-                alert(data.des);
+                // alert(data.des);
+                that.$myToast.error(data.des);
               }
             });
           }
@@ -444,14 +450,17 @@
         },
         //举报按钮点击
         jb_btn:function(val){
+          var that=this;
           this.ajax(this.http_url.url+"/answer/updateStatus",{
             "status":"3","answerUuid":val
           },function(data){
             if(data.code==1){
-              alert("操作成功");
+              // alert("操作成功");
+              that.$myToast.success("操作成功");
               location.reload();
             }else{
-              alert(data.des);
+              // alert(data.des);
+              that.$myToast.error(data.des);
             }
           });
         },
@@ -469,11 +478,13 @@
             "status":"2","answerUuid":val.uuid
           },function(data){
               if(data.code==1){
-                alert("操作成功");
+                // alert("操作成功");
+                that.$myToast.success("操作成功");
                 that.pj_status=true;
                 that.query_status=3;
               }else{
-                alert(data.des);
+                // alert(data.des);
+                that.$myToast.error(data.des);
               }
           });
         },
@@ -506,7 +517,8 @@
               event="/static/img/zan_click.png";
               span.innerHTML=Number(span.innerHTML)+1;
             }else{
-              alert(data.des);
+              // alert(data.des);
+              that.$myToast.error(data.des);
             }
           })
         },
@@ -520,7 +532,8 @@
               event.src="/static/img/cai_click.png";
               span.innerHTML=Number(span.innerHTML)+1;
             }else{
-              alert(data.des);
+              // alert(data.des);
+              that.$myToast.error(data.des);
             }
           })
         },
@@ -535,11 +548,14 @@
         sub_jc:function(val){
           var that=this;
           if($("#content").val()==""){
-            alert("请输入内容")
+            // alert("请输入内容");
+            that.$myToast.error("请输入内容");
           }else if(this.sz_selece==""){
-            alert("税种不能为空")
+            // alert("税种不能为空")
+            that.$myToast.error("税种不能为空");
           }else if(this.topicId==""){
-            alert("专题不能为空")
+            // alert("专题不能为空");
+            that.$myToast.error("专题不能为空");
           }else{
             this.ajax(this.http_url.url+"/changerError/answer/add",{
               "content":$("#content").val(),
@@ -549,10 +565,12 @@
             },function(data){
               console.log(data);
               if(data.code==1){
-                alert("提交成功");
+                // alert("提交成功");
+                that.$myToast.success("提交成功");
                 window.location.reload();
               }else{
-                alert(data.des);
+                // alert(data.des);
+                that.$myToast.error(data.des);
               }
             })
           }
@@ -563,6 +581,27 @@
 </script>
 
 <style scoped>
+  .back>div{
+    width:15rem;
+    height:3rem;
+    line-height: 3rem;
+    color:#fff;
+    background: #eee;
+    text-align: center;
+    border-radius: 4px;
+    margin: 2rem auto;
+    font-size: 1.125rem;
+
+  }
+  .mine-right{
+    position: relative;
+    min-height: 47.3rem;
+  }
+  .back{
+    position: absolute;
+    bottom:0;
+    width: 100%;
+  }
   .go_pj{
     position: absolute;
     top:1rem;
@@ -652,6 +691,7 @@
   }
   .mine-ques-detail{
     padding:0 6.25rem 0 1.75rem;
+    margin-bottom: 6rem;
   }
   #content{
     padding:1.125rem;

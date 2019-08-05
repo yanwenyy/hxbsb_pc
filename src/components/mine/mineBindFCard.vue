@@ -50,7 +50,8 @@
           sub:function(){
             var that=this;
             if(this.cardNumber==""||this.cardPass==""){
-              alert("请完善信息")
+              // alert("请完善信息");
+              that.$myToast.error("请完善信息");
             }else{
               this.ajax(this.http_url.url+"/bindingQACard",{
                 "id":this.cardNumber,
@@ -61,7 +62,8 @@
                     name:'mineFinanceCard'
                   })
                 }else{
-                  alert(data.des);
+                  // alert(data.des);
+                  that.$myToast.error(data.des);
                 }
               })
             }

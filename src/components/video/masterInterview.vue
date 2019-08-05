@@ -1,43 +1,44 @@
 <template>
   <div class="home-body">
     <headerTab msg="大咖访谈"></headerTab>
-    <Swiper></Swiper>
+    <!--<Swiper></Swiper>-->
     <div class="container">
-      <div class="wdk-select-group">
-        <ul>
-          <li>
-            <div class="wdk-select-name inline-block">全部类型:</div>
-            <div class="wdk-select-msg inline-block">
-              <div class="inline-block blue" @click="search_list()">全部</div>
-            </div>
-          </li>
-          <li>
-            <div class="wdk-select-name inline-block">行业类型:</div>
-            <div class="wdk-select-msg inline-block">
-              <div class="inline-block wdk-select-msg-div" @click="search_list_wdk($event,item.uuid,'trade')" v-for="item in hy" data-type="trade">{{item.name}}</div>
-            </div>
-          </li>
-          <li>
-            <div class="wdk-select-name inline-block">专题类型:</div>
-            <div class="wdk-select-msg inline-block">
-              <div class="inline-block wdk-select-msg-div" @click="search_list_wdk($event,item.uuid,'topic')" v-for="item in zt" data-type="topic">{{item.name}}</div>
-            </div>
-          </li>
-          <li>
-            <div class="wdk-select-name inline-block">税种类型:</div>
-            <div class="wdk-select-msg inline-block">
-              <div class="inline-block wdk-select-msg-div" @click="search_list_wdk($event,item.uuid,'tax')" v-for="item in sz" data-type="tax">{{item.name}}</div>
-            </div>
-          </li>
-        </ul>
-      </div>
+      <!--<div class="wdk-select-group">-->
+        <!--<ul>-->
+          <!--<li>-->
+            <!--<div class="wdk-select-name inline-block">全部类型:</div>-->
+            <!--<div class="wdk-select-msg inline-block">-->
+              <!--<div class="inline-block blue" @click="search_list()">全部</div>-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<div class="wdk-select-name inline-block">行业类型:</div>-->
+            <!--<div class="wdk-select-msg inline-block">-->
+              <!--<div class="inline-block wdk-select-msg-div" @click="search_list_wdk($event,item.uuid,'trade')" v-for="item in hy" data-type="trade">{{item.name}}</div>-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<div class="wdk-select-name inline-block">专题类型:</div>-->
+            <!--<div class="wdk-select-msg inline-block">-->
+              <!--<div class="inline-block wdk-select-msg-div" @click="search_list_wdk($event,item.uuid,'topic')" v-for="item in zt" data-type="topic">{{item.name}}</div>-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<div class="wdk-select-name inline-block">税种类型:</div>-->
+            <!--<div class="wdk-select-msg inline-block">-->
+              <!--<div class="inline-block wdk-select-msg-div" @click="search_list_wdk($event,item.uuid,'tax')" v-for="item in sz" data-type="tax">{{item.name}}</div>-->
+            <!--</div>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
       <div class="home-model-header">
         <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>大咖访谈</div>
       </div>
       <div class="sm-class-video box-sizing" v-if="nomsg">
-        <div class="inline-block"v-for="(item,index) in video_list">
+        <div class="inline-block video-list" v-for="(item,index) in video_list"  @click="video_click(item)">
           <img :src="cover_src+item.image" alt="" @click="video_click(item)">
           <div>{{item.title}}</div>
+          <div class="video-hover"><img src="../../../static/img/video-hover.png" alt=""></div>
         </div>
       </div>
       <div class="no-msg" v-else>暂无相关内容</div>
@@ -63,10 +64,10 @@
         zt:[],//主题
         video_list:[],  //大咖访谈视频封面列表
         sinceId:1,//当前页开始条数
-        maxId:15,//当前页结束条数
+        maxId:16,//当前页结束条数
         type:3,//微课类型
         total:1,//分页页数
-        page_size:15//每页15条
+        page_size:16//每页15条
       }
     },
     mounted () {
@@ -154,6 +155,21 @@
 
 <style scoped>
   @import '../../../static/css/swiper.min.css';
+  .video-list{
+    position: relative;
+  }
+  .video-hover{
+    height:9.4rem;
+    top:0.5rem;
+    width:95%;
+    box-sizing: border-box;
+  }
+  .video-list:hover .video-hover{
+    display: block;
+  }
+  .video-hover>img{
+    margin-top:3.5rem;
+  }
   .sm-banner img{
     width: 100%;
   }
@@ -234,16 +250,16 @@
     color:#2D86FD;
   }
   .sm-class-video{
-    width: 85%;
-    margin: 0 auto;
+    width: 100%;
+    margin: 2rem auto;
   }
   .sm-class-video>div{
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     color: #666;
     font-size: 0.875rem;
-    width: 31%;
-    margin-right: 2%;
+    width: 24%;
+    margin-right: 1%;
     padding: 0.5rem;
     vertical-align: top;
   }

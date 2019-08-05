@@ -6,7 +6,7 @@
           <div class="queser-grounp">
             <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'/static/img/user-img.png'"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
             <div class="inline-block queser-msg">
-              <div class="inline-block user_name">{{questionUser.isAnon==1? questionUser.realName:'匿名用户'}}</div>
+              <div class="inline-block user_name">{{get_name(questionUser)}}</div>
               <div class="inline-block user-dj"><img :src="get_score(questionUser.integralScore,questionUser.aision,questionUser.vip)" alt=""></div>
               <div>{{format(questionUser.date)}}</div>
             </div>
@@ -44,19 +44,23 @@
           </div>
         </div>
       </div>
-          <div class="cwacth-notice">
-            <span class="gray-line inline-block"></span>
-            <span class="inline-block">只需1元即可查看答案</span>
-            <span class="gray-line inline-block"></span>
+          <!--<div class="cwacth-notice">-->
+            <!--<span class="gray-line inline-block"></span>-->
+            <!--<span class="inline-block">只需1元即可查看答案</span>-->
+            <!--<span class="gray-line inline-block"></span>-->
+          <!--</div>-->
+          <div style="text-align: center">
+            <div class="cwatch-weiguan inline-block" @click="weiguan()">一元围观</div>
+            <div class="cwatch-weiguan inline-block" @click="weiguan_free()">免费围观 <span>（观看视频）</span></div>
           </div>
-          <div class="cwatch-weiguan" @click="weiguan()">一元围观</div>
+          <div v-if="status_365" class="open-365 cursor" @click="open_365">开通365会员卡 (免费围观、免费问）></div>
           <div class="cwatch-list-people">
             <div class="cwatch-list-people-head">
               <img v-for="item in 10" :src="item<look_length? head_src+look_list[item-1].headImage:'./static/img/user-img-moren.png'" onerror="javascript:this.src='./static/img/user-img.png'" alt="">
             </div>
             <div class="cw-people-num">
-              {{look_list_num}}人围观,
-              <span class="blue" @click="open_shadow()">查看详情</span>
+              <span class="cursor" @click="open_shadow()">{{look_list_num}}人已围观></span>
+              <!--<span class="blue" @click="open_shadow()">查看详情</span>-->
             </div>
           </div>
         </div>
@@ -78,7 +82,7 @@
               <div class="inline-block wgry-list">
                 <div class="inline-block wgry-list-usermsg">
                   <div class="wgry-list-name">
-                    <span>{{item.realName}}</span>
+                    <span>{{get_name(item)}}</span>
                     <span class="user-zxs" v-if="item.role==2">
                         <img src="../../../static/img/zxs-icon.png" alt="">
                         <span>{{item.levelName}}</span>
@@ -126,10 +130,28 @@
             look_list_detail:[],
             //回答者信息
             answer_msg:'',
-            zt_method_data:''
+            zt_method_data:'',
+            status_365:false,
+
         }
       },
       mounted (){
+          var that=this;
+        this.ajax_nodata(this.http_url.url+"/user/message",function(data){
+          if(data.tsfTime!=null&&data.tsfTime!=''){
+            var tt=new Date().getTime();
+            if(tt>data.tsfTime){
+              that.status_365=true;
+            }else{
+              that.status_365=false;
+            }
+          }else{
+            that.status_365=true;
+          }
+          if(data.aision==0&&data.vip==0){
+            that.status_365=false;
+          }
+        });
           //问题者信息
         this.ajax_nodata(this.http_url.url+"/onlook/wx/onlookAuthorized?uuid="+this.$route.query.uuid,this.que_msg);
           // alert(this.$route.query.questionUuid);
@@ -143,6 +165,10 @@
         this.ajax(this.http_url.url+"/user/someUserMsg",{"questionUuid":this.$route.query.uuid},this.msg_show);
         },
       methods:{
+        open_365:function(){
+          var that=this;
+          this.$router.push({name:'mine365'})
+        },
         //图片放大组件控制
         lookImgFn:function (list,index) {
           this.lookImgVisible = true
@@ -193,6 +219,7 @@
         //一元围观
         weiguan:function(){
           var that=this;
+          _czc.push(["_trackEvent","详情一元围观","点击"]);
           var data=encodeURIComponent(JSON.stringify(this.$route.query))||encodeURIComponent(JSON.stringify(this.zt_method_data));
           this.$router.push({
             name:"payMethod",query:{ url:"answerWacthDetail",price: 1 ,source:"围观",data:data}
@@ -202,12 +229,30 @@
         msg_show:function(data){
             // console.log(data);
             this.answer_msg=data.userMsg;
+        },
+        //免费围观
+        weiguan_free:function(data){
+          var that=this;
+          _czc.push(["_trackEvent","免费围观","点击"]);
+          this.ajax_nodata(this.http_url.url+"videoAdvertising",function(data){
+            console.log(data);
+            if(data.code==1){
+              that.$router.push({name:"freeWatch",query:{"vid":data.id,"uuid":that.$route.query.uuid,"mid":data.videoId,"link":data.pageLink}})
+              // that.$router.push({name:'freeWatchAd',query:{"uuid":1,"link":'http://test.jieshuibao.com/video_ad/html/ad1.html?'}})
+            }
+          })
         }
       }
     }
 </script>
 
 <style scoped>
+  .open-365{
+    text-align: center;
+    font-size: 0.875rem;
+    color:#D19428;
+    margin-top: 1.69rem;
+  }
   .zxs-img-show>img{
     margin-top: -0.1rem;
   }
@@ -277,16 +322,21 @@
   .cwacth-notice>.gray-line{
     width:5.5rem;
   }
+  .cwatch-weiguan>span{
+    font-size: 0.68rem;
+  }
   .cwatch-weiguan{
-    width:7.5rem;
+    vertical-align: top;
+    width:9.37rem;
     height:2.25rem;
     line-height: 2.25rem;
     text-align: center;
     color:#fff;
     background:rgba(254,109,39,1);
     border-radius:2px;
-    font-size: 1rem;
-    margin: 0 auto;
+    font-size: 0.94rem;
+    margin-top:2.31rem ;
+    margin-right: 1.875rem;
   }
   .cwatch-list-people{
     text-align: center;

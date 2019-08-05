@@ -1,7 +1,7 @@
 <template>
     <div class="home-body">
       <headerTab msg="微课"></headerTab>
-      <Swiper></Swiper>
+      <!--<Swiper></Swiper>-->
       <!--<div class="sm-banner">
         <img src="../../../static/img/sm-class-banner.png">
       </div>-->
@@ -11,25 +11,25 @@
             <li>
               <div class="wdk-select-name inline-block">全部类型:</div>
               <div class="wdk-select-msg inline-block">
-                <div class="inline-block blue" @click="search_list()">全部</div>
+                <div class="inline-block" :class="sx==''?'blue':''" @click="search_list();sx=''">全部</div>
               </div>
             </li>
             <li>
               <div class="wdk-select-name inline-block">行业类型:</div>
               <div class="wdk-select-msg inline-block">
-                <div class="inline-block wdk-select-msg-div" @click="search_list_wdk($event,item.uuid,'trade')" v-for="item in hy" data-type="trade">{{item.name}}</div>
+                <div class="inline-block wdk-select-msg-div" :class="sx==item.uuid?'blue':''" @click="search_list_wdk($event,item.uuid,'trade');sx=item.uuid" v-for="item in hy" data-type="trade">{{item.name}}</div>
               </div>
             </li>
             <li>
               <div class="wdk-select-name inline-block">专题类型:</div>
               <div class="wdk-select-msg inline-block">
-                <div class="inline-block wdk-select-msg-div" @click="search_list_wdk($event,item.uuid,'topic')" v-for="item in zt" data-type="topic">{{item.name}}</div>
+                <div class="inline-block wdk-select-msg-div" :class="sx==item.uuid?'blue':''" @click="search_list_wdk($event,item.uuid,'topic');sx=item.uuid" v-for="item in zt" data-type="topic">{{item.name}}</div>
               </div>
             </li>
             <li>
               <div class="wdk-select-name inline-block">税种类型:</div>
               <div class="wdk-select-msg inline-block">
-                <div class="inline-block wdk-select-msg-div" @click="search_list_wdk($event,item.uuid,'tax')" v-for="item in sz" data-type="tax">{{item.name}}</div>
+                <div class="inline-block wdk-select-msg-div" :class="sx==item.uuid?'blue':''" @click="search_list_wdk($event,item.uuid,'tax');sx=item.uuid" v-for="item in sz" data-type="tax">{{item.name}}</div>
               </div>
             </li>
           </ul>
@@ -38,15 +38,19 @@
           <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>微课</div>
         </div>
         <div class="sm-class-video box-sizing" v-if="nomsg">
-          <div class="inline-block"v-for="(item,index) in video_list">
+          <div class="inline-block video-list" v-for="(item,index) in video_list"  @click="video_click(item)">
             <img :src="cover_src+item.image" alt="" @click="video_click(item)">
             <div>{{item.title}}</div>
             <p class="buy" v-if="item.ifBuy==1">已购买</p>
             <p class="price" v-else-if="item.ifBuy!=1&&item.price!=0">¥{{parseFloat(item.price).toFixed(2)}}</p>
             <p class="free" v-else-if="item.price==0">限时免费</p>
+            <div class="video-hover"><img src="../../../static/img/video-hover.png" alt=""></div>
           </div>
         </div>
-        <div class="no-msg" v-else>暂无相关内容</div>
+        <div class="no-msg-img" v-show="video_list==''">
+          <img src="../../../static/img/no-msg-img.png" alt="">
+          <div>没有搜到相关内容哦～</div>
+        </div>
       </div>
 
       <div id="page" class="paging" v-show="nomsg"></div>
@@ -70,11 +74,12 @@
           zt:[],//主题
           video_list:[], //微课封面列表
           sinceId:1,//当前页开始条数
-          maxId:15,//当前页结束条数
+          maxId:16,//当前页结束条数
           type:0,//微课类型
           total:1,//分页页数
-          page_size:15,//每页15条
-          vid:null
+          page_size:16,//每页15条
+          vid:null,
+          sx:'',
         }
       },
       mounted () {
@@ -96,8 +101,12 @@
             this.ajax(this.http_url.url+'video/vid',{id:data.id},function (e) {
               that.vid=e.data.vid
               if(data.ifBuy==1||data.price==0){
+                if(data.price==0){
+                  _czc.push(["_trackEvent","微课免费","点击"]);
+                }
                 that.$router.push({name:'video',query:{vid:that.vid}})
               }else{
+                _czc.push(["_trackEvent","微课付费","点击"]);
                 data={videoId:data.id,source:2,money:data.price,url:'video'};
                 var money=data.money;
                 data=encodeURIComponent(JSON.stringify(data));
@@ -153,8 +162,8 @@
           //类别搜索
           search_list_wdk:function (event,uuid,wdk) {
             var query;
-            $(".wdk-select-msg>div").removeClass("blue");
-            $(event.target).addClass("blue");
+            // $(".wdk-select-msg>div").removeClass("blue");
+            // $(event.target).addClass("blue");
             if(wdk=="trade"){
               query={sinceId:this.sinceId,maxId:this.maxId,type:this.type,trade:uuid}
             }else if(wdk=="topic"){
@@ -170,6 +179,21 @@
 
 <style scoped>
   @import '../../../static/css/swiper.min.css';
+  .video-list{
+    position: relative;
+  }
+  .video-hover{
+    height:9.4rem;
+    top:0.5rem;
+    width:95%;
+    box-sizing: border-box;
+  }
+  .video-list:hover .video-hover{
+    display: block;
+  }
+  .video-hover>img{
+    margin-top:3.5rem;
+  }
   .sm-banner img{
     width: 100%;
   }
@@ -226,8 +250,13 @@
   }
   .wdk-select-group{
     margin-top: 1.0625rem;
-    color:#666;
+    color: #666;
     font-size: 0.875rem;
+    border: 1px solid rgba(229,229,229,1);
+  }
+  .wdk-select-group>ul{
+    background: #F6F6F6;
+    padding: 2.19rem 2.44rem 1rem 2.44rem;
   }
   .wdk-select-msg{
     color:#333;
@@ -250,7 +279,7 @@
     color:#2D86FD;
   }
   .sm-class-video{
-    width: 85%;
+    width: 100%;
     margin: 0 auto;
     margin-top: 2rem;
   }
@@ -259,8 +288,8 @@
     box-sizing: border-box;
     color: #666;
     font-size: 0.875rem;
-    width: 31%;
-    margin-right: 2%;
+    width: 24%;
+    margin-right: 1%;
     padding: 0.5rem;
     vertical-align: top;
     height: 14.5rem;
@@ -274,6 +303,7 @@
     width:100%;
     height:9.4rem;
     margin-bottom: 0.5rem;
+    border-radius: 4px;
   }
   .sm-class-video>div>p{
     position: absolute;

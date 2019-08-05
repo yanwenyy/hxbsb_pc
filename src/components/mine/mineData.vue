@@ -16,7 +16,7 @@
               <div>上传头像</div>
             </div>
             <div class="inline-block mine-data-user-duty">
-              <div class="mine-data-user-name">{{user_name}}</div>
+              <div class="mine-data-user-name">{{usermsg.role==2?usermsg.userName:usermsg.realName}} <span v-show="usermsg.role==2" style="font-size: 0.88rem"><img src="../../../static/img/zxs-icon.png" alt="">{{usermsg.levelName}}</span></div>
               <div class="mine-data-user-duty-img">
                 <img :src="dj_img" alt="">
               </div>
@@ -32,7 +32,7 @@
                   <span class="orange">*</span>昵   称：
                 </span>
                 <div class="inline-block">
-                  <input type="text" placeholder="请输入昵称" v-model="user_name">
+                  <input type="text" placeholder="请输入昵称" v-model="user_name" maxlength="5">
                 </div>
               </li>
               <li>
@@ -40,7 +40,7 @@
                   真实姓名：
                 </span>
                 <div class="inline-block">
-                  <input type="text" placeholder="请输入真实姓名" v-model="user_realNanme">
+                  <input type="text" placeholder="请输入真实姓名" v-model="user_realNanme" maxlength="5">
                 </div>
               </li>
               <li>
@@ -76,7 +76,7 @@
                   <img src="../../../static/img/input-sel.png" alt="" class="input-sel">
                   <div class="company-industry-list" v-if="hy_show">
                     <ul class="box-sizing">
-                      <li v-for="items in hy" @click="hy_sel(items.name)">{{items.name}}</li>
+                      <li v-for="items in hy" class="cursor" @click="hy_sel(items.name)">{{items.name}}</li>
                     </ul>
                   </div>
                 </div>
@@ -250,16 +250,20 @@
           }
           function edit_user_msg(data){
             if(data.code==1){
-              alert(data.des);
+              // alert(data.des);
+              that.$myToast.success(data.des);
               location.reload();
             }else{
-              alert(data.des)
+              // alert(data.des)
+              that.$myToast.error(data.des);
             }
           }
           if(that.user_name==""){
-            alert("昵称不能为空")
+            // alert("昵称不能为空")
+            that.$myToast.error("昵称不能为空");
           }else if(that.province=="省"||address==""){
-            alert("请完善所在城市信息")
+            // alert("请完善所在城市信息");
+            that.$myToast.error("请完善所在城市信息");
           }else{
             that.ajax(that.http_url.url+"/user/editUser",{
               "headImage":headImage,
@@ -280,6 +284,9 @@
 </script>
 
 <style scoped>
+  .mine-right{
+    padding: 0 0.875rem 1rem 0rem;
+  }
   .img-file{
     position: absolute;
     top:0;
@@ -306,11 +313,11 @@
     overflow: auto;
   }
   >>>.distpicker-address-wrapper>select{
-    width:7.125rem;
+    width:9rem;
     height:2.25rem;
-    color:#999;
-    font-size: 0.75rem;
-    margin-right: 1rem;
+    color:#666;
+    font-size: 0.88rem;
+    margin-right: 0.5rem;
   }
   .data-reset-btn{
     background: #DDDDDD;
@@ -318,7 +325,7 @@
   }
   .data-sub-btn{
     background: #2D86FD;
-    color:#fff;
+    color:#fff!important;
   }
   .mine-data-btn{
     margin-top: 2rem;
@@ -341,7 +348,7 @@
     right:1rem;
   }
   .mine-data-body li input{
-    width:12.31rem;
+    width:28.4rem;
     height:2.25rem;
     padding-left: 0.625rem;
     border:1px solid rgba(221,221,221,1);
@@ -353,9 +360,15 @@
     color:#333;
     margin-bottom: 1rem;
   }
+  .mine-data-body>ul>li input,.mine-data-body>ul>li div{
+    color:#666;
+    font-size: 0.88rem;
+  }
   .mine-data-body li>span{
     width: 15%;
     text-align: right;
+    font-size: 1rem;
+    color:#999;
   }
   .mine-data-user-duty-img>img{
       width:4.06rem;
@@ -396,7 +409,7 @@
     box-shadow:none;
   }
   .mine-data-head{
-    height:10.75rem;
+    height:11.75rem;
     width:100%;
     background: #fff;
     box-shadow:0px 1px 8px 0px rgba(54,177,255,0.1);

@@ -44,7 +44,7 @@
               <div class="inline-block blue password_login cursor" @click="pass=true;info=false;forget_pass=false">账号密码登录</div>
             </div>
             <div class="login-btn" @click="info_sub()">注册/登录</div>
-            <div class="login-must-know cursor" @click="$router.push({name:'userAgreement'})">登录即代表同意我们的《用户使用协议和隐私政策》</div>
+            <input type="checkbox"  v-model="agree_phone" v-on:click="agreeRule($event,1)"><div class="inline-block login-must-know cursor" @click="$router.push({name:'userAgreement'})">登录即代表同意我们的《用户使用协议和隐私政策》</div>
           </div>
         </div>
         <div class="password-way" v-if="pass">
@@ -71,7 +71,7 @@
               <div class="inline-block blue password_login cursor" @click="pass=false;info=false;forget_pass=true">忘记密码</div>
             </div>
             <div class="login-btn" @click="pass_sub()">登录</div>
-            <div class="login-must-know cursor" @click="$router.push({name:'userAgreement'})">登录即代表同意我们的《用户使用协议和隐私政策》</div>
+            <input type="checkbox" v-model="agree_pass" v-on:click="agreeRule($event,2)"><div class="inline-block login-must-know cursor" @click="$router.push({name:'userAgreement'})">登录即代表同意我们的《用户使用协议和隐私政策》</div>
           </div>
         </div>
         <div class="forget-password-way"  v-if="forget_pass">
@@ -148,7 +148,9 @@
             pass_password:'',//账号密码登录的密码
             password_confrim:'',//确认输入的密码
             code_status:false,
-            nums:60
+            nums:60,
+            agree_pass:true,
+            agree_phone:true,
           }
         },
         mounted(){
@@ -174,6 +176,20 @@
           // });
         },
         methods:{
+          //勾选登录协议点击
+          agreeRule:function(e,val){
+            if(val==1){
+              //手机短信登录
+              this.agree_phone=e.target.checked;
+              this.agree_pass=false;
+            }else if(val==2){
+              //账号密码登录
+              this.agree_pass=e.target.checked;
+              this.agree_phone=false;
+            }
+            console.log("手机"+this.agree_phone);
+            console.log("密码"+this.agree_pass);
+          },
           //发送倒计时
           doLoop(){
             this.nums--;
@@ -185,7 +201,7 @@
               this.nums = 60; //重置时间
             }
           },
-          //验证码点击
+          //图形验证码点击
           info_img:function(){
             var timestamp=new Date().getTime();
             var phonenum = $(".phones").val();
@@ -195,10 +211,12 @@
           },
           //手机号登录失焦验证
           get_codeimg:function(){
-            console.log(this.info_phone)
+            console.log(this.info_phone);
+            var that=this;
             var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
             if(!reg.test(this.info_phone) && this.info_phone != ''){
-              alert("手机号码输入有误!");
+              // alert("手机号码输入有误!");
+              that.$myToast.error("手机号码输入有误");
               return false;
             }
           },
@@ -213,12 +231,14 @@
             },function(data){
                //  console.log(data);
                 if(data.code==1){
-                  alert("短信已发送");
+                  // alert("短信已发送");
+                  that.$myToast.success("短信已发送");
                   that.info_smsMessageSid=data.smsMessageSid;
                   that.clock = setInterval(that.doLoop, 1000);
                   that.code_status=true;
                 }else{
-                  alert(data.des);
+                  // alert(data.des);
+                  that.$myToast.error(data.des);
                 }
             })
           },
@@ -227,15 +247,20 @@
             sessionStorage.removeItem("cookieId");
             var that=this;
             if(this.info_phone==""||this.info_message==""||this.info_code==""){
-              alert("请完善信息")
+              // alert("请完善信息");
+              that.$myToast.error("请完整输入内容");
             }else{
-              this.ajax(this.http_url.url+"/pc/login",{
-                "phoneNumber":this.info_phone,
-                "deviceType":"3",
-                "smsMessageSid":this.info_smsMessageSid,
-                "code":this.info_message
-              },function(data){
+              if(that.agree_phone==false){
+                that.$myToast.error('请阅读并同意《用户使用协议和隐私政策》');
+              }else{
+                this.ajax(this.http_url.url+"/pc/login",{
+                  "phoneNumber":this.info_phone,
+                  "deviceType":"3",
+                  "smsMessageSid":this.info_smsMessageSid,
+                  "code":this.info_message
+                },function(data){
                   if(data.code==1){
+                    _czc.push(["_trackEvent","手机号注册登录","点击"]);
                     sessionStorage.setItem("userMessage",JSON.stringify(data));
                     sessionStorage.setItem("cookieId",data.cookieId);
                     if(data.ifNewRegist==0){
@@ -245,9 +270,11 @@
                       that.$router.push({name:"bindFinanceCard"})
                     }
                   }else{
-                    alert(data.des);
+                    // alert(data.des);
+                    that.$myToast.error(data.des);
                   }
-              })
+                })
+              }
             }
           },
           //账号密码登录
@@ -255,27 +282,33 @@
             sessionStorage.removeItem("cookieId");
             var that=this;
             if(this.pass_phone==""||this.pass_password==''){
-              alert("请完善信息")
+              // alert("请完善信息")
+              that.$myToast.error("请完整输入内容");
             }else{
-              this.ajax(this.http_url.url+"/pc/login",{
-                "phoneNumber":this.pass_phone,
-                "pwd":md5(this.pass_password),
-              },function(data){
-               if(data.code==1){
-                 // console.log(data);
-                  sessionStorage.setItem("userMessage",JSON.stringify(data));
-                 sessionStorage.setItem("cookieId",data.cookieId);
-                  if(data.ifNewRegist==0){
-                    that.$router.push({name:"Home"});
+              if(that.agree_pass==false){
+                that.$myToast.error('请阅读并同意《用户使用协议和隐私政策》');
+              }else{
+                this.ajax(this.http_url.url+"/pc/login",{
+                  "phoneNumber":this.pass_phone,
+                  "pwd":md5(this.pass_password),
+                },function(data){
+                  if(data.code==1){
+                    // console.log(data);
+                    _czc.push(["_trackEvent","账号密码登录","点击"]);
+                    sessionStorage.setItem("userMessage",JSON.stringify(data));
                     sessionStorage.setItem("cookieId",data.cookieId);
+                    if(data.ifNewRegist==0){
+                      that.$router.push({name:"Home"});
+                      sessionStorage.setItem("cookieId",data.cookieId);
+                    }else{
+                      that.$router.push({name:"bindFinanceCard"})
+                    }
                   }else{
-                    that.$router.push({name:"bindFinanceCard"})
+                    // alert(data.des);
+                    that.$myToast.error(data.des);
                   }
-
-               }else{
-                 alert(data.des);
-               }
-            })
+                })
+              }
             }
           },
           //忘记密码登录
@@ -295,7 +328,8 @@
                 sessionStorage.setItem("cookieId",data.cookieId);
                 if(data.ifNewRegist==0){
                   // that.$router.push({name:"Home"});
-                  alert("修改成功");
+                  // alert("修改成功");
+                  that.$myToast.success("修改成功");
                   that.pass=true;
                   that.forget_pass=false;
                   sessionStorage.setItem("cookieId",data.cookieId);
@@ -303,7 +337,8 @@
                   that.$router.push({name:"bindFinanceCard"})
                 }
               }else{
-                alert(data.des);
+                // alert(data.des);
+                that.$myToast.error(data.des);
               }
             })
           }

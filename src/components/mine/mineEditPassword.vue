@@ -55,10 +55,17 @@
           sub:function(){
             // console.log(this.password+"..."+this.passwordConfirm);
             var that=this;
-            if(this.password==""||this.passwordConfirm==""){
-              alert("密码不能为空")
+            if(this.password.length<6){
+              that.$myToast.error("请输入6-15位数字或密码");
+            }
+            else if(this.password==""){
+              // alert("密码不能为空")
+              that.$myToast.error("密码不能为空");
+            }else if(this.passwordConfirm==""){
+              that.$myToast.error("确认密码不能为空");
             }else if(this.password!=this.passwordConfirm){
-              alert("两次密码输入不一致")
+              // alert("两次密码输入不一致")
+              that.$myToast.error("两次密码输入不一致");
             }else{
               $.ajax({
                 type:"POST",
@@ -75,9 +82,11 @@
                 }),
                 success:function(data){
                   if(data.code=="1"){
-                    alert(data.des);
+                    // alert(data.des);
+                    that.$myToast.success(data.des);
                   }else{
-                    alert(data.des);
+                    // alert(data.des);
+                    that.$myToast.error(data.des);
                   }
 
                 },

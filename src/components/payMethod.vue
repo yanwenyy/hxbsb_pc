@@ -111,6 +111,7 @@
       },
       mounted () {
         // console.log(this.$route.query.msg);
+        var that=this;
         this.price=this.$route.query.price;
         this.source=this.$route.query.source;
         this.title="首页> "+this.$route.query.source+" > 支付";
@@ -143,8 +144,8 @@
         this.ajax_nodata(this.http_url.url+"/user/message",this.get_money);
         // 通过$once来监听定时器，在beforeDestroy钩子可以被清除。
         this.$once('hook:beforeDestroy', () => {
-          clearInterval(this.timer);
-          this.timer=null;
+          clearInterval(that.timer);
+          that.timer=null;
         });
       },
       methods: {
@@ -157,6 +158,7 @@
         },
         //扫码支付
         wexin_pay:function(data){
+          var that=this;
           console.log(data);
           if(data.code==1){
             this.codeUrl=data.codeUrl;
@@ -165,10 +167,11 @@
             this.orderNo=data.orderNo;
             this.nonceStr=data.nonceStr;
             this.sign=data.sign;
-            this.show_code(this.codeUrl);
-            this.check_order();
+            // this.show_code(this.codeUrl);
+            // this.check_order();
           }else{
-            alert(data.des);
+            // alert(data.des);
+            that.$myToast.error(data.des);
           }
         },
         //查询订单
@@ -182,8 +185,10 @@
                 if(that.$route.query.source=="我要提问"){
                   that.suc_show=true
                 }else {
-                  alert("支付成功");
+                  // alert("支付成功");
+                  that.$myToast.success("支付成功");
                   if (that.$route.query.source == "围观") {
+                    _czc.push(["_trackEvent","围观支付成功","点击"]);
                     that.$router.push({
                       name: that.$route.query.url,
                       query: {
@@ -227,9 +232,13 @@
               if(that.$route.query.source=="我要提问"){
                 that.suc_show=true
               }else{
-                alert("支付成功");
+                // alert("支付成功");
+                that.$myToast.success("支付成功");
+                clearInterval(that.timer);
+                that.timer=null;
                 if(that.$route.query.source=="围观"){
-                  console.log(that.$route.query.source)
+                  console.log(that.$route.query.source);
+                  _czc.push(["_trackEvent","围观支付成功","点击"]);
                   that.$router.push({
                     name:that.$route.query.url,
                     query:{
@@ -243,19 +252,24 @@
                 }
               }
             }else{
-              alert(data.des);
+              // alert(data.des);
+              that.$myToast.error(data.des);
             }
           }
           //微课支付成功跳转播放页
           function go_video(data){
             if(data.code==1){
-              alert("支付成功");
+              // alert("支付成功");
+              that.$myToast.success("支付成功");
+              clearInterval(that.timer);
+              that.timer=null;
               that.ajax(that.http_url.url+'video/vid',{id:data_msg.videoId},function (e) {
                 // console.log(e.data.vid);
                 that.$router.push({name:that.$route.query.url,query:{vid:e.data.vid,pagetype:'pay'}})
               })
             }else{
-              alert(data.des);
+              // alert(data.des);
+              that.$myToast.error(data.des);
             }
           }
           //this.$route.query.data
@@ -271,12 +285,13 @@
         pay_click:function(msg){
           var that=this;
           if(msg=="wexin"){//微信支付
+              $("#qrcode").html('');
               this.wexin=true;
               this.bag=false;
               this.card=false;
               this.btn_show=false;
               this.qa=false;
-            this.payType="weixin";
+              this.payType="weixin";
               setTimeout(function(){that.show_code(that.codeUrl);},1);
               this.check_order();
           }else {

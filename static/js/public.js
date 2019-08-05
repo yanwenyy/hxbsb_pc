@@ -6,7 +6,13 @@ export default{
     Vue.prototype.http_url = {
       test:'http://test.jieshuibao.com/jsb_webserver/',
       formal: "https://api.jieshuibao.com/",
-      url:  "https://api.jieshuibao.com/",
+      url:  "http://test.jieshuibao.com/jsb_webserver/",
+    };
+    //视频广告接口变量
+    Vue.prototype.ad_url = {
+      test:'http://test.jieshuibao.com/',
+      formal: "https://hx.jieshuibao.com/",
+      url:  "http://test.jieshuibao.com/",
     };
     //头像变量
     Vue.prototype.head_src = Vue.prototype.http_url.url+"showImg/head/";
@@ -33,6 +39,7 @@ export default{
         success:function(data){
           if(data.code=="2"){
             // alert(data.des);
+
             Router.push({name:'login'});
             return false;
           }else{
@@ -117,7 +124,7 @@ export default{
         }
       }
       return categorys;
-    }
+    };
     //地址栏参数
     Vue.prototype.getUrlParms=function(name){
       var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -126,9 +133,23 @@ export default{
         return unescape(r[2]);
       return null;
     }
+    //用户名显示
+    Vue.prototype.get_name=function(val){
+      var realName='';
+      if(val.isAnon==0){
+        realName="匿名用户"
+      }else{
+        if(val.role==2){
+          realName=val.userName;
+        }else{
+          realName=val.realName||"匿名用户";
+        }
+      }
+      return realName;
+    }
   }
 }
-//时间转换
+//地址栏参数
 export function getUrlParms (name) {
   var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
   var r = window.location.search.substr(1).match(reg);

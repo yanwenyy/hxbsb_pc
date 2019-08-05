@@ -1,6 +1,6 @@
 <template>
   <div class="home-body">
-    <Swiper></Swiper>
+    <!--<Swiper></Swiper>-->
     <div class="container">
       <div class="home-main box-sizing">
         <div class="inline-block">
@@ -9,25 +9,25 @@
               <li>
                 <div class="wdk-select-name inline-block">全部类型:</div>
                 <div class="wdk-select-msg inline-block">
-                  <div class="inline-block blue" @click="load_list()">全部</div>
+                  <div class="inline-block" :class="typeContent==''?'blue':''" @click="typeContent='';type='new';load_list()">全部</div>
                 </div>
               </li>
               <li>
                 <div class="wdk-select-name inline-block">行业类型:</div>
                 <div class="wdk-select-msg inline-block">
-                  <div class="inline-block wdk-select-msg-div" v-for="item in hy" data-type="trade">{{item.name}}</div>
+                  <div class="inline-block wdk-select-msg-div" :class="typeContent==item.name?'blue':''" v-for="item in hy" data-type="trade" @click="typeContent=item.name;type='trade';search()">{{item.name}}</div>
                 </div>
               </li>
               <li>
                 <div class="wdk-select-name inline-block">专题类型:</div>
                 <div class="wdk-select-msg inline-block">
-                  <div class="inline-block wdk-select-msg-div" v-for="item in zt" data-type="topic">{{item.name}}</div>
+                  <div class="inline-block wdk-select-msg-div" :class="typeContent==item.name?'blue':''" v-for="item in zt" data-type="topic" @click="typeContent=item.name;type='topic';search()">{{item.name}}</div>
                 </div>
               </li>
               <li>
                 <div class="wdk-select-name inline-block">税种类型:</div>
                 <div class="wdk-select-msg inline-block">
-                  <div class="inline-block wdk-select-msg-div" v-for="item in sz" data-type="tax">{{item.name}}</div>
+                  <div class="inline-block wdk-select-msg-div"  :class="typeContent==item.name?'blue':''" v-for="item in sz" data-type="tax" @click="typeContent=item.name;type='tax';search()">{{item.name}}</div>
                 </div>
               </li>
             </ul>
@@ -37,17 +37,20 @@
               <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>问答库</div>
               <div class="inline-block">为您筛选到以下围观信息</div>
             </div>
-            <div v-if="nomsg" class="no-msg">暂无相关内容</div>
+            <div class="no-msg-img" v-show="list==''">
+              <img src="../../../static/img/no-msg-img.png" alt="">
+              <div>没有搜到相关内容哦～</div>
+            </div>
             <div class="wdk-list-group box-sizing">
               <div class="wdk-list" v-for="item in list"  @click="weiguan(item.uuid,item.status)">
                 <div class="inline-block">
                   <div class="wdk-name">
                     <img :src="head_src+item.headImage" alt=""  onerror="javascript:this.src='./static/img/user-img.png';">
-                    <div class="inline-block user_name">{{item.realName||"匿名用户"}}</div>
+                    <div class="inline-block user_name">{{get_name(item)}}</div>
                     <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
                     <div class="home-list-msg-group">
                       <div class="inline-block home-list-msg">{{item.content}}</div>
-                      <div class="inline-block weiguan" :class="item.status==1? 'weiguan_also':''">{{item.status==1? '已围观':'一元围观'}}</div>
+                      <div class="inline-block weiguan" :class="item.status==1? 'weiguan_also':''">{{item.status==1? '已围观':'围观'}}</div>
                     </div>
                     <div class="label box-sizing">
                       <div class="inline-block">{{format(item.date)}}</div>
@@ -69,7 +72,7 @@
               </div>
             </div>
           </div>
-          <div class="load-more">
+          <div class="load-more"  v-if="list&&list.length==count_end">
             <span class="inline-block gray-line"></span>
             <span class="inline-block load-more-btn" @click="load_more()">点击加载更多</span>
             <span class="inline-block gray-line"></span>
@@ -108,27 +111,28 @@
         type:"new",
         num:1,
         count_start:1,
-        count_end:10
+        count_end:10,
+        typeContent:''
       }
     },
     mounted () {
       var that=this;
-      //删选条件点击
-      $("body").on("click",".wdk-select-msg-div",function(){
-        this.num=1;
-        this.count_start=1;
-        this.count_end=10;
-        $(".wdk-select-msg>div").removeClass("blue");
-        $(this).addClass("blue");
-        var type=$(this).attr("data-type"),typeContent=$(this).html();
-        that.ajax(that.http_url.url+'/onlook/serarch',{
-          "sinceId":1,
-          "maxId":10,
-          "type":type,
-          "typeContent":typeContent
-        },that.get_list);
-      });
-      if(this.$route.query.name){
+      // //删选条件点击
+      // $("body").on("click",".wdk-select-msg-div",function(){
+      //   this.num=1;
+      //   this.count_start=1;
+      //   this.count_end=10;
+      //   $(".wdk-select-msg>div").removeClass("blue");
+      //   $(this).addClass("blue");
+      //   var type=$(this).attr("data-type"),typeContent=$(this).html();
+      //   that.ajax(that.http_url.url+'/onlook/serarch',{
+      //     "sinceId":1,
+      //     "maxId":10,
+      //     "type":type,
+      //     "typeContent":typeContent
+      //   },that.get_list);
+      // });
+      if(this.$route.query.name&&this.$route.query.name!=''&&this.$route.query.name!=undefined){
         this.type=this.$route.query.name;
         //列表数据加载
         // this.ajax(this.http_url.url+'/onlook/look/list',{
@@ -152,11 +156,24 @@
     methods:{
       //一元围观
       weiguan:function(val,status){
-        if(status==1){
-          this.$router.push({ name: 'answerWacthDetail',query:{"uuid":val}})
-        }else{
-          this.$router.push({ name: 'answerWacth',query: {"uuid":val,"money":1}});
-        }
+        var that=this;
+        _czc.push(["_trackEvent","一元围观","点击"]);
+        this.ajax_nodata(this.http_url.url+"/user/message",function(data){
+          if(status==1){
+            that.$router.push({ name: 'answerWacthDetail',query:{"uuid":val}})
+          }else{
+            if(data.tsfTime!=null&&data.tsfTime!=''){
+              var tt=new Date().getTime();
+              if(tt>data.tsfTime){
+                that.$router.push({ name: 'answerWacth',query: {"uuid":val,"money":1}});
+              }else{
+                that.$router.push({ name: 'answerWacthDetail',query:{"uuid":val}})
+              }
+            }else{
+              that.$router.push({ name: 'answerWacth',query: {"uuid":val,"money":1}});
+            }
+          }
+        });
         // this.$router.push({ name: 'answerWacth',query:{questionUuid:val}})
       },
       //列表数据
@@ -164,10 +181,24 @@
         this.num=1;
         this.count_start=1;
         this.count_end=10;
+        // this.typeContent='';
         this.ajax(this.http_url.url+'/onlook/look/list',{
           "sinceId":this.count_start,
           "maxId":this.count_end,
-          "type":this.type
+          "type":this.type,
+        },this.get_list);
+      },
+      //删选条件点击
+      search:function(){
+        this.num=1;
+        this.count_start=1;
+        this.count_end=10;
+        // this.typeContent='';
+        this.ajax(this.http_url.url+'/onlook/serarch',{
+          "sinceId":this.count_start,
+          "maxId":this.count_end,
+          "type":this.type,
+          "typeContent":this.typeContent
         },this.get_list);
       },
       //列表
@@ -178,8 +209,8 @@
           this.nomsg=false;
           $(".load-more").show();
           for(var i=0;i<data.length;i++){
-            if(data[i].content.length>40){
-              data[i].content=data[i].content.substr(0,40)+"...";
+            if(data[i].content.length>120){
+              data[i].content=data[i].content.substr(0,120)+"...";
             }
           }
         }else{
@@ -193,13 +224,14 @@
         var data=data.data;
         if(data!=""&&data!=null){
           for(var i=0;i<data.length;i++){
-            if(data[i].content.length>40){
-              data[i].content=data[i].content.substr(0,40)+"...";
+            if(data[i].content.length>120){
+              data[i].content=data[i].content.substr(0,120)+"...";
             }
             this.list.push(data[i]);
           }
         }else{
           $(".load-more").hide();
+          this.nomsg=true;
         }
       },
       //行业,税种,专题
@@ -280,8 +312,13 @@
   }
   .wdk-select-group{
     margin-top: 1.0625rem;
-    color:#666;
+    color: #666;
     font-size: 0.875rem;
+    border: 1px solid rgba(229,229,229,1);
+  }
+  .wdk-select-group>ul{
+    background: #F6F6F6;
+    padding: 2.19rem 2.44rem 1rem 2.44rem;
   }
   .wdk-select-msg{
     color:#333;

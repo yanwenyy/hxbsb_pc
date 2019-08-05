@@ -51,7 +51,7 @@
         扫码支付, 支付<span>{{card_money}}</span>元
       </div>
       <div class="pay-wexin-code-img box-sizing">
-        <div class="code-img-show" id="qrcode"></div>
+        <div class="code-img-show" id="qrcode" ref="qrcode"></div>
       </div>
     </div>
   </div>

@@ -3,10 +3,17 @@
     <div id="lunbo">
       <div class="head-banner clearfix">
         <div class="swiper-container s1">
-          <ul class="swiper-wrapper">
-            <li class="swiper-slide head-img" style="background: url('./static/img/img1920.png') center">
+          <ul class="swiper-wrapper swiper-no-swiping">
+            <!--<li class="swiper-slide head-img" style="background: url('./static/img/img1920.png') center">-->
+            <li class="swiper-slide head-img">
+              <img src="../../static/img/swiper_bg.png" alt="">
             </li>
           </ul>
+          <div class="ask-btn">
+            <div class="ask-btn-title">快速问</div>
+            <textarea class="box-sizing" @click="userMessage.userName||userMessage.companyName||userMessage.province?$router.push({name:'askQuestion'}):$myToast.confirm('您还没有完善信息,完善后方可提问','mineData','去完善')" readonly v-model="text" name="" id="" style="resize:none" placeholder="点击输入您要问的问题"></textarea>
+            <div class="ask-btn-btn cursor" @click="userMessage.userName||userMessage.companyName||userMessage.province?$router.push({name:'askQuestion'}):$myToast.confirm('您还没有完善信息,完善后方可提问','mineData','去完善')">我要提问</div>
+          </div>
           <div class="swiper-pagination"></div>
           <!--<div class="swiper-button-prev"></div>&lt;!&ndash;左箭头&ndash;&gt;
           <div class="swiper-button-next"></div>&lt;!&ndash;右箭头&ndash;&gt;-->
@@ -39,10 +46,17 @@
         name: "swiper",
         data () {
           return {
-            s_head:1
+            s_head:1,
+            text:'',
+            userMessage:'',
           }
         },
         mounted () {
+          var that=this;
+          // this.userMessage=JSON.parse(sessionStorage.getItem("userMessage"));
+          this.ajax_nodata(this.http_url.url+"/user/message",function(data){
+            that.userMessage=data;
+          });
           var mySwiper = new Swiper('.s1', {
             // autoplay: 3000, //可选选项，自动滑动
             //autoHeight: true,
@@ -86,6 +100,44 @@
 
 <style scoped>
   @import '../../static/css/swiper.min.css';
+  .ask-btn-title{
+    color:#333;
+    font-size: 0.88rem;
+    margin: 1.125rem;
+    font-weight: bold;
+  }
+  .ask-btn-btn{
+    width:11rem;
+    height:1.875rem;
+    line-height: 1.875rem;
+    text-align: center;
+    background:rgba(252,109,52,1);
+    border-radius:4px;
+    color:#fff;
+    font-size: 0.81rem;
+    margin: 0 auto;
+  }
+  .ask-btn>textarea{
+    width:11rem;
+    height:5rem;
+    padding:0.69rem 1rem;
+    outline: none;
+    border:1px solid rgba(238,238,238,1);
+    border-radius:4px;
+    line-height: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .ask-btn{
+    width:13.38rem;
+    height:12.56rem;
+    background:rgba(225,225,225,.8) ;
+    position: absolute;
+    top:3rem;
+    right:6rem;
+    z-index: 99999999;
+    border-radius:4px;
+    text-align: center;
+  }
   .swiper-pagination-bullet{
     width: 8px;
     height: 8px;
@@ -114,8 +166,12 @@
     display: block;
   }
   .swiper-slide{
-    height: 200px;
+    height: 18.75rem;
     width: 100%;
     background-size: cover;
+  }
+  .swiper-slide>img{
+    width: 100%;
+    height: 100%;
   }
 </style>

@@ -5,17 +5,21 @@
           <div class="home-model-header">
             <div class="inline-block home-head-title"><span class="inline-block span-blue-line"></span>搜索结果</div>
           </div>
-          <div class="no-msg out">暂无相关内容</div>
+          <!--<div class="no-msg out">暂无相关内容</div>-->
+          <div class="no-msg-img" v-show="list==''&&typeContent==undefined">
+            <img src="../../../static/img/no-msg-img.png" alt="">
+            <div>没有搜到相关内容哦～</div>
+          </div>
           <div class="wdk-list-group box-sizing">
             <div class="wdk-list" v-for="item in list"  @click="weiguan(item.uuid,item.status)">
               <div class="inline-block">
                 <div class="wdk-name">
                   <img :src="head_src+item.headImage" alt=""  onerror="javascript:this.src='./static/img/user-img.png';">
-                  <div class="inline-block user_name">{{item.realName||"匿名用户"}}</div>
+                  <div class="inline-block user_name">{{get_name(item)}}</div>
                   <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
                   <div class="home-list-msg-group">
                     <div class="inline-block home-list-msg">{{item.content}}</div>
-                    <div class="inline-block weiguan" :class="item.status==1? 'weiguan_also':''">{{item.status==1? '已围观':'一元围观'}}</div>
+                    <div class="inline-block weiguan" :class="item.status==1? 'weiguan_also':''">{{item.status==1? '已围观':'围观'}}</div>
                   </div>
                   <div class="label box-sizing">
                     <div class="inline-block">{{format(item.date)}}</div>
@@ -36,7 +40,7 @@
               </div>
             </div>
           </div>
-          <div class="load-more out">
+          <div class="load-more out"  v-if="list.length==end">
             <span class="inline-block gray-line"></span>
             <span class="inline-block load-more-btn" @click="load_more()">点击加载更多</span>
             <span class="inline-block gray-line"></span>
@@ -68,6 +72,7 @@
             start:1,
             end:10,
             num:1,
+            first:true,
           }
         },
         mounted () {
@@ -85,7 +90,23 @@
               "content":this.msg,
               "type":this.type,
               "typeContent":this.typeContent
-            },that.get_list);
+            },function(data){
+              var data=data.data;
+              if(data!=null&data!=""){
+                $(".no-msg").hide();
+                $(".load-more").show();
+                for(var i=0;i<data.length;i++){
+                  if(data[i].content.length>40){
+                    data[i].content=data[i].content.substr(0,40)+"...";
+                  }
+                }
+                that.list=data;
+              }else{
+                that.first=false;
+                $(".no-msg").show();
+                $(".load-more").hide();
+              }
+            });
           });
           setTimeout(function(){
             that.ajax(that.http_url.url+'/onlook/serarch',{
@@ -96,20 +117,34 @@
               "typeContent":that.typeContent
             },that.get_list);
           },1500);
-
         },
         methods:{
           //一元围观
           weiguan:function(val,status){
-            if(status==1){
-              this.$router.push({ name: 'answerWacthDetail',query:{"uuid":val}})
-            }else{
-              this.$router.push({ name: 'answerWacth',query: {"uuid":val,"money":1}});
-            }
+            //用户所有信息
+            _czc.push(["_trackEvent","一元围观","点击"]);
+            var that=this;
+            this.ajax_nodata(this.http_url.url+"/user/message",function(data){
+              if(status==1){
+                that.$router.push({ name: 'answerWacthDetail',query:{"uuid":val}})
+              }else{
+                if(data.tsfTime!=null&&data.tsfTime!=''){
+                  var tt=new Date().getTime();
+                  if(tt>data.tsfTime){
+                    that.$router.push({ name: 'answerWacth',query: {"uuid":val,"money":1}});
+                  }else{
+                    that.$router.push({ name: 'answerWacthDetail',query:{"uuid":val}})
+                  }
+                }else{
+                  that.$router.push({ name: 'answerWacth',query: {"uuid":val,"money":1}});
+                }
+              }
+            });
             // this.$router.push({ name: 'answerWacth',query:{questionUuid:val}})
           },
           //列表
           get_list:function(data){
+            var that=this;
             //console.log(data);
             var data=data.data;
             if(data!=null&data!=""){

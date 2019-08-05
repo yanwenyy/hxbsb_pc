@@ -140,6 +140,7 @@
   .mine-right{
     background: #F4F6F8;
     box-shadow:none;
+    padding-left: 0;
   }
   .mine-data-head{
     height:10.75rem;

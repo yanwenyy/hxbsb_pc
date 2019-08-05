@@ -8,7 +8,7 @@
           <div class="inline-block" @click="list(item.status,item.uuid)">
             <div class="wdk-name">
               <img :src="head_src+item.headImage" alt=""  onerror="javascript:this.src='./static/img/user-img.png';">
-              <div class="inline-block user_name">{{item.realName||"匿名用户"}}</div>
+              <div class="inline-block user_name">{{get_name(item)}}</div>
               <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
               <div class="home-list-msg-group">
                 <div class="inline-block home-list-msg">{{item.content}}</div>

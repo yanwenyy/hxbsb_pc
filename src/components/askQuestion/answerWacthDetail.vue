@@ -6,7 +6,7 @@
           <div class="queser-grounp">
             <img :src="questionUser.isAnon==1? head_src+questionUser.headImage:'/static/img/user-img.png'"   onerror="javascript:this.src='./static/img/user-img.png';" alt="" class="queser-head">
             <div class="inline-block queser-msg">
-              <div class="inline-block user_name">{{questionUser.isAnon==1? questionUser.realName:'匿名用户'}}</div>
+              <div class="inline-block user_name">{{get_name(questionUser)}}</div>
               <div class="inline-block user-dj"><img :src="get_score(questionUser.integralScore,questionUser.aision,questionUser.vip)" alt=""></div>
               <div>{{format(questionUser.date)}}</div>
             </div>
@@ -189,7 +189,7 @@
               <div class="inline-block">
                 <div class="wdk-name">
                   <img :src='head_src+item.headImage' onerror="javascript:this.src='./static/img/user-img.png';">
-                  <div class="inline-block user_name">{{item.realName}}</div>
+                  <div class="inline-block user_name">{{get_name(item)}}</div>
                   <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
                   <div class="home-list-msg-group">
                     <div class="inline-block home-list-msg">{{item.content}}</div>
@@ -235,17 +235,20 @@
       </div>
     </div>
     <look-img v-if="lookImgVisible" ref="lookImg" @refreshMask="maskShow"></look-img>
+    <freeWatchAd v-if="free_status" ref="free_show_child"></freeWatchAd>
   </div>
 </template>
 
 <script>
   import ztRight from '@/components/ztRight'
   import lookImg from '@/components/lookImg'
+  import freeWatchAd from '@/components/askQuestion/freeWatchAd'
   export default {
     name: "answer-wacth",
     components:{
       ztRight,
-      lookImg
+      lookImg,
+      freeWatchAd,
     },
     data(){
       return{
@@ -281,11 +284,16 @@
         //选择的税种
         sz_selece:[],
         //专题id
-        topicId:''
+        topicId:'',
+        free_status:false,//视频广告落地页状态
       }
     },
     mounted(){
       var that=this;
+      if(this.$route.query.link!=''&&this.$route.query.link!=null){
+        this.free_status=true;
+        this.free_show(this.$route.query.link+"&cookieId="+sessionStorage.getItem("cookieId"));
+      }
       //用户所有信息
       this.ajax_nodata(this.http_url.url+"/user/message",function(data){
         // console.log(data);
@@ -319,6 +327,12 @@
       // })
     },
     methods:{
+      //调用freeWacth事件
+      free_show:function(e){
+        this.$nextTick(() => {
+          this.$refs.free_show_child.init(e);
+        })
+      },
       sz_click:function(item){
         //删除数组内某项的构造函数
         Array.prototype.indexOf = function(val) {
@@ -403,14 +417,16 @@
       sub_commit:function(){
         var that=this;
         if(this.commit_msg==""){
-          alert("请输入评论内容");
+          // alert("请输入评论内容");
+          that.$myToast.error("请输入评论内容");
         }else{
           this.ajax(this.http_url.url+"/discuss/edit",{
             "answerUuid":that.comment_id,
             "discussContent":that.commit_msg
           },function(data){
-              alert(data.des);
+              // alert(data.des);
               if(data.code==1){
+                that.$myToast.success(data.des);
                 that.ajax(that.http_url.url+"/discuss/all",{
                   "sinceId":that.start, "maxId":that.end, "answerUuid":that.comment_id
                 },function(data){
@@ -427,12 +443,12 @@
         this.ajax(this.http_url.url+"/answer/proveAndpose",{
           "answerUuid": val, "status": 1
         },function(data){
-
           if(data.code==1){
-            event="./static/img/zan_click.png";
+            event.src="./static/img/zan_click.png";
             span.innerHTML=Number(span.innerHTML)+1;
           }else{
-            alert(data.des);
+            // alert(data.des);
+            that.$myToast.error(data.des);
           }
         })
       },
@@ -446,7 +462,8 @@
             event.src="./static/img/cai_click.png";
             span.innerHTML=Number(span.innerHTML)+1;
           }else{
-            alert(data.des);
+            // alert(data.des);
+            that.$myToast.error(data.des);
           }
         })
       },
@@ -464,11 +481,14 @@
       sub_jc:function(val){
         var that=this;
         if($("#content").val()==""){
-          alert("请输入内容")
+          // alert("请输入内容");
+          that.$myToast.error("请输入内容");
         }else if(this.sz_selece==""){
-          alert("税种不能为空")
+          // alert("税种不能为空")
+          that.$myToast.error("税种不能为空");
         }else if(this.topicId==""){
-          alert("专题不能为空")
+          // alert("专题不能为空")
+          that.$myToast.error("专题不能为空");
         }else{
           this.ajax(this.http_url.url+"/changerError/answer/add",{
             "content":$("#content").val(),
@@ -478,10 +498,12 @@
           },function(data){
             console.log(data);
             if(data.code==1){
-              alert("提交成功");
+              // alert("提交成功");
+              that.$myToast.success("提交成功");
               window.location.reload();
             }else{
-              alert(data.des);
+              // alert(data.des);
+              that.$myToast.error(data.des);
             }
           })
         }
@@ -780,6 +802,7 @@
     color:#333;
     line-height:1.625rem ;
     margin: 1rem 0;
+    word-break: break-all;
   }
   .answer-group-class>div{
     padding:0 0.375rem;

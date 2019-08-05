@@ -8,7 +8,7 @@
             <div class="search-input-header inline-block">
               <input type="text" class="box-sizing" placeholder="请输入关键字" v-model="message">
               <div class="inline-block header-search-answer" @click="ques_btn()">搜索答案</div>
-              <div class="inline-block header-search-ques"><router-link :to="{ name: 'askQuestion'}">我要提问</router-link></div>
+              <div v-show="$route.path!='/home'&&$route.path!='/smallClass'&&$route.path!='/smallClassSearch'" class="inline-block header-search-ques cursor" @click="ask_btn()">我要提问</div>
             </div>
             <div class="header-user inline-block">
               <div class="inline-block h-u-name" v-on:click="user_name">
@@ -18,21 +18,27 @@
               </div>
               <div class="uer-sel">
                 <ul>
-                  <li v-on:click="user_name_li"><router-link :to="{ name: 'mineData', params: { name:''  }}">我的资料</router-link></li>
-                  <li v-on:click="user_name_li"><router-link :to="{ name: 'mineQuestion', params: { name:''  }}">我的提问</router-link></li>
-                  <li v-on:click="user_name_li"><router-link :to="{ name: 'mineBuy', params: { name:''  }}">我的购买</router-link></li>
-                  <li v-on:click="user_name_li"><router-link :to="{ name: 'mineBag', params: { name:''  }}">我的钱包</router-link></li>
-                  <li v-on:click="user_name_li"><router-link :to="{ name: 'mineLearningCard', params: { name:''  }}">学习顾问卡</router-link></li>
-                  <li v-on:click="user_name_li"><router-link :to="{ name: 'mineFinanceCard', params: { name:''  }}">财税问答卡</router-link></li>
-                  <!--<li v-on:click="user_name_li"><router-link :to="{ name: 'mineInvoice', params: { name:''  }}">开具发票</router-link></li>-->
-                  <li v-on:click="user_name_li"><router-link :to="{ name: 'mineEditPassword', params: { name:''  }}">设置密码</router-link></li>
-                  <li v-on:click="user_name_li"><router-link :to="{ name: 'login', params: { name:''  }}">退出</router-link></li>
+                  <li v-on:click="user_name_li('')"><router-link :to="{ name: 'mineData', params: { name:''  }}">我的资料</router-link></li>
+                  <li v-on:click="user_name_li('我的提问')"><router-link :to="{ name: 'mineQuestion', params: { name:''  }}">我的提问</router-link></li>
+                  <li v-on:click="user_name_li('')"><router-link :to="{ name: 'mineBuy', params: { name:''  }}">我的购买</router-link></li>
+                  <li v-on:click="user_name_li('')">
+                    <router-link v-show="userMessage.role==2" :to="{ name: 'mineRobAnswer', params: { name:''  }}">我的工作台</router-link>
+                    <router-link v-show="userMessage.role==1" :to="{ name: 'mineWorkbench', params: { name:''  }}">我的工作台</router-link>
+                  </li>
+                  <li v-on:click="user_name_li('我的钱包')"><router-link :to="{ name: 'mineBag', params: { name:''  }}">我的财富</router-link></li>
+                  <!--<li v-on:click="user_name_li('学习顾问卡')"><router-link :to="{ name: 'mineLearningCard', params: { name:''  }}">学习顾问卡</router-link></li>-->
+                  <li  v-show="userMessage.aision!=0||userMessage.vip==1"  v-on:click="user_name_li('')"><router-link :to="{ name: 'mine365', params: { name:''  }}">365会员卡</router-link></li>
+                  <!--<li v-on:click="user_name_li('财税问答卡')"><router-link :to="{ name: 'mineFinanceCard', params: { name:''  }}">财税问答卡</router-link></li>-->
+                  <li  v-show="userMessage.aision!=0||userMessage.vip==1" v-on:click="user_name_li"><router-link :to="{ name: 'mineInvoice', params: { name:''  }}">开具发票</router-link></li>
+                  <li v-on:click="user_name_li('')"><router-link :to="{ name: 'mineAttention', params: { name:''  }}">我的关注</router-link></li>
+                  <li v-on:click="user_name_li('')"><router-link :to="{ name: 'mineEditPassword', params: { name:''  }}">设置密码</router-link></li>
+                  <li v-on:click="user_name_li('')"><router-link :to="{ name: 'login', params: { name:''  }}">退出航信办税宝</router-link></li>
                 </ul>
               </div>
             </div>
-            <div class="inline-block ask-index">
-              <img src="../../static/img/ask_index.gif" alt="">
-            </div>
+            <!--<div class="inline-block ask-index">-->
+              <!--<img src="../../static/img/ask_index.gif" alt="">-->
+            <!--</div>-->
           </div>
         </div>
       </div>
@@ -60,23 +66,43 @@
             //搜索框内容
             message:"",
             //用户姓名
-            userName:''
+            userName:'',
+            userMessage:'',
           }
         },
       mounted () {
         this.message="";
+        // this.userMessage=JSON.parse(sessionStorage.getItem("userMessage"));
+        // console.log(this.userMessage);
         //获取用户名字
         var that=this;
         function get_name(data){
-          that.userName=data.realName;
+          that.userMessage=data;
+          if(data.role==1){
+            that.userName=data.realName;
+          }else{
+            that.userName=data.userName;
+          }
+
         }
         this.ajax_nodata(this.http_url.url+"/user/message",get_name);
         // var data=JSON.parse(sessionStorage.getItem("userMessage"));
         // this.userName=data.realName;
         this.title_code=this.$route.query.msg;
+        if(location.href.indexOf("smallClass")!=-1||location.href.indexOf("smallClassSearch")!=-1){
+          $(".header-search-answer").html("搜索视频");
+          $(".ask-index").hide();
+        }else if(location.href.indexOf("expert")!=-1||location.href.indexOf("expertSearch")!=-1||location.href.indexOf("expertHomepage")!=-1){
+          $(".header-search-answer").html("搜索专家");
+        }else if(location.href.indexOf("mechanismlist")!=-1||location.href.indexOf("mechanismDetail")!=-1||location.href.indexOf("mechanismSearch")!=-1){
+          $(".header-search-answer").html("搜索机构");
+        }else{
+          $(".header-search-answer").html("搜索答案");
+          $(".ask-index").show();
+        }
+
       },
       methods:{
-
         init (id){
           this.userName=id;
         },
@@ -90,12 +116,17 @@
         },
         header_clcik:function(){
           $(".search-input-header>input").val('');
+          this.message="";
           this.$router.push({name:'Home'});
           $(".header-search-answer").html("搜索答案");
-          $(".header-search-ques").show();
+          // $(".header-search-ques").show();
         },
         //我的列表点击
-        user_name_li:function(){
+        user_name_li:function(e){
+          // console.log(e);
+          if(e!=""){
+            _czc.push(["_trackEvent",e,"点击"]);
+          }
           this.head_scode=false;
           this.title_code=1;
         },
@@ -114,27 +145,68 @@
         //     // }
         // },
         //我要提问点击
-        ques_btn:function(){
-          if(this.$route.path=="/smallClass"||this.$route.path=="/video"){
-            this.$router.push({
-              name: 'smallClassSearch',query:{msg:this.message}
-            });
+        ask_btn:function(){
+          _czc.push(["_trackEvent","我要提问","点击"]);
+          if(this.userMessage.userName||this.userMessage.companyName||this.userMessage.province){
+            this.$router.push({name:'askQuestion'})
           }else{
-            this.$router.push({
-              name: 'answerSearch',query:{msg:this.message}
-            })
+            this.$myToast.confirm('您还没有完善信息,完善后方可提问','mineData','去完善');
           }
-          // if(this.title_code==1||this.title_code==2){
-          //   this.$router.push({
-          //     name: 'answerSearch',query:{msg:this.message}
-          //   })
-          // }else if(this.title_code==4){
-          //   this.$router.push({
-          //     name: 'smallClassSearch',query:{msg:this.message}
-          //   })
-          // }
+        },
+        //搜索答案点击
+        ques_btn:function(){
+          _czc.push(["_trackEvent","搜索答案","点击"]);
+          if(this.message==''){
+            this.$myToast.error("请输入搜索内容")
+          }else{
+            if(this.$route.path=="/smallClass"||this.$route.path=="/smallClassSearch"){
+              this.$router.push({
+                name: 'smallClassSearch',query:{msg:this.message}
+              });
+            }else if(this.$route.path=="/expertHomepage"||this.$route.path=="/expert"||this.$route.path=="/expertSearch"){
+              this.$router.push({
+                name: 'expertSearch',query:{msg:this.message}
+              });
+            }else if(this.$route.path=="/mechanismlist"||this.$route.path=="/mechanismDetail"||this.$route.path=="/mechanismSearch"){
+              this.$router.push({
+                name: 'mechanismSearch',query:{msg:this.message}
+              });
+            }else{
+              this.$router.push({
+                name: 'answerSearch',query:{msg:this.message}
+              })
+            }
+          }
+        },
+      },
+      watch:{
+        $route(to,from){
+          if(to.path=='/smallClassSearch'||to.path=='/expertSearch'||to.path=='/mechanismSearch'||to.path=='/answerSearch'){
+
+          }else{
+            this.message="";
+          };
+          if(to.path=="/smallClass"||to.path=="/smallClassSearch"){
+            $(".header-search-answer").html("搜索视频");
+            $(".ask-index").hide();
+          }else if(to.path=="/expert"||to.path=="/expertSearch"||to.path=="/expertHomepage"){
+            $(".header-search-answer").html("搜索专家");
+          }else if(to.path=="/mechanismlist"||to.path=="/mechanismDetail"||to.path=="/mechanismSearch"){
+            $(".header-search-answer").html("搜索机构");
+          }else{
+            $(".header-search-answer").html("搜索答案");
+            $(".ask-index").show();
+          }
         }
-      }
+      },
+      // watch:{
+      //   'message':{
+      //     handler:function(newValue,oldValue){
+      //       console.log(newValue)
+      //     },
+      //     deep:true,
+      //   }
+      // }
     }
 </script>
 
@@ -154,7 +226,7 @@
   }
   .uer-sel{
     display: none;
-    z-index: 10000021;
+    z-index: 999999999;
   }
   .header-user:hover .uer-sel{
     display: block;

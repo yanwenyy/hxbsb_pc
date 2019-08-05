@@ -7,10 +7,10 @@
         <div class="h-main-left inline-block">
             <div class="inline-block home-head-title">
               <span class="inline-block span-blue-line"></span>问题内容
-              <div class="ask-head-title ask-price">提问金额：<i :class="vip?'no-v':''">￥15</i><span class="orange-font" v-show="vip">会员免费</span></div>
+              <div class="ask-head-title ask-price">提问金额：<i :class="vip?'no-v':''">￥{{money_show}}</i><span class="orange-font" v-show="vip">会员免费</span></div>
             </div>
             <div class="textarea-box">
-              <textarea placeholder="请详细描述您的问题，可附上图片。针对税企争议，方案设计，棘手问题，创新模式等类问题不适用快速咨询请选择私密问或联系客服。" v-model="content" name="content"></textarea>
+              <textarea placeholder="请详细描述您的问题，可附上图片。针对税企争议，方案设计，棘手问题，创新模式等类问题不适用快速咨询请选择联系我们，我们会分配相应的咨询师为您服务。" v-model="content" name="content"></textarea>
             </div>
             <div class="ask-img-box">
               <div class="ask-head-title">添加图片(最多3张)</div>
@@ -33,7 +33,7 @@
             </ul>
           </div>
           <div class="aks-submit">
-            <input type="button" class="submit-btn" @click="check_sub" value="提交"/>
+            <input type="button" class="submit-btn cursor" @click="check_sub" value="提交"/>
             <div class="ask-anonymity-box checkbox-box" :class="check_icon ? 'checked-icon' : 'checkbox-icon' ">
               <label class="inline-block icon"></label>
               <!-- 0是匿名 1是不匿名 -->
@@ -43,7 +43,7 @@
           <input type="hidden" name="payType" :value="vip?'free':null" />
         </div>
         <div class="h-main-right inline-block box-sizing">
-          <div class="inline-block home-head-title">悬赏规则</div>
+          <div class="inline-block home-head-title"><img src="../../../static/img/ask-rule-alarm.png" alt="">悬赏规则</div>
           <div class="rules">
             <ol type="1">
               <li>您的问题最多被两位咨询师抢答。</li>
@@ -57,18 +57,21 @@
       </div>
       <Diglog v-show="show"></Diglog>
     </div>
+    <vipDateOut :type="vip_type" v-if="vipdateout"></vipDateOut>
   </div>
 </template>
 <script>
   import BreadNav from '@/components/breadNav'
   import Diglog from '@/components/askQuestion/sucDialog'
   import headerTab from "@/components/headerTab"
+  import vipDateOut from '@/components/vipDateOut'
     export default {
         name: "ask-question",
         components: {
           BreadNav,
           Diglog,
-          headerTab
+          headerTab,
+          vipDateOut
         },
       data () {
         return {
@@ -85,17 +88,24 @@
           content:null,//问题内容
           isAnon:1,//是否匿名 0 是 1否
           payType:null,//支付类型
-          images:[]//提交图片参数bsae64
+          images:[],//提交图片参数bsae64
+          vip_type:1,//会员类型
+          vipdateout:false,
+          money_show:0,//快速问金额
         }
       },
       mounted (){
+          var that=this;
         //面包屑
         this.title='首页 > '+this.$route.meta.title;
         //调用接口-问题涉及行业
         this.ajax_nodata(this.http_url.url+'category/tree',this.get_trade);
         //获取登录账号的个人信息
         this.ajax_nodata(this.http_url.url+'user/message',this.get_aision);
-
+        //获取金额
+        this.ajax_nodata(this.http_url.url+"/load/getconfig/message",function(data){
+          that.money_show=data.questionMoney;
+        })
       },
       methods:{
         //判断是否为航信会员航信会员
@@ -105,14 +115,24 @@
             if(data.vip==0){
               this.vip=true
               this.payType='free'
+            }else if(data.vip==1&&localStorage.getItem("no_vipDateout")!="yes"){
+              this.vipdateout=true;
+              this.vip_type=1;
             }
           }else if(data.aision==2){
             this.vip=true
             this.payType='free'
-          }else if(data.tsfTime!=""&&data.tsfTime!=null&&data.tsfTime!=undefined&&data.tsfTime>new Date().getTime()){
+          }
+         if(data.tsfTime!=""&&data.tsfTime!=null&&data.tsfTime>new Date().getTime()){
             this.vip=true
             this.payType='free'
           }
+          // else if(data.vip==1&&data.tsfTime!=""&&data.tsfTime!=null&&data.tsfTime<new Date().getTime()){
+          //   if(localStorage.getItem("no_vipDateout")!="yes"){
+          //     this.vipdateout=true;
+          //     this.vip_type=2;
+          //   }
+          // }
           for(var i=0;i<$(".ask-trade-box li").length;i++){
             if($(".ask-trade-box li").eq(i).text()===this.trade){
               this.current=i
@@ -183,37 +203,45 @@
         },
         //提交 + 表单验证
         check_sub:function () {
-          var query={url:"mineQuestion",content:this.content,isAnon:Number(this.isAnon),money:15,payType:this.payType,trade:this.trade,images:this.images};
-          $(".submit-btn").attr("disabled","true")
+          var query={url:"mineQuestion",content:this.content,isAnon:Number(this.isAnon),money:this.money_show,payType:this.payType,trade:this.trade,images:this.images};
           if(this.vip){
             if (this.content!=null&&this.content!="") {
+              $(".submit-btn").attr("disabled","true");
+              _czc.push(["_trackEvent","航信会员免费发布问题","点击"]);
               this.ajax(this.http_url.url+'question/releaseQuestion',query,this.show_dialog)
             }else{
-              $("textarea").focus()
+              $("textarea").focus();
+              // alert("请输入问题");
+              this.$myToast.error("请输入您要提问的内容");
             }
 
           }else{
             if (this.content!=null&&this.content!="") {
+              $(".submit-btn").attr("disabled","true");
+              _czc.push(["_trackEvent","普通会员发布问题","点击"]);
               this.go_pay(query)
             }else{
-              $("textarea").focus()
+              $("textarea").focus();
+              this.$myToast.error("请输入您要提问的内容");
             }
           }
 
         },
         //显示Dialog
         show_dialog:function (data) {
+          var that=this;
           if(data.code==1){
             this.show=true
           }else{
             $(".submit-btn").attr("disabled","false")
-            alert(data.des);
+            // alert(data.des);
+            that.$myToast.error(data.des);
           }
         },
         //跳转支付（带参）
         go_pay:function (data) {
           data=encodeURIComponent(JSON.stringify(data));
-          this.$router.push({ name: 'payMethod',query: {url:'mineQuestion',price: 15 ,source:"我要提问",data:data}})
+          this.$router.push({ name: 'payMethod',query: {url:'mineQuestion',price: this.money_show ,source:"我要提问",data:data}})
         }
       }
     }
@@ -221,8 +249,19 @@
 </script>
 
 <style scoped>
+  .home-head-title>img{
+    width:1.19rem;
+    height: 1.19rem;
+    margin-right: 0.56rem;
+    margin-top: -0.2rem;
+  }
   .h-main-right{
     margin-top: 0;
+    height:25.38rem;
+    padding:1.56rem 2rem;
+    box-sizing: border-box;
+    background: url('../../../static/img/ask-rule-bg.png') no-repeat;
+    background-size: 100% 100%;
   }
   .h-main-right .home-head-title{
     color: #666;

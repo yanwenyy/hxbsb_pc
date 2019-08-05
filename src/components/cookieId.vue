@@ -32,7 +32,8 @@
                 }
                 console.log(sessionStorage.getItem("cookieId"));
               }else{
-                alert(data.des);
+                // alert(data.des);
+                that.$myToast.error(data.des);
               }
             },
             error:function(){

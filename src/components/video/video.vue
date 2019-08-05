@@ -16,9 +16,8 @@
           window.addEventListener("popstate", function(e) {
             that.$router.push({name:"smallClass"})
           }, false);
-        }
-
-      }
+        };
+      },
     }
 
 </script>

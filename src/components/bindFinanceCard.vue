@@ -1,10 +1,10 @@
 <template>
   <div class="login-body">
-    <div class="login-header">
-      <div class="container">
-        <img src="../../static/img/login-logo.png" alt="">
-      </div>
-    </div>
+    <!--<div class="login-header">-->
+      <!--<div class="container">-->
+        <!--<img src="../../static/img/login-logo.png" alt="">-->
+      <!--</div>-->
+    <!--</div>-->
     <div class="login">
       <div class="login-model box-sizing">
         <div class="information-way">
@@ -35,10 +35,10 @@
         </div>
       </div>
     </div>
-    <div id="footer" class="box-sizing">
-      <div>©2018 北京解税宝科技有限公司与航天信息股份有限公司版权所有，并保留所有权利</div>
-      <div>京ICP备 16029821号-1</div>
-    </div>
+    <!--<div id="footer" class="box-sizing">-->
+      <!--<div>©2018 北京解税宝科技有限公司与航天信息股份有限公司版权所有，并保留所有权利</div>-->
+      <!--<div>京ICP备 16029821号-1</div>-->
+    <!--</div>-->
   </div>
 </template>
 <script>
@@ -58,7 +58,8 @@
         sub:function(){
           var that=this;
           if(this.cardNumber==""||this.cardPass==""){
-            alert("请完善信息")
+            // alert("请完善信息")
+            that.$myToast.error("请完善信息");
           }else{
             this.ajax(this.http_url.url+"/bindingQACard",{
               "id":this.cardNumber,
@@ -69,7 +70,8 @@
                   name:'Home'
                 })
               }else{
-                alert(data.des);
+                // alert(data.des);
+                that.$myToast.error(data.des);
               }
             })
           }
@@ -167,8 +169,8 @@
   .login-body{
     width:100%;
     height:120vh;
-    position: absolute;
-    top:0;
+    /*position: absolute;*/
+    /*top:0;*/
   }
   .login:before{
     display: table;
@@ -176,7 +178,7 @@
   }
   .login{
     width:100%;
-    height:90%;
+    height:100%;
     background: url(../../static/img/login-bg.png);
 
   }

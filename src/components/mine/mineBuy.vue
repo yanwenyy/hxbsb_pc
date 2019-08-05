@@ -27,7 +27,7 @@
                     <div class="inline-block">
                       <div class="wdk-name">
                         <img :src='head_src+item.headImage'  onerror="javascript:this.src='./static/img/user-img.png';">
-                        <div class="inline-block user_name">{{item.realName||"匿名用户"}}</div>
+                        <div class="inline-block user_name">{{get_name(item)}}</div>
                         <div class="inline-block user-dj"><img :src="get_score(item.integralScore,item.aision,item.vip)" alt=""></div>
                         <div class="home-list-msg-group">
                           <div class="inline-block home-list-msg">{{item.content}}</div>
@@ -51,12 +51,21 @@
                       </div>
                     </div>
                   </div>
+                  <div class="no-msg-img" v-show="questions==''">
+                    <img src="../../../static/img/answer-nomsg.png" alt="">
+                    <div>暂无任何记录～</div>
+                  </div>
                 </div>
               </div>
               <div class="mine-buy-video box-sizing"  v-if="headName=='已购视频'">
-                <div class="inline-block" v-for="item in video">
+                <div class="inline-block  video-list" v-for="item in video"  @click="video_click(item.id)">
                   <img :src="cover_src+item.image" alt="" @click="video_click(item.id)">
                   <div>{{item.title}}</div>
+                  <div class="video-hover"><img src="../../../static/img/video-hover.png" alt=""></div>
+                </div>
+                <div class="no-msg-img" v-show="video==''">
+                  <img src="../../../static/img/answer-nomsg.png" alt="">
+                  <div>暂无任何记录～</div>
                 </div>
               </div>
             </div>
@@ -181,6 +190,21 @@
 </script>
 
 <style scoped>
+  .video-list{
+    position: relative;
+  }
+  .video-hover{
+    height:9rem;
+    top:0.5rem;
+    width:95%;
+    box-sizing: border-box;
+  }
+  .video-list:hover .video-hover{
+    display: block;
+  }
+  .video-hover>img{
+    margin-top:3.5rem;
+  }
   .mine-buy-body{
     padding:0 1rem;
   }
@@ -210,7 +234,7 @@
   .mine-buy-video{
     margin: 1rem 0;
   }
-  .mine-buy-video>div{
+  .mine-buy-video>div:not(.no-msg-img){
     box-sizing: border-box;
     color:#666;
     font-size: 0.875rem;

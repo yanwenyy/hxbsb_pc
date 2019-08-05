@@ -1,41 +1,55 @@
 <template>
     <div>
-      <div class="home-zt-img">
-        <img src="../../static/img/zt_banner.jpg" alt="">
-      </div>
-      <div class="selected-zt">
+      <!--<div class="home-zt-img">-->
+        <!--<img src="../../static/img/zt_banner.jpg" alt="">-->
+      <!--</div>-->
+      <div class="selected-zt box-sizing">
         <div class="selected-zt-title">
-          <span class="span-blue-line"></span>
-          精选专题
+          <!--<span class="span-blue-line"></span>-->
+          专题类型
         </div>
         <div class="selected-zt-msg">
           <div class="inline-block box-sizing" v-for="item in jxzt" @click="jxzt_click('topic',item.name)">{{item.name}}</div>
         </div>
-        <div class="zt-look-more" @click="look_btn_click()">
-          <span>{{look_btn}}</span>
-          <img src="../../static/img/zt-xl.png" alt="">
+        <div class="selected-zt-title">
+          <!--<span class="span-blue-line"></span>-->
+          税种类型
         </div>
-      </div>
-      <div class="hx-qr-code box-sizing">
-        <div class="title-notice">想体验更多功能,请使用移动端</div>
-        <div class="qr-title">航信办税宝</div>
-        <div class="qr-code-img-group">
-          <div class="inline-block">
-            <img src="../../static/img/qr-weixin.png" alt="">
-            <div class="qr-code-footer">
-              <div>扫描二维码</div>
-              <div>关注微信公众号</div>
-            </div>
-          </div>
-          <div class="inline-block">
-            <img src="../../static/img/qr-app.png" alt="">
-            <div class="qr-code-footer">
-              <div>扫描二维码</div>
-              <div>下载航信办税宝APP</div>
-            </div>
-          </div>
+        <div class="selected-zt-msg">
+          <div class="inline-block box-sizing" v-for="item in sz" @click="jxzt_click('tax',item.name)">{{item.name}}</div>
         </div>
+        <div class="selected-zt-title">
+          <!--<span class="span-blue-line"></span>-->
+          行业类型
+        </div>
+        <div class="selected-zt-msg">
+          <div class="inline-block box-sizing" v-for="item in hy" @click="jxzt_click('trade',item.name)">{{item.name}}</div>
+        </div>
+        <!--<div class="zt-look-more" @click="look_btn_click()">-->
+          <!--<span>{{look_btn}}</span>-->
+          <!--<img src="../../static/img/zt-xl.png" alt="">-->
+        <!--</div>-->
       </div>
+      <!--<div class="hx-qr-code box-sizing">-->
+        <!--<div class="title-notice">想体验更多功能,请使用移动端</div>-->
+        <!--<div class="qr-title">航信办税宝</div>-->
+        <!--<div class="qr-code-img-group">-->
+          <!--<div class="inline-block">-->
+            <!--<img src="../../static/img/qr-weixin.png" alt="">-->
+            <!--<div class="qr-code-footer">-->
+              <!--<div>扫描二维码</div>-->
+              <!--<div>关注微信公众号</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="inline-block">-->
+            <!--<img src="../../static/img/qr-app.png" alt="">-->
+            <!--<div class="qr-code-footer">-->
+              <!--<div>扫描二维码</div>-->
+              <!--<div>下载航信办税宝APP</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
     </div>
 </template>
 
@@ -47,7 +61,13 @@
             //精选专题
             jxzt:[],
             jxzt_all:[],
-            look_btn:"查看更多"
+            look_btn:"查看更多",
+            //税种
+            sz:[],
+            sz_all:[],
+            //行业
+            hy:[],
+            hy_all:[],
           }
         },
         mounted () {
@@ -64,7 +84,11 @@
             // console.log(data);
             var categorys=data.categorys;
             this.jxzt_all=this.get_category(categorys,"专题");
-            this.jxzt=this.jxzt_all.slice(0,6);
+            this.sz_all=this.get_category(categorys,"税种");
+            this.hy_all=this.get_category(categorys,"行业");
+            this.jxzt=this.jxzt_all.slice(0,14);
+            this.sz=this.sz_all.slice(0,16);
+            this.hy=this.hy_all.slice(0,10);
           },
           //专题查看更多
           look_btn_click:function(){
@@ -89,6 +113,7 @@
 </script>
 
 <style scoped>
+
   .title-notice{
     text-align: center;
     margin-bottom: 0.5rem;
