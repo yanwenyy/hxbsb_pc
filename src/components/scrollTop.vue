@@ -24,7 +24,7 @@
             <img src="../../static/img/footer-code-app.jpg" alt="">
             <div>
               <div>扫描二维码</div>
-              <div>下载航信办税宝APP</div>
+              <div>下载刷刷APP</div>
             </div>
           </div>
         </div>

@@ -9,7 +9,7 @@
               <span>Tel：010-57797504</span>
               <span>Email：jsb@jieshuibao.com</span>
             </div>
-            <div style="text-align: left">©2018 航天信息股份有限公司与北京解税宝科技有限公司版权所有，并保留所有权利</div>
+            <div style="text-align: left">©2018 北京解税宝科技有限公司版权所有，并保留所有权利</div>
             <div style="text-align: left">京ICP备 16029821号-1</div>
           </div>
           <div class="inline-block">
@@ -21,7 +21,7 @@
             <div class="inline-block footer-code-group">
               <img src="../../static/img/footer-code-app.jpg" alt="">
               <div>扫描二维码</div>
-              <div>下载航信办税宝APP</div>
+              <div>下载刷刷APP</div>
             </div>
           </div>
         </div>
@@ -33,7 +33,7 @@
             <!--<span>邮箱：jsb@jieshuibao.com</span>-->
           <!--</div>-->
         <!--</div>-->
-        <!--<div>©2018 航天信息股份有限公司与北京解税宝科技有限公司版权所有，并保留所有权利</div>-->
+        <!--<div>©2018 北京解税宝科技有限公司版权所有，并保留所有权利</div>-->
         <!--<div>京ICP备 16029821号-1</div>-->
       </div>
     </div>

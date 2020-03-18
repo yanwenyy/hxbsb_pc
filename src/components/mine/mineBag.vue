@@ -13,7 +13,7 @@
             <div class="inline-block user-money-msg">
               <div>可用余额（元）</div>
               <div>¥<span class="orange">{{parseFloat(balance).toFixed(2)}}</span></div>
-              <div>*提示：请下载航信办税宝APP进行提现。</div>
+              <div>*提示：请下载刷刷APP进行提现。</div>
             </div>
             <div class="inline-block money-record box-sizing">
               <!--<div class="inline-block money-tx">-->

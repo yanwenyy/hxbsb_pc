@@ -32,7 +32,7 @@
                   <li  v-show="userMessage.aision!=0||userMessage.vip==1" v-on:click="user_name_li"><router-link :to="{ name: 'mineInvoice', params: { name:''  }}">开具发票</router-link></li>
                   <li v-on:click="user_name_li('')"><router-link :to="{ name: 'mineAttention', params: { name:''  }}">我的关注</router-link></li>
                   <li v-on:click="user_name_li('')"><router-link :to="{ name: 'mineEditPassword', params: { name:''  }}">设置密码</router-link></li>
-                  <li v-on:click="user_name_li('')"><router-link :to="{ name: 'login', params: { name:''  }}">退出航信办税宝</router-link></li>
+                  <li v-on:click="user_name_li('')"><router-link :to="{ name: 'login', params: { name:''  }}">退出刷刷</router-link></li>
                 </ul>
               </div>
             </div>
@@ -141,7 +141,7 @@
         //       $(".header-search-ques").show();
         //     }
         //     // if(e==5){
-        //     //   alert("请下载航信办税宝app进行操作")
+        //     //   alert("请下载刷刷app进行操作")
         //     // }
         // },
         //我要提问点击

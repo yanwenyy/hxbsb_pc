@@ -125,7 +125,7 @@
       </div>
     </div>
     <div id="footer" class="box-sizing">
-      <div>©2018 航天信息股份有限公司与北京解税宝科技有限公司版权所有，并保留所有权利</div>
+      <div>©2018 北京解税宝科技有限公司版权所有，并保留所有权利</div>
       <div>京ICP备 16029821号-1</div>
     </div>
   </div>

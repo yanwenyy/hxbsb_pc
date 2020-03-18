@@ -32,7 +32,7 @@
       </div>
       <!--<div class="hx-qr-code box-sizing">-->
         <!--<div class="title-notice">想体验更多功能,请使用移动端</div>-->
-        <!--<div class="qr-title">航信办税宝</div>-->
+        <!--<div class="qr-title">刷刷</div>-->
         <!--<div class="qr-code-img-group">-->
           <!--<div class="inline-block">-->
             <!--<img src="../../static/img/qr-weixin.png" alt="">-->
@@ -45,7 +45,7 @@
             <!--<img src="../../static/img/qr-app.png" alt="">-->
             <!--<div class="qr-code-footer">-->
               <!--<div>扫描二维码</div>-->
-              <!--<div>下载航信办税宝APP</div>-->
+              <!--<div>下载刷刷APP</div>-->
             <!--</div>-->
           <!--</div>-->
         <!--</div>-->
